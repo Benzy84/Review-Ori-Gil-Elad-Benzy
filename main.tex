@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO
-% After finishing with the paper and supplementary, name all figures as they are in the paper and in the supplementary materials
+% 11After finishing with the paper and supplementary, name all figures as they are in the paper and in the supplementary materials
 % make the captions in normal size
 
 \documentclass[12pt]{article}
@@ -115,29 +115,33 @@ As often with this group, this work is technically of excellent quality and its 
 
     \end{reviewercomment}
     \begin{ourresponse}
-    We agree with the reviewer's comment that in the coherent imaging experiment depicted in Fig. 5, we benefited from using a thin scattering diffuser, enabling us to focus onto a single illumination mode and thus maintain a uniform incident field across all measurements. We fully acknowledge that this requirement of a constant incident wave-field represents a practical limitation in coherent imaging scenarios, particularly when considering realistic, volumetric dynamic scattering media. To clearly address this concern, we have explicitly stated this limitation in our revised manuscript as follows:
-
-    "We note that a constant illumination field is crucial for our coherent imaging approach, a condition easily satisfied by focusing the illumination onto a thin diffuser within a single coherence length. However, in realistic situations, this requirement poses significant practical challenges, as dynamic scattering inherently impacts both the incident and reflected fields."
+    We appreciate the reviewer's observation about the apparent contradiction between dynamic scattering and our requirement for constant illumination in the coherent imaging experiment (Fig. 5). 
     
-    We further clarify that such limitation does not affect the incoherent imaging scenarios described in our manuscript. In these cases, uniform incoherent illumination naturally arises through temporal or spatial averaging (e.g., by using wide-angle or spatially extended illumination), inherently overcoming the issue of dynamic variations in illumination.
+    In our coherent demonstration, we circumvented this challenge by focusing the illumination beam onto a small area of the diffuser (smaller than its correlation length), effectively sampling only a single "phase patch" as the diffuser rotates. However, we recognize this approach is not feasible for volumetric scattering media where maintaining constant illumination becomes challenging.
     
-    We chose to include a coherent imaging demonstration utilizing a rotating diffuser precisely to illustrate, in a controlled manner, the potential and limitations of matrix-based imaging methods through dynamic scatterers. Additionally, we highlight the applicability of our approach to advanced systems such as flexible multi-core fiber endoscopes (as demonstrated by Choi et al. [Flexible-type ultrathin holographic endoscope for microscopic imaging of unstained biological tissues]), where uniform illumination via single-mode excitation can be straightforwardly achieved.
+    To address this limitation transparently in our manuscript, we have added the following clarification:
+    
+    "For coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin diffuser, volumetric scattering presents additional challenges that require further development."
+    
+    Beyond this manuscript revision, we propose a hybrid approach that could extend our method to volumetric dynamic media without requiring focused illumination:
+    \begin{enumerate}
+        \item For each realization of the dynamic scatterer, rapidly acquire multiple ($K \gg 1$) holograms under different speckle illuminations (created with an additional diffuser in the illumination path)
+        \item Use coherence gating on each individual hologram to determine the correct object depth and eliminate unwanted reflections
+        \item Incoherently sum the intensity patterns to create "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$ 
+        \item Process these macro-frames using I-CLASS as in our incoherent experiments
+    \end{enumerate}
+    
+    This protocol creates effectively uniform illumination through incoherent summing (as in the incoherent experiment with the rapidly rotating diffuser in the illumination path) while preserving the depth-selectivity and reflection-filtering advantages of coherent light. Each resulting macro-frame follows $I_m = P_m * O$, making the problem mathematically equivalent to our incoherent imaging scenario.
+    
+    Our current experimental demonstration served as a controlled environment to validate the fundamental principles of our approach. The hybrid method described above offers a promising path forward for complex volumetric media while maintaining the benefits of coherent imaging. Additionally, we highlight the applicability of our approach to advanced systems such as flexible multi-core fiber endoscopes (as demonstrated by Choi et al. [Flexible-type ultrathin holographic endoscope for microscopic imaging of unstained biological tissues]), where uniform illumination via single-mode excitation can be straightforwardly achieved.
     \end{ourresponse}
 
-    \begin{ourresponse}
-    We agree with the reviewer's comment that in the coherent imaging experiment depicted in Fig. 5, we benefited from using a thin scattering diffuser, enabling us to focus onto a single illumination mode and thus maintain a uniform incident field across all measurements. We fully acknowledge that this requirement of a constant incident wave-field represents a practical limitation in coherent imaging scenarios, particularly when considering realistic, volumetric dynamic scattering media. To clearly address this concern, we have explicitly stated this limitation in our revised manuscript as follows:
 
-    "We note that a constant illumination field is crucial for our coherent imaging approach, a condition easily satisfied by focusing the illumination onto a thin diffuser within a single coherence length. However, in realistic situations, this requirement poses significant practical challenges, as dynamic scattering inherently impacts both the incident and reflected fields."
-    
-    We further clarify that such limitation does not affect the incoherent imaging scenarios described in our manuscript. In these cases, uniform incoherent illumination naturally arises through temporal or spatial averaging (e.g., by using wide-angle or spatially extended illumination), inherently overcoming the issue of dynamic variations in illumination.
-    
-    We would like to propose an alternative approach that could bridge this gap for coherent imaging through more complex dynamic media. For each static realization of the dynamic scatterer, one could illuminate the object with many ($K >> 1$) different random speckle patterns in rapid succession, sum their \textit{intensities} (not fields) to create one "macro-frame," and only then allow the scatterer to change. similar/like in the incoherent experiment, the incoherent summation would effectively flatten the illumination patterns, so that each macro-frame follows the equation $I_m = P_m * O$, mathematically identical to our incoherent experiments. We could then process these macro-frames with the I-CLASS algorithm to recover the object amplitude (though not phase).
 
-    This hybrid approach offers two significant advantages: (1) it eliminates the need to focus the illumination beam on a small area of the scatterer as required in our current approach, making it applicable to volumetric scattering media, and (2) since the light source remains temporally coherent, coherence-gating could still be used to determine the correct depth prior to reconstruction by analyzing any individual frame before summation. This method could be implemented using a secondary rapidly moving diffuser in the illumination path or a spatial light modulator to generate varied illumination patterns while the primary dynamic scatterer remains temporarily static.
 
-    While this alternative approach could address the limitations identified by the reviewer, we chose our current experimental demonstration with a focused beam on a rotating diffuser as a controlled way to establish the fundamental principles of our matrix-based imaging method through dynamic scatterers. This controlled scenario allowed us to validate the mathematical model and demonstrate proof of concept before addressing more complex imaging scenarios. Additionally, our approach remains directly applicable to certain specialized systems such as flexible multi-core fiber endoscopes (as demonstrated by Choi et al. [Flexible-type ultrathin holographic endoscope for microscopic imaging of unstained biological tissues]), where uniform illumination via single-mode excitation can be straightforwardly achieved.
-    \end{ourresponse}
 
+
+       
     \item \leavevmode\vspace{-\baselineskip}
     \begin{reviewercomment}
         Another issue of three-dimensional scattering is that it breaks the isoplanatic assumption on which the current approach relies. The authors mention in the discussion the idea of mosaicking the field-of-view but it somehow requires a roughly focused incident wave-field and only applies to moderate scattering. Another route is a multi-conjugate adaptive optics scheme in which multiple scattering trajectories are rectified by compensating aberrations from a stack of phase screens conjugated with different planes inside the scattering medium [Kang et al., Nat. Commun., 2023]. Would the current approach proposed by the authors be compatible with such a multi-conjugate strategy? It might be relevant to discuss this point in the conclusion.
