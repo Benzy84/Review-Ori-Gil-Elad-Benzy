@@ -328,7 +328,7 @@ Additional improvements of this point can will be the focus of future work.
         The same remark holds for the Fresnel operators applied at different stages of the post-processing for the holographic experiment.
     \end{solved_reviewercomment}
 
-    %\hlred{Why Fresnel and not ASM?} \\
+    % \hlred{Why Fresnel and not ASM?}
     
 
     \begin{ourresponse}
@@ -336,7 +336,7 @@ Additional improvements of this point can will be the focus of future work.
         \begin{quote}
             \subsection*{Fresnel Propagation via Fourier-Domain Transfer Function}
             \label{Fresnel_propagation}
-            In Fig.~\ref{fig5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However,\hlred{Add something like: 'since we measure the field on the diffuser plane...} the I-CLASS algorithm reconstructs the complex field in the plane of the scattering layer, denoted as $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, we propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
+            In Fig.~\ref{fig5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However,since we measure the field on the diffuser plane, the I-CLASS algorithm reconstructs the complex field in the plane of the scattering layer, denoted as $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, we propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
             
             This propagation is efficiently implemented in the Fourier domain using the Fresnel transfer function:
             
@@ -366,6 +366,7 @@ Additional improvements of this point can will be the focus of future work.
 
                 
     \end{ourresponse}
+    
 
     
     \item \leavevmode\vspace{-\baselineskip}
@@ -373,15 +374,16 @@ Additional improvements of this point can will be the focus of future work.
         In that respect, it is not really clear to me why, in the holographic experiment, the I-CLASS reconstructed object field is obtained in the scattering layer plane? A more detailed description of the method is needed.
     \end{solved_reviewercomment}
         
-
+    
     \begin{ourresponse}
+        \begin{comment}
         \hlred{I would add that we measure on the diffuser plane and hence the multiplicative factor is with the propagated object, so that is the object that is reconstructed}
 
     
         We thank the reviewer for raising this important point.
         
-        In conventional CLASS/I-CLASS implementations, the output of the algorithm is the scattering layer function at the pupil of the optical system, that is, at the Fourier plane of the target. CLASS algorithms specifically look for correlations in the k-space, where the reflection matrix becomes diagonal         \hlred{the reflection matrix is definitely not diagonal...  }
- under the isoplanatic approximation and outputs the phase mask in this space.
+        In conventional CLASS/I-CLASS implementations, the output of the algorithm is the scattering layer function at the pupil of the optical system, that is, at the Fourier plane of the target. CLASS algorithms specifically look for correlations in the k-space, where the reflection matrix becomes diagonal
+        \hlred{the reflection matrix is definitely not diagonal...} under the isoplanatic approximation and outputs the phase mask in this space.
         
         In our work, the roles are reversed: the object plays the role of the scattering medium. Consequently, the I-CLASS "scattering function" output is effectively the object function in k-space. This is why our reconstruction naturally occurs in the plane corresponding to the scattering layer.
 
@@ -389,7 +391,25 @@ Additional improvements of this point can will be the focus of future work.
         \hlred{Write equations... original CLASS $POP\quad \overrightarrow{}\tilde{P}\tilde{O}\tilde{P}$, Here $O_{prop}PO_{prop}$ where $O_{prop}$ is diagonal and $P$ is the envelope, no Fourier needed}
         
         This approach creates no fundamental limitation for our imaging capability. Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using Fresnel propagation, as detailed in the Methods section.
+        \end{comment}
+        We thank the reviewer for raising this important point.
+    
+        Reconstructing in the diffuser plane is a matter of convenience rather than a fundamental requirement. In principle, we could have followed the same route as in the incoherent experiments—image the object plane, apply a 2-D Fourier transform, run CLASS, and obtain the restored $\tilde{O}(\vec{k})$. Our choice to work in the diffuser plane for the coherent case was based on practical considerations related to optical efficiency.
+        
+        In conventional CLASS/I-CLASS implementations, the output of the algorithm is the scattering layer function at the pupil of the optical system, that is, at the Fourier plane of the target. CLASS algorithms specifically look for correlations in k-space, where the transmission matrix of the scattering layer becomes diagonally structured under the isoplanatic approximation, and outputs the phase mask in this space.
+        
+        Within a single isoplanatic patch, the measured field obeys $I_m(\vec{r})=P_m(\vec{r})*O(\vec{r})$. Taking a 2D Fourier transform turns this convolution into a point-wise product $\tilde{I}_m(\vec{k})=\tilde{P}_m(\vec{k})\cdot\tilde{O}(\vec{k})$, where every spatial frequency $\vec{k}$ is multiplied by its corresponding transfer coefficient $\tilde{P}_m(\vec{k})$. CLASS/I-CLASS exploit this "diagonal" (i.e., per-$\vec{k}$) structure to retrieve $\tilde{O}$.
+        
+        In our coherent experiment (Fig. 5), the field at the scattering layer is already naturally represented in k-space:
+        $E^{diff}_m(\vec{k})=\tilde{P}_m(\vec{k})\cdot\tilde{O}_{eff}(\vec{k})$,
+        where $\tilde{O}_{eff}(\vec{k}) = \tilde{O}(\vec{k})e^{i\phi_{prop}(\vec{k})}$ includes the Fresnel propagation term.
+        
+        We chose to perform the reconstruction in the diffuser plane since correcting aberrations at their origin provides optimal results. This principle of correcting aberrations in the plane conjugate to where they originate is well-established in adaptive optics (see Choi et al., Nat. Commun. 13, 7939, 2022) and offers optimal correction efficiency.
+        
+        Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using the Fresnel operator, as detailed in our new Methods section "Fresnel Propagation via Fourier-Domain Transfer Function" and demonstrated in our new supplementary section "Digital Autofocus through Fresnel Propagation."
     \end{ourresponse}
+
+
 
 \end{enumerate}
 
@@ -446,8 +466,6 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
     \begin{solved_reviewercomment}
         Another point that is likely to make the life on a non-specialist unnecessarily hard is that eq. 1 is only valid within the isoplanatic patch. For objects larger than the isoplanatic patch nothing of what is presented here will work. This is only briefly addressed at the end of the Discussion section (largely swiping it under the carpet) but if not tackled at the beginning is likely to confuse people.
         
-        \hlred{we already mentioned it in the beginning of the paragraph}
-
     \end{solved_reviewercomment}
     \begin{ourresponse}
         We thank the reviewer for this suggestion. 
