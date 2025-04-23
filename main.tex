@@ -110,10 +110,11 @@ As often with this group, this work is technically of excellent quality and its 
 
 \begin{enumerate}[label=\arabic*.]
     \item \leavevmode\vspace{-\baselineskip}
-    \begin{reviewercomment}
+    \begin{solved_reviewercomment}
+        
         For instance, in the coherent imaging experiment depicted in Fig. 5, the approach requires a constant incident wave-field, which is complicated if one wants to image through a dynamic scattering medium. In the present experiment, the authors circumvent this issue by focusing the incident wave-field in the diffuser plane such that the beam waist is contained in one coherence length of the diffuser. However, in practical situations, the scattering medium is three-dimensional, and the condition of a constant incident wave-field becomes impossible to fulfill. In real life, dynamic scattering impacts both the incident and reflected wave-fields. The authors do not discuss really this apparent contradiction between the assumption of a constant incident wave-field and dynamic scattering that will break this invariance.
 
-    \end{reviewercomment}
+    \end{solved_reviewercomment}
     \begin{ourresponse}
     We appreciate the reviewer's observation about the apparent contradiction between dynamic scattering and our requirement for constant illumination in the coherent imaging experiment (Fig. 5). 
     
@@ -143,34 +144,27 @@ As often with this group, this work is technically of excellent quality and its 
 
        
     \item \leavevmode\vspace{-\baselineskip}
-    \begin{reviewercomment}
+    \begin{solved_reviewercomment}
+        
         Another issue of three-dimensional scattering is that it breaks the isoplanatic assumption on which the current approach relies. The authors mention in the discussion the idea of mosaicking the field-of-view but it somehow requires a roughly focused incident wave-field and only applies to moderate scattering. Another route is a multi-conjugate adaptive optics scheme in which multiple scattering trajectories are rectified by compensating aberrations from a stack of phase screens conjugated with different planes inside the scattering medium [Kang et al., Nat. Commun., 2023]. Would the current approach proposed by the authors be compatible with such a multi-conjugate strategy? It might be relevant to discuss this point in the conclusion.
-    \end{reviewercomment}
+    \end{solved_reviewercomment}
     \begin{ourresponse}
-    We thank the reviewer for noting that three-dimensional scattering can be done via a multi-conjugate strategy for the coherent case. However, these are not directly applicable in the case of incoherent imaging. Following the reviewer's suggestion, we have added the following paragraph to the discussion of the revised manuscript (I suggest adding a paragraph for the discussion similar to the I-CLASS discussion paragraph, the paragraph that starts with:): "Extending the corrected FoV beyond the optical memory effect..."
-    \hlred{What about the coherent case? the answer raises this question, a possible answer will be that it will be harder to maintain the  constant illumination constraint (the effective correlation length is small)}
+        We thank the reviewer for highlighting this important limitation. We have demonstrated reconstruction through a thin scattering dynamic layer in our current work. The extension to thick scattering media represents an important challenge and direction for future research.
     
-    \hlyellow{
-    \textbf{Note from Ori:} 
-    Great idea and add a small discussion on use of multi-conjugate approaches:
+        In conventional CLASS or computational wavefront shaping, thick scatterers can be addressed by using multi-conjugate approaches with multi-layer scattering profiles. However, our approach presents a unique twist: in our formulation, the dynamic medium plays the role that would normally be occupied by the object in conventional CLASS implementations. This role reversal creates both challenges and opportunities.
+        
+        The modeling and treatment of thick targets proposed in the recent work by Park et al. [https://www.nature.com/articles/s41467-025-56865-z] (Nature Communications, 2024) may offer a pathway forward. In that work, the authors developed techniques for handling thick objects rather than treating them as purely planar. Since in our case the dynamic medium mathematically functions as the "object," adapting these techniques could potentially allow us to extend our approach to volumetric scattering media.
     
-    1) multi-conjugate can directly extend the technique to thick \textbf{objects }IN OUR CASE - modeled by by multiple phase and amplitude screens
-    
-    2) but our thick-medium case is analogous to a thick object in standard CTR-CLASS: is there a solution in standard CTR-CLASS for a thick object?  refer to recent paper by Park et al. where they model the object as a ‘thick’ object and not a planar object. 
-    
-    3) mention adaptation of gradient-decent model-b ased algorithm [Omri and Jeremy]
-    
-    this might help in our case since in our case the random medium plays the role of the object for CLASS
-    
-    possible problem: we do CTR-CLASS so we incohererently average the “object/medium” and I think that in Park’s work it is not the case - might be a serious issue
-
-    \textbf{Discussion:}
-    We have demonstrated reconstruction through a thin scattering dynamic layer. Thick scatterers are considered in conventional CLASS or computational wavefront shaping by a multi-conjugate multi-layer scattering profile. However, a thick medium in our case is equicalent to a thick object/target in the conventional case. The modeling and treatement of thick targets proposed in the recent work by SSS et al. [https://www.nature.com/articles/s41467-025-56865-z] may be interesting to study as a possible solution to this challenge.
-    }
-    
-
+        Additionally, another potential approach could be derived from the gradient-descent model-based algorithm recently developed by Haim et al. in their computational holographic wavefront shaping work \cite{haim2024image}. This method's flexibility in computational wavefront correction might offer alternative strategies for handling thick scattering media.
+        
+        We have added the following paragraph to the discussion section:
+        
+        "While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Recent advances in modeling thick targets rather than planar ones, such as those presented by Park et al., suggest potential pathways for adaptation to our scenario, where the dynamic medium mathematically plays the role of the object. Future work could explore combining our approach with multi-conjugate modeling, treating thick media as a series of thin scattering layers at different depths, each contributing its own phase and amplitude distortions to the overall scattering process."
     \end{ourresponse}
-    
+
+
+
+
     \item \leavevmode\vspace{-\baselineskip}
     \begin{solved_reviewercomment}
         One last point which is not really discussed in the paper is the number of required independent frames \(M\) to converge towards a reliable estimation of the object or, in other words, the scaling of the estimator bias with respect to this number \(M\). An analytical formulation of the problem could be performed to derive this number, which is important for future implementations of the method. I guess this number will depend on the object complexity/sparsity.
@@ -178,7 +172,9 @@ As often with this group, this work is technically of excellent quality and its 
         
 
     \begin{ourresponse}
-        We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a set of numerical simulations investigating the relationship between reconstruction quality, number of realizations (M), and object sparsity. We have added a new supplementary section ("Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity") to the Supplementary Materials that addresses this \hlred{Take from I-CLASS / Acusto-optic the paragraph about the theoretical dependence on M which is logarithmic (from the CTR paper) and add that there are additional factors to this theory such as the object complexity and SNR}.
+        We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a set of numerical simulations investigating the relationship between reconstruction quality, number of realizations (M), and object sparsity. We have added a new supplementary section ("Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity") to the Supplementary Materials that addresses this
+        
+        \hlred{Take from I-CLASS / Acusto-optic the paragraph about the theoretical dependence on M which is logarithmic (from the CTR paper) and add that there are additional factors to this theory such as the object complexity and SNR}.
         
         \begin{quote}
             \section{Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity}
