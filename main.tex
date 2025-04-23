@@ -6,7 +6,7 @@
 \documentclass[12pt]{article}
 % Increase margin width for todos
 \setlength{\marginparwidth}{2cm}
-
+\usepackage{comment}
 \usepackage{geometry}
 \geometry{a4paper, margin=0.6in}
 \usepackage{setspace}
@@ -172,18 +172,25 @@ As often with this group, this work is technically of excellent quality and its 
         
 
     \begin{ourresponse}
-        We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a set of numerical simulations investigating the relationship between reconstruction quality, number of realizations (M), and object sparsity. We have added a new supplementary section ("Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity") to the Supplementary Materials that addresses this
+
+        We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a set of numerical simulations investigating the relationship between reconstruction quality, number of realizations (M), and object sparsity. 
+
+        The theoretical foundation of CTR-CLASS, as established in previous work by Lee et al., indicates a logarithmic dependence of the required number of measurements on the degrees of freedom (i.e., the number of camera pixels $N$). However, this theoretical scaling is modified in practice by additional factors including object complexity (sparsity) and signal-to-noise ratio (SNR). These factors play crucial roles in determining the practical minimum number of frames needed for successful reconstruction.
+
+        We have added a new supplementary section ("Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity") that addresses this question.
         
-        \hlred{Take from I-CLASS / Acusto-optic the paragraph about the theoretical dependence on M which is logarithmic (from the CTR paper) and add that there are additional factors to this theory such as the object complexity and SNR}.
+        % \hlred{Take from I-CLASS / Acusto-optic the paragraph about the theoretical dependence on M which is logarithmic (from the CTR paper) and add that there are additional factors to this theory such as the object complexity and SNR}.
         
         \begin{quote}
             \section{Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity}
 
-            \hlred{I suggest inserting something about how statistical siginficant is this result? how many experiments are in each heatmap cell? and what is the std between expereimnts (you have 3 random variables, the random object, the shot noise and the PSFs, maybe freeze 2 each time and run it to understand if they have the same effect}.
+            % \hlred{I suggest inserting something about how statistical siginficant is this result? how many experiments are in each heatmap cell? and what is the std between expereimnts (you have 3 random variables, the random object, the shot noise and the PSFs, maybe freeze 2 each time and run it to understand if they have the same effect}.
 
             
             To study the dependence of the reconstruction quality on the number of realizations and object complexity (sparsity), we numerically simulate the reconstructions at a varying number of random realizations (M) for different object complexities (sparsity) for incoherent and coherent imaging modalities.
             The results of the simulation for varying SNR values at an object sparsity are given in Figure Fig.~\ref{fig:convergence_heatmaps}
+            To ensure statistical robustness, each data point in these heatmaps represents the average outcome from 10 independent numerical experiments.
+
             
             \begin{minipage}{\linewidth}
                 \centering
@@ -251,14 +258,43 @@ To investigate the optimal range for this modulation, we conducted a study exami
 
 where $\alpha$ controls the total range of modulation with corresponding modulation depth $\frac{\alpha-1}{\alpha+1}$.
 
+\begin{comment}
+    We can rewrite this equation directly in terms of the modulation depth $d$ by solving for $\alpha$:
+
+    \begin{align}
+    d &= \frac{\alpha-1}{\alpha+1} \\
+    d(\alpha+1) &= \alpha-1 \\
+    d\alpha + d &= \alpha - 1 \\
+    d\alpha - \alpha &= -1 - d \\
+    \alpha(d-1) &= -1 - d \\
+    \alpha &= \frac{-1-d}{d-1} = \frac{1+d}{1-d}
+    \end{align}
+
+    Substituting this into our original equation:
+    
+    \begin{align}
+    f_m &= 1 + \frac{m-1}{M-1} \cdot \left(\frac{1+d}{1-d} - 1\right) \\
+    &= 1 + \frac{m-1}{M-1} \cdot \frac{1+d-(1-d)}{1-d} \\
+    &= 1 + \frac{m-1}{M-1} \cdot \frac{2d}{1-d}
+    \end{align}
+    
+    Therefore, the multiplication factor for the $m$-th frame in terms of modulation depth $d$ is:
+    
+    \begin{equation}
+        f_m = 1 + \frac{m-1}{M-1} \cdot \frac{2d}{1-d}
+    \end{equation}
+\end{comment}
+
+
 \begin{minipage}{\linewidth}
     \centering
     \includegraphics[width=0.85\textwidth]{figures/Figure_S9.pdf}
-    \captionof{figure}{\footnotesize \textbf{Effect of modulation depth on reconstruction quality.} The similarity score shows how reconstruction quality improves with increasing modulation depth. Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
+    \captionof{figure}{\footnotesize \textbf{Effect of modulation depth on reconstruction quality.}
+    The Pearson correlation coefficient (y-axis) shows how reconstruction quality changes as the modulation depth increases. The Pearson correlation measures the similarity between the reconstructed and ground-truth images (1 for maximum correlation). Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
 \end{minipage}
 \hlred{Explain  what is the similarity score in the caption, change y-label to correlation, write in the caption 'Pearson correlation'}
 
-\hlred{Add $\alpha$ to x label}
+% \hlred{Add $\alpha$ to x label}
 
 % אני כתבתי את מה שכאן בירוק וגיל תיקן את זה למה שמופיע עכשיו.
 Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As modulation increases, this background haze diminishes progressively. However, at very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of a imperfect estimation of the MTF in the I-CLASS algorithm.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. %However, depending on specific application requirements, users might prefer different modulation depths to prioritize either background cleanliness or internal object clarity.
@@ -295,7 +331,6 @@ Additional improvements of this point can will be the focus of future work.
 
     %\hlred{Why Fresnel and not ASM?} \\
     
-    \hlred{What if you don't know the distance?}
 
     \begin{ourresponse}
         We thank the reviewer for this helpful suggestion. The revised manuscript now includes a detailed description of the Fresnel propagation operator used in the holographic reconstruction. This has been added to the \textbf{Methods} section titled "Fresnel Propagation via Fourier-Domain Transfer Function".
