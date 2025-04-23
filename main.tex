@@ -290,25 +290,24 @@ where $\alpha$ controls the total range of modulation with corresponding modulat
     \centering
     \includegraphics[width=0.85\textwidth]{figures/Figure_S9.pdf}
     \captionof{figure}{\footnotesize \textbf{Effect of modulation depth on reconstruction quality.}
-    The Pearson correlation coefficient (y-axis) shows how reconstruction quality changes as the modulation depth increases. The Pearson correlation measures the similarity between the reconstructed and ground-truth images (1 for maximum correlation). Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
+    The similarity score (y-axis) shows the Pearson correlation coefficient between the reconstructed and ground-truth images as modulation depth increases. Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
 \end{minipage}
-\hlred{Explain  what is the similarity score in the caption, change y-label to correlation, write in the caption 'Pearson correlation'}
+%\hlred{Explain  what is the similarity score in the caption, change y-label to correlation, write in the caption 'Pearson correlation'}
 
 % \hlred{Add $\alpha$ to x label}
 
-% אני כתבתי את מה שכאן בירוק וגיל תיקן את זה למה שמופיע עכשיו.
-Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As modulation increases, this background haze diminishes progressively. However, at very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of a imperfect estimation of the MTF in the I-CLASS algorithm.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. %However, depending on specific application requirements, users might prefer different modulation depths to prioritize either background cleanliness or internal object clarity.
+
+
+Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As modulation increases, this background haze diminishes progressively. However, at very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of a imperfect estimation of the MTF in the I-CLASS algorithm.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. 
 Additional improvements of this point can will be the focus of future work.
 
-%Our results show that without adding a modulation (modulation depth = 0), reconstructions display a significant background haze. As modulation increases, this background haze diminishes progressively. However, at higher modulation depths, the reconstruction of I-CLASS does not correct the scattering PSF, as the amount of independent realizations diminishes. 
-
-%\hlred{What do you mean by 'the reconstruction of I-CLASS does not correct the scattering PSF', of course it corrects, the frames looks much worse (by the way show in the graph an example frame }
+% \hlred{What do you mean by 'the reconstruction of I-CLASS does not correct the scattering PSF', of course it corrects, the frames looks much worse (by the way show in the graph an example frame }
 
 
-%\hlred{Can you clarify on this sentences, what do you mean by independent realizations diminishes}
+% \hlred{Can you clarify on this sentences, what do you mean by independent realizations diminishes}
 
 
-\hlred{Maybe show the $PP^T$ for different $\alpha$-s}
+%\hlred{Maybe show the $PP^T$ for different $\alpha$-s}
 
 
 \end{quote}
