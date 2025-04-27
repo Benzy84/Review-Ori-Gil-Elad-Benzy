@@ -21,6 +21,7 @@
 \usepackage{xcolor}         % For color definitions
 \usepackage{todonotes}      % For margin notes
 \usepackage{enumitem,amssymb}
+\usepackage{bm}% bold math
 
 % Define custom colors
 \definecolor{softtodogreen}{HTML}{90EE90}  % Light green
@@ -69,7 +70,7 @@
 \begin{itemize}
 
 \item[$\square$]
-Coherent spot size simulation: achive more stastics and try to solve it
+Coherent spot size simulation: achieve more stastics and try to solve it
 \item[$\square$]
 Analytic dependence on M (covariance estimator + rank of object) 
 
@@ -175,7 +176,7 @@ As often with this group, this work is technically of excellent quality and its 
 
         We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a set of numerical simulations investigating the relationship between reconstruction quality, number of realizations (M), and object sparsity. 
 
-        The theoretical foundation of CTR-CLASS, as established in previous work by Lee et al., indicates a logarithmic dependence of the required number of measurements on the degrees of freedom (i.e., the number of camera pixels $N$). However, this theoretical scaling is modified in practice by additional factors including object complexity (sparsity) and signal-to-noise ratio (SNR). These factors play crucial roles in determining the practical minimum number of frames needed for successful reconstruction.
+        The theoretical foundation of CTR-CLASS, as established in previous work by Lee et al., indicates a logarithmic dependence of the required number of measurements on the degrees of freedom (i.e., the number of camera pixels $N$). However, this theoretical scaling is modified in practice by additional factors, including object complexity (sparsity) and signal-to-noise ratio (SNR). These factors play crucial roles in determining the practical minimum number of frames needed for successful reconstruction.
 
         We have added a new supplementary section ("Dependence of Reconstruction Quality on Number of Realizations and Object Sparsity") that addresses this question.
         
@@ -218,16 +219,17 @@ As often with this group, this work is technically of excellent quality and its 
     \begin{ourresponse}
         % Add to the main text something like: "Our numerical study shows that correlations that arise from energy conservation in the speckle pattern can be the source for the xxxx. It would be interesting to study whether a singular value decomposition (SVD) of the covariance matrix [10] can help to address these effects?  In this work,  we have heuristically addressed this issue by applying a modulation to the total energy of captured images during post-processing, which effectively mitigates the observed correlation artifacts (see Supplementary Figure S2).
 
-        We thank the reviewer for this insightful suggestion. Following your recommendation, we have added the following discussion to the main manuscript:
+        We thank the reviewer for this insightful comment. Following this recommendation, we have added the following discussion to the main manuscript:
         
         \begin{quote}
         \hlred{But citation [10] doesn't perform SVD on the covariance matrix: A. it is not on the covariance but on the full matrix, and B. it is also not on the matrix but on the 'de-scanned' / 'distortion' matrix, which is different. This cannot apply here where the energy conservation creates a problem in the covariance calculation, **before applying algorithm**}
     
 
 
-        \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
+        \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
 
-            Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition (SVD) of the covariance matrix [10] can help to address these effects. The full analysis of these correlation effects and our mitigation approach is detailed in Supplementary Section S2 and Supplementary Figure S3.
+            Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix [10,Wonshik] can help to address these effects. It was recently shown that SVD based filtering of the distortion matrix [10] or the reflection matrix [Wonshik] can XXXXX. An in-depth study of the potential of advnaced filtering of the measurement or covariance matrix will be the focus of future work.
+            The full analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3.
         \end{quote}
         
         We maintained the detailed analysis in Supplementary Section S2 as you suggested, while bringing the key insight to readers' attention in the main text.
@@ -300,12 +302,6 @@ where $\alpha$ controls the total range of modulation with corresponding modulat
 Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As modulation increases, this background haze diminishes progressively. However, at very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of a imperfect estimation of the MTF in the I-CLASS algorithm.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. 
 Additional improvements of this point can will be the focus of future work.
 
-% \hlred{What do you mean by 'the reconstruction of I-CLASS does not correct the scattering PSF', of course it corrects, the frames looks much worse (by the way show in the graph an example frame }
-
-
-% \hlred{Can you clarify on this sentences, what do you mean by independent realizations diminishes}
-
-
 %\hlred{Maybe show the $PP^T$ for different $\alpha$-s}
 
 
@@ -323,273 +319,123 @@ Additional improvements of this point can will be the focus of future work.
         The descriptions in the methods part are not clear without the matrix description, and the MTF deconvolution part is not relevant here, it should be totally rephrased and organized, and in the supplementary it is also very long and most parts are not relevant to this paper, you don't have to derive all the CLASS algorithm again, I would just write something like $I=P*(O\cdot E_{in}*P_{in})$ and therefore $R=POP$ and CLASS is a matrix unitary decomposition algorithm, after that in few lines about CTR and just bring the final memory efficient term of each phase correction iteration, (maybe write in algorithm pattern as shown in CS papers) And write that the MTF estimation is just like speckle correlation methods. You can take my AO paper as reference, I explained there more briefly}
 
     
-        \hlblue{for now, this is just a copy from your Sci-Adv paper, it has to be eddited}
+        \hlblue{for now, this is just a copy from the AO paper, it has to be edited}
 
-        \textbf{This is the part copied from, and has to be added to the main manuscript: (again, it is very long, has to be heavily edited.)}
+        We employ the I-CLASS algorithm \cite{ weinberg2023noninvasive}, which is based on the CLASS algorithm \cite{kang17, kang2024implementation}, which corrects incident and reflected aberrations within an isoplanatic patch. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. In the specific case of CTR-CLASS, this further simplifies the estimation to two rank-1 vectors, as the incident and reflected aberrations are identical. CTR-CLASS is based on covariance analysis of random speckle illuminations, analogous to the retrieval of Green’s functions in passive correlation imaging [Maybe cite Wapenaar, Phys. Rev. Lett. 93, 254301 (2004)?], enabling a compressed estimation of the reflection matrix. As mentioned, we use dynamic scattering to replace the role of the random speckle illuminations, but as the covariance matrix of a set of camera frames of a rapidly varying dynamic scattering sample has the same mathematical form as a reflection matrix of a static medium, the same algorithm can be applied in this use case. We note that the addition of the $\vec{k}$-space amplitude correction, as demonstrated in the I-CLASS paper \cite{weinberg2023noninvasive}, is required for both the incoherent and coherent imaging cases, as in stellar speckle interferometry \cite{labeyrie1970attainment}.
+        
+        In the specific context of this paper... (add something similar to the \subsubsection*{Memory-efficient CLASS iterations}, but swap the roles of P and O - write the algo iterations)
+
+
+        
+        \textbf{This is the part copied from, and has to be added to the main manuscript:}
         \begin{quote}
-            \subsection*{I-CLASS}
-            The full description of the I-CLASS memory-efficient, phase, and amplitude scattering compensation algorithm is fully given in Supplementary Section S4. Here, we provide a concise explanation of the I-CLASS algorithm.
-            
-            \subsubsection*{Memory-efficient CLASS iterations}
-            
-            The memory-efficient equivalent method for calculating the CLASS iterations using the $N \times M$ matrix $\hat{\textbf{A}}$ without the explicit computation of the $N \times N$ matrix $\textbf{R}_{virt}$ can be calculated from the following formula for the t-th iteration (see Supplementary S1): 
-            
+            \subsection{CTR-CLASS}
+            %Several key techniques for imaging through scattering layers within the 'memory-effect' region involve measuring the imaging system's transmission matrix. Recent advancements \cite{lee22,weinberg2023noninvasive} propose that, as the distortion caused by illumination does not hold any informative value, it's not necessary to measure the entire large matrix. Instead, one can effectively use a limited number ($M$) of random, uncorrelated illuminations for imaging, rather than analyzing the full matrix.
+            Following the work of Lee et al. \cite{lee22}, we consider $m=1...M$ measured scattered light fields, $\vec{A}_m$ obtained under random uncorrelated illuminations, $\vec{S}_m$. By representing the optical transmission matrix from the illumination plane to the target plane as $\bm{P}_{ill}$, and the transmission matrix from the target plane to the camera plane by $\bm{P}_{det}$, each measured light field can be written as $\vec{A}_m = \bm{P}_{det}\bm{O} \bm{P}_{ill} \vec{S}_m$. The matrix $\bm{O}$ is the object transmission matrix. For a thin object, the matrix $\bm{O}$ is a diagonal matrix with the object transmission function along its diagonal.
+            By incorporating the $M$ measurements, $\vec{A}_m$, as columns in a matrix $\bm{A}$, the entire measured dataset can be represented in a matrix form as:
             \begin{eqnarray}
-            \vec{z}_{t+1}=\sum_{q=1}^{M}(\tilde{\textbf{A}}_t^* \odot ((\tilde{\textbf{A}}_t^{(ud)^*}*\tilde{\textbf{A}}_t^{(lr)})_{:,M-1} \star \tilde{\textbf{A}}_t^{(ud)}))_{:,q}
-            \label{eq:three}
+            \bm{A} = \bm{P}_{det}\bm{O} \bm{P}_{ill} \bm{S}
+            \label{eq:1}
+            \end{eqnarray}
+            where $\bm{S}$ is a matrix containing the input random patterns in its columns. By leveraging the fact that the illumination patterns are uncorrelated, i.e. $\bm{S}\bm{S}^\dagger = \bm{I + \epsilon}$ (where $\bm{I}$ is the identity matrix and $\bm{\epsilon}$ is the statistical noise matrix which diminishes as the number of realizations $M$ increases, eventually becoming negligible with a significant number of such uncorrelated illumination patterns), and the time-reversal symmetry of light propagation ($\bm{P}_{ill}\bm{P}_{ill}^{\dagger}=\bm{I}$), we can analyze the covariance matrix of $\bm{A}$: $\bm{R}=\bm{A}\bm{A}^{\dagger}$, as follows:
+            \begin{eqnarray}
+            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^{\dagger} \bm{O}^\dagger \bm{P}^\dagger_{det} \nonumber \\ \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
+            \label{eq:2}
             \end{eqnarray}
             
-            \noindent where $\tilde{\textbf{A}}$ as the 2D Fourier transform of $\hat{\textbf{A}}$. Here, $\tilde{\textbf{A}}^{(ud)}$ is the matrix $\tilde{\textbf{A}}$ with each of its columns flipped upside-down, and $\tilde{\textbf{A}}^{(lr)}$ is $\tilde{\textbf{A}}$ with its rows flipped left-to-right. In addition, we denote the element-wise Hadamard product as $\odot$, the 2D convolution as $*$, and the 2D correlation operator as $\star$. $\textbf{X}^{*}$ is the element-wise complex-conjugation operator on the matrix $\textbf{X}$, and $\textbf{X}_{:,q}$ is the q-th column of $\textbf{X}$.
+            where $\bm{O}_{eff} \equiv |\bm{O}|^2$ (see Supplementary S1 for further explanations). 
             
-            As in the conventional CLASS algorithm \cite{kang17}, throughout the iterative process of the I-CLASS algorithm, we solely update the $\vec{k}$-space (OTF) phase correction with the correction:
-            \begin{eqnarray}
-            \tilde{\textbf{A}}_{t+1}=diag\{e^{i\frac{\vec{z}_t}{|\vec{z}_t|}}\}\tilde{\textbf{A}}_t
-            \end{eqnarray}
-            \noindent where the exponential and division operations are element-wise and $t=1...T$ is the iteration number. 
-             \subsubsection*{I-CLASS $\vec{k}$-space amplitude correction}
+            Remarkably, as seen from Eq. 2, the covariance matrix $\bm{R}$ is mathematically analogous to the conventional reflection matrix from the camera plane to the object and back, when the target object is replaced by $\bm{O}_{eff}$. Hence, one can apply any conventional reflection-matrix analysis approach such as CLASS \cite{kang17,lee22} or distortion matrix \cite{badon2020distortion} on $\bm{R}$.
             
-            The $\vec{k}$-space amplitude correction in the I-CLASS algorithm consists of two primary steps: (1) estimating the MTF, up to a scaling factor, using $\widehat{MTF} \equiv  \sqrt{diag\{ \tilde{\textbf{R}_{virt}} \}} = \sqrt{\sum_{q=1}^{M} (\tilde{\textbf{A}} \odot \tilde{\textbf{A}}^*)_{:,q}}$ (See supplementary S1). We note that this scaling factor ambiguity inhibits quantitative reconstruction unless the scattering medium transmission is properly estimated. (2) The estimated MTF is then utilized in a regularized Fourier reweighting on each of the captured camera frames after the phase-correction:%last iteration CLASS corrected object $\vec{{O}}_{CLASS}$:
-            
-            \begin{eqnarray}
-            \tilde{\textbf{A}}_{fixed}=\frac{\tilde{\textbf{A}}_T}{\widehat{MTF}+\sigma}
-            \end{eqnarray}
-            
-            %  \begin{eqnarray}
-            %      \vec{\tilde{O}}_{I-CLASS_{i}} \equiv \frac{ \vec{\tilde{O}}_{CLASS_{i}}}{\frac{\widehat{MTF}_i}{\max_{q} \widehat{MTF}_q }+\sigma}
-            % \end{eqnarray}
-            
-            \noindent where $\sigma$ is the regularization parameter, and $\tilde{\textbf{A}}_T$ are the phase-corrected frames.  
-            
-            As a final step, The phase and Fourier-amplitude corrected frames are then reconstructed by inverse Fourier transforming back the corrected Fourier matrix $\tilde{\textbf{A}}_{fixed}$ into $\hat{\textbf{A}}$ and taking the pixel-wise square root of the sum of the columns of $|\hat{\textbf{A}}|^2$ which is equivalent to the square root of the variance image, i.e. the square-root of the scattering-corrected virtual-confocal image (see supplementary S1). This can be written mathematically as $diag\{ \textbf{R}_{virt} \} = \sum_{q=1}^{M} (\hat{\textbf{A}} \odot \hat{\textbf{A}}^*)_{:,q}$, and the I-CLASS corrected object 
-            is given by taking an element-wise square root as seen from Eq.~\ref{eq:two}. We note that the I-CLASS final image inherently contains shift ambiguity, where a shift in the PSF can be equally interpreted as a shift in the target object. For convenience, in all the presented reconstructions, the images were co-registered with respect to the widefield reference.
-
+            We chose to apply the recently introduced memory-efficient version of the CTR-CLASS algorithm, whose code is publicly available \cite{weinberg2023noninvasive}, since it allows the application of the CLASS algorithm directly on high pixel-count holographic datasets without the need to explicitly compute the memory-demanding reflection matrix $\bm{R}$
+ 
         \end{quote}
 
         \textbf{This is the part copied from, and has to be added to the supplementary:}
         \begin{quote}
-            \section{Modified CLASS Algorithm (I-CLASS)}
-            \subsection*{Forward Model}
-            
-            In the context of incoherent imaging of fluorescence targets through a disordered media, where an object is located within the optical memory effect regime \cite{feng1988correlations}, the image intensity can be described as a convolution of the intensity impulse response (PSF) with the ideal image intensity \cite{goodman2005introduction}.
-            For coherent illumination of a fluorescence target object, we obtain the following:
-            
-            \begin{equation}
-            {I}(\vec{r}) = (|{E}_{in}(\vec{r})*{P}^{(E)}_{ill}(\vec{r})|^2{O}(\vec{r}))*{P}(\vec{r})
+            \section{CTR-CLASS}
+
+            The linear nature of a coherent imaging system and the wave equation makes choosing a basis consisting of independent illumination patterns possible. By writing the matrix of the system in this basis (the Green's function), we can fully describe the imaging process. Furthermore, if this matrix is pre-measured, one can obtain the output for any given illumination pattern by multiplying the matrix with the corresponding pattern \cite{popoff2010measuring}.
+            For instance, one possible choice for the basis is the set of point-illuminations, which aligns with the description of the imaging system in real space ($\vec{r}$-basis), such that using controlled illumination field $\vec{E}_{in} (\vec{r})$ the output field ${\vec{E}_{out}}(\vec{r})$ can be described as:
+            \begin{eqnarray}
+            \vec{E}_{out} = \bm{R}_{sys}\vec{E}_{in}
             \label{eq:1}
-            \tag{S1}
-            \end{equation}
+            \end{eqnarray}
+            Conceptually, we can decompose the system's matrix into a product of three distinct matrices, each corresponding to a distinct phase in the imaging process:
             
-            Where ${P}^{(E)}_{ill}, {P}_{det}$ are the coherent illumination A-PSF and incoherent detection PSF, respectively, and ${O}(\vec{r})$ is the intensity distribution function of the object.
-            
-            Thus, under conditions of coherent random illuminations, the fluorescence measurement matrix can be constructed in the spatial basis of variable $\vec{r}$, which is sampled and quantized by the $N$ discrete camera pixels. This construction can be expressed mathematically as follows: ${\textbf{A}} = \textbf{P}_{det}\textbf{O}|\textbf{P}^{(E)}_{ill}\textbf{S}^{(E)}|^2$.
-            Notably, $\textbf{P}^{(E)}_{ill}$ and $\textbf{P}_{det}$ represent convolution matrices, the optical system input illumination coherent A-PSF and detection incoherent PSF, respectively. Furthermore, the matrix ${\textbf{O}}$ is described by a diagonal matrix, carrying the elements of ${O}(\vec{r})$ on its diagonal, and $\textbf{S}^{(E)}$ contains $M$ columns that represent the $M$ random fields in the illumination plane. For simplicity let us denote the matrix  $\textbf{S} \stackrel{\text{def}} = |\textbf{P}^{(E)}_{ill}\textbf{S}^{(E)}|^2$.
-            
-            Since $\textbf{S}$ is composed of independent intensity speckle-patterns originating from the same source, one can show that since the patterns are independent, the correlation between a pair of pixels ${a,b}$ and speckle patterns ${i,j}$ can be expressed as $\overline{I_{i_a}I_{j_b}}=\bar{I_a}\bar{I_b}+\delta_{a,b}\delta_{i,j}\bar{I_a}^2$ (using $\overline{I^2}=2\bar{I}^2$) (47).
-            
-            \noindent This leads to $\overline{(\textbf{S}\textbf{S}^{T})_{i,j}} = \sum^{M-1}_{k=0}\overline{I_{k_i}I_{k_j}} = M\bar{I_i}\bar{I_j}+M\delta_{i,j}\bar{I_i}^2$.
-            
-            \noindent Thus, considering $\overline{(\textbf{S}\textbf{S}^{T})^2_{i,j}}=\sum^{M-1}_{k,k'=(0,0)}\overline{I_{k_i}I_{k_j}I_{k'_i}I_{k'_j}} = \underbrace{(M^2-M)\overline{I_{i}I_{j}}^2}_{k\neq k'}+M\overline{I^2_{i}I^2_{j}}$ 
-            and by using $\overline{I^n_i}=n!\overline{I_i}^n$,  it can be demonstrated that:$\frac{\Delta(\textbf{S}\textbf{S}^{T})_{i,j}}{(\textbf{S}\textbf{S}^{T})_{i,j}} \sim \frac{1}{\sqrt{M}}$
-            (where $\Delta X$ signifies the standard deviation of $X$). 
-            
-            Consequently, we conclude that to a good approximation $\textbf{S}\textbf{S}^{T} \approx Mdiag(\bar{I}\odot \bar{I}) + M\vec{\bar{I}}\vec{\bar{I}}^T$ where $\vec{\bar{I}}$ is the vector that holds the mean intensity values for each pixel ($\odot$ is the element-wise Hadamard product).
-            Building on this, we define $\hat{\textbf{S}}\stackrel{\text{def}} = \textbf{S} (\mathbf{I}-\frac{1}{M}\cdot\vec{1}\vec{1}^T)$, where $\vec{1}$ represents a column vector comprising entirely of ones ($\forall i\in[N] :
-            \vec{1}_{i}=1$) and $\mathbf{I}$ is the identity matrix. This modification effectively normalizes the speckle data by removing the average intensity contribution from each pixel.
-            Importantly, this transformation renders $\hat{\textbf{S}}$ uncorrelated:
-            
-            \begin{align}
-            &\hat{\textbf{S}} \hat{\textbf{S}}^T = \textbf{S}(\mathbf{I}-\frac{1}{M}\cdot\vec{1}\vec{1}^T)^2\textbf{S}^T = \textbf{S}(\mathbf{I}-\frac{1}{M}\cdot\vec{1}\vec{1}^T)\textbf{S}^T \nonumber &\\ &= \textbf{S}\textbf{S}^T-\frac{1}{M}
-            \underbrace{(\textbf{S}\vec{1})}_{\approx M\vec{\bar{I}}}
-            \underbrace{(\textbf{S}\vec{1})^T}_{\approx M\vec{\bar{I}}^T}\approx Mdiag(\bar{I}\odot \bar{I}) + M\vec{\bar{I}}\vec{\bar{I}}^T- M\vec{\bar{I}}\vec{\bar{I}}^T = Mdiag(\bar{I}\odot \bar{I}) &
+            \begin{eqnarray}
+            \bm{R}_{sys} = \bm{P}_{det}\bm{O}\bm{P}_{ill}
             \label{eq:2}
-            \tag{S2}
-            \end{align}
-            leading to the approximation ${\hat{\textbf{S}}} \hat{\textbf{S}}^T \approx \textbf{D}$, for $\textbf{D}\stackrel{\text{def}} =  Mdiag(\bar{I}\odot \bar{I})$.
+            \end{eqnarray}
+            The first matrix $\bm{P}_{ill}$ represents the propagation through the optical system of the input field to the object plane. The second matrix $\bm{O}$ characterizes the interaction with the object, where this matrix is modeled as a diagonal matrix for thin objects, with the object reflection function $O(\vec{r})$ on its diagonal. The third matrix $\bm{P}_{det}$ governs the propagation of back from the object plane through the optical system to the detection. 
             
-            % We note that this approximation assumes that the spatial autocorrelation of the random speckle pattern is negligible, and can be considered as an additive complex random noise \cite{lee22}, but in fact, as the speckle size is finite, there exists some spatial correlation which smears the object's spectrum \cite{katz14}.
+            However, due to the very high number of modes in most common systems, measuring the reflection matrix can be daunting and time-consuming. In many practical imaging scenarios, such comprehensive measurements may be unnecessary for imaging within the optical memory effect. Recognizing this, the CTR framework \cite{lee22} presents an alternative approach that exploits the time-reversal symmetry of the illumination process for a phase-only distortion - which translates into the fact the matrix $\bm{P}_{ill}$, which represents the illumination step, is approximated as a unitary matrix $(\bm{P}_{ill}\bm{P}^\dagger_{ill} \approx \mathbf{I})$.
+            Instead of measuring the reflection matrix $\bm{R}_{sys}$ in an orderly set of modes, such as the point illumination basis or plane waves basis (in k-space), it is suggested to illuminate a set of random, uncorrelated illumination patterns.
             
-            Notably, from a mathematical perspective, it becomes apparent that by subtracting the temporal mean from the measurement matrix $\textbf{A}$, we effectively replicate an illumination pattern with uncorrelated illuminations $\hat{\textbf{S}}$:
+            The $M$ random illuminations used in the CTR methodology can be arranged in a matrix $\bm{S}$ in the $\vec{r}$-basis, where each illumination pattern corresponds to a matrix column. Due to their uncorrelated nature, the matrix \textbf{S} approximately satisfies the property $\bm{S} \bm{S}^\dagger = \mathbf{I} + \mathbf{\epsilon} \approx \mathbf{I}$, where $\bm{I}$ is the identity matrix and $\mathbf{\epsilon}$ represents the statistical noise matrix, which diminishes as the number of realizations $M$ increases and becomes negligible with a sufficient number of such realizations.
             
-            \begin{equation}
-            \hat{\textbf{A}}\stackrel{\text{def}} = {\textbf{A}}(\mathbf{I}-\frac{1}{M}\cdot\vec{1}\vec{1}^T) = {\textbf{P}_{det}}{\textbf{O}}{\textbf{S}}(\mathbf{I}-\frac{1}{M}\cdot\vec{1}\vec{1}^T)
-             = {\textbf{P}_{det}}{\textbf{O}}\hat{\textbf{S}}
-             \label{eq:3}
-            \tag{S3}
-            \end{equation}
-            From the above calculation of the covariance matrix, we overall get:
-            \begin{equation}
-            \textbf{R}_{virt}=\hat{\textbf{A}}\hat{\textbf{A}}^T = {\textbf{P}_{det}}\textbf{O}\hat{\textbf{S}}\hat{\textbf{S}}^T\textbf{O}\textbf{P}_{det}^T \approx \textbf{P}_{det}{\textbf{O}_{eff}} \textbf{P}_{det}^T
-            \tag{S4}
+            
+            
+            
+            One can order the $M$ measurements in the columns of 'measurement matrix' $\bm{A}$ which can be written by:
+            \begin{eqnarray}
+            \bm{A} = \bm{R}_{sys}\bm{S} = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S}
+            \label{eq:3}
+            \end{eqnarray}
+            Then, rather than directly examining the reflection matrix $\bm{R}_{sys}$, the algorithm focuses on the matrix $\bm{R} \stackrel{\text{def}} = \bm{A}\bm{A}^\dagger$, which, from our analysis above can be written by:
+            \begin{eqnarray}
+            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^\dagger \bm{O}^\dagger \bm{P}^\dagger_{det} \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
             \label{eq:4}
-            \end{equation}
-            For $\textbf{O}_{eff}\stackrel{\text{def}}=\textbf{O}^2 \textbf{D}$, an incoherent fluorescent analog to a virtual reflection matrix.
-            Utilizing the multiplication-convolution relationship in $\vec{k}$-space, we can decompose the Fourier transform of the reflection matrix into: 
-            \begin{align}
-            \tag{S5}
+            \end{eqnarray}
+            where $\bm{O}_{eff} \stackrel{\text{def}} = \bm{O}\bm{O}^\dagger$ and has $|{O}(\vec{r})|^2$ on its diagonal, as $\bm{O}$ is diagonal matrix as we consider thin objects.
+            
+            This matrix $\bm{R}$ has a similar structure to a full system reflection matrix in the real space ($\vec{r}$-basis), with the same illumination and detection transfer matrix up to phase conjugation.
+            In the context of imaging through a scattering medium within the memory-effect regime, we can further model the detection transfer matrix $ \bm{P}_{det}$ as a convolution Toeplitz matrix that represents the distorted point spread function (PSF) any point on the object is convoluted with.
+            
+            The CTR-CLASS algorithm takes advantage of this unique structure of matrix $\bm{R}$ and estimates $\bm{P}_{det}$ and $\bm{O}_{eff}$ using the CLASS algorithm \cite{kang17}. This is achieved by iteratively leveraging the shifted inter-column correlations within $\bm{R}$.
+            A recent improvement introduced a memory-efficient version of the CTR-CLASS algorithm, significantly reducing memory usage to $O(MN)$, where $N$ denotes the number of camera pixels \cite{weinberg2023noninvasive}. This advancement enables the application of the algorithm to megapixel-scale images without the need to explicitly compute $\bm{R}$, which is sized $O(N^2)$.
+            It's important to note that while any matrix-based scattering compensation method could theoretically be applied given $\bm{R}$, in this work, we specifically utilize the CLASS algorithm.
+            
+            \newpage
+            \section{CTR-CLASS correction in a conjugated plane}
+            As described above, the matrix $\bm{R}$ can be looked at as a reflection matrix for a system:
+            \begin{eqnarray}
+            \bm{R} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
             \label{eq:5}
-            \tilde{\textbf{R}}_{virt}\equiv\mathcal{F}\textbf{R}_{virt}\mathcal{F}^{\dagger} \approx  \mathcal{F}\textbf{P}_{det}{\textbf{O}_{eff}} \textbf{P}_{det}^T\mathcal{F}^{\dagger} = &&  \\ \nonumber 
-            \mathcal{F}\textbf{P}_{det}\mathcal{F}^{\dagger}\mathcal{F}\textbf{O}_{eff}\mathcal{F}^{\dagger}(\mathcal{F}\textbf{P}_{det}\mathcal{F}^{\dagger})^{\dagger}={\tilde{\textbf{P}}_{det}}{\tilde{\textbf{O}}_{eff}}{\tilde{\textbf{P}}^{\dagger}_{det}}
-            \end{align}
-            (where $\mathcal{F}$ represents the unitary DFT matrix).
+            \end{eqnarray}
             
-            
-            In this Fourier domain representation, $\tilde{\textbf{P}}_{det}$ which is the Fourier transform of $\textbf{P}_{det}$, takes on a diagonal form, reflecting the fact that the convolution operations in real space become simple multiplications in Fourier space. In the case of a unitary phase-only distortion (which is the model in the coherent case), these diagonal matrices contain the random phases $e^{i\phi_{det}(\vec{k})}$ and $e^{-i\phi_{det}(\vec{k})}$, respectively, which the CLASS algorithm aims to correct. On the other hand, the matrix $\tilde{\textbf{O}}_{eff}$ which is the Fourier transform of $\textbf{O}_{eff}$, now adopts the form of a Toeplitz convolution matrix, with the Fourier components of the object.
-            
-            \subsection*{CLASS algorithm}
-            
-            The CLASS algorithm \cite{kang17} aims to correct the distortion, $\tilde{\textbf{P}}_{det}$, and retrieve the ideal image intensity ${\tilde{\textbf{O}}_{eff}}$. Mathematically, this requires finding the inverse of $\tilde{\textbf{P}}_{det}$ which, being modeled as a unitary transformation with only phase aberrations, is equivalent to finding $\tilde{\textbf{P}}_{det}^{\dagger}$.
-            We note that very recently, a tutorial with detailed algorithm implementations of CLASS was published \cite{kang2024implementation}. 
-            %The algorithm aims to minimize the difference between the k-space $\tilde{\textbf{R}}$ and $\tilde{\textbf{P}}_{det}^{\dagger}\tilde{\textbf{P}}_{det}\tilde{\textbf{O}}_{eff}\tilde{\textbf{P}}_{det}^{\dagger}\tilde{\textbf{P}}_{det} = \tilde{\textbf{O}}_{eff}$, which is a Toeplitz matrix. 
-            % The second perspective involves maximizing the diagonal elements of $\textbf{R}$ in $r$-space, which represent the "effective confocal energy". Both perspectives are entirely equivalent, as evidenced by their Fourier relations.
-            %The problem is addressed in k-space in the CLASS algorithm, where $\tilde{\textbf{P}}_{det}$ is modeled as a diagonal matrix containing only phase components on its diagonal.
-            
-            The standard CLASS algorithm, handling a full system reflection matrix in the form of  $\textbf{R}={\tilde{\textbf{P}}_{det}}{\tilde{\textbf{O}}}{\tilde{\textbf{P}}_{ill}}$, addresses a single distortion during each iteration, alternately handling $\tilde{\textbf{P}}_{det}$ and $\tilde{\textbf{P}}_{ill}$. However, in CTR-CLASS \cite{lee22} where $\tilde{\textbf{P}}_{ill} = \tilde{\textbf{P}}_{det}$, exclusively tackles the "right" matrix $\tilde{\textbf{P}}_{det}$ in each iteration and fixes the matrix from both sides.
-            
-            In each iteration of the CLASS algorithm, only a single aberration is corrected—either the output (detection) or the input (illumination) aberration. Specifically, when correcting the input aberration, the output aberration is temporarily neglected, and vice versa. The convergence of CLASS assumes correlation in the uncorrected aberration in each iteration \cite{kang17}. Therefore if we displace each column proportionally to its index, the resultant matrix should approximately exhibit columns of equal values which contain the spectrum of $\tilde{O}_{eff}(\vec{k})$, albeit with distinct global phases for each column. Consequently, if we compute the average of these columns, we obtain a reasonably accurate estimation of $\tilde{O}_{eff}(\vec{k})$, given that the phase averages out.\\
-            Now that we possess an approximation of $\tilde{O}_{eff}(\vec{k})$, we can determine the overall phase for each column. This can be achieved by calculating the correlation angle between the j-th column and the estimated $\hat{\tilde{O}}_{eff}(\vec{k})$:
-            
-            \begin{equation}
-            \hat{\phi}_{det}({k_{j})} = arg\{<\hat{\tilde{O}}_{eff}^*(\vec{k})\tilde{O}_{eff}(\vec{k})e^{i\phi_{det}(k_{j})}>_k\}
-            \tag{S6}
+            Where for an 'isoplanatic' patch where the distortion does not rely on object coordinates, the matrix $\bm{P}_{det}(\vec{r}_{diff},\vec{r}_{obj})$ describes a transfer matrix from each point on the detection scattering phase mask $\vec{r}_{diff}$ is transmitted towards the object plane with coordinates $\vec{r}_{obj}$. Hence, the effective field in the effective object plane is: $\vec{E}_{obj} = \bm{P}_{det}\vec{E}_{in}$. Assuming free-space configuration and that the distance $d$ between the object and the scattering layer is large enough to apply the Fresnel diffraction approximation, we can derive given an input field ${E}_{in}(x,y)$ the field at the object plane:
+            \begin{eqnarray}
+            {E}_{obj}(x,y)= \frac{e^{\frac{i2 \pi d}{\lambda}}}{i\lambda d} \iint {E}_{in}(x',y') 
+            e^{\frac{-i\pi}{\lambda d} [ (x-x')^2+(y-y')^2 ] } dx'dy'
             \label{eq:6}
-            \end{equation}
-            By incorporating the terms $e^{-i\hat{\phi}_{det}(\vec{k})}$ into a diagonal matrix $\hat{\tilde{\textbf{P}}}_{det}$ we can fix $\tilde{\textbf{R}}$ by $\tilde{\textbf{R}}_t=\hat{\tilde{\textbf{P}}}_{det}^{\dagger}\tilde{\textbf{R}}_{t-1}\hat{\tilde{\textbf{P}}}_{det}$. This iterative approach consistently leads to the convergence of the correct phase correction.
-            We now write the iteration in a matrix notation by defining the following:
-            \begin{equation}
-            \vec{z}\stackrel{\text{def}} =  \tilde{\textbf{R}}^{T}_{n_s}(\tilde{\textbf{R}}_{n_s}\vec{1})^*=(\tilde{\textbf{R}}^{\dagger}_{n_s}\tilde{\textbf{R}}_{n_s}\vec{1})^*=\vec{1}^T\tilde{\textbf{R}}^{\dagger}_{n_s}\tilde{\textbf{R}}_{n_s}
-            \tag{S7}
+            \end{eqnarray}
+            where $\lambda$ is the field wavelength. Thus, in a similar way to Choi et al. \cite{choi2022flexible}, each element of $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ can be described as an input field of a point-illumination at $\vec{r}_{in}$ from the diffuser plane and point-detection $\vec{r}_{out}$ at the diffuser plane:
+            \begin{eqnarray}
+            {E}_{in}(x,y)= e^{-i\phi(x_{in},y_{in})}\delta(x-x_{in},y-y_{in})
             \label{eq:7}
-            \end{equation}
-            
-            With this notation, we obtain:  $\hat{\phi}_{det}({k_{j})}=\frac{\vec{z}_j}{|\vec{z}_j|}$
-            
-            Here, $\tilde{\textbf{R}}_{n_s}$ represents the shifted version of $\tilde{\textbf{R}}^{(ud)}$, which can be expressed as:
-            \begin{equation}
-            \forall i\in[2N-1] \forall j\in[N]:
-            \tilde{\textbf{R}}_{n_{s_{i,j}}}=\sum^{N-1}_{a=0}\sum^{N-1}_{b=0}S_{i,j,a,b}\tilde{\textbf{R}}^{(ud)}_{n_{a,b}}
-            \tag{S8}
+            \end{eqnarray}
+            Where $\phi(x_{in},y_{in})$ is the phase distortion of the effective phase-mask and the sign is conjugated from Eq.~\ref{eq:5}. Using Eq.~\ref{eq:7} we obtain:
+            \begin{eqnarray}
+            {E}_{obj}(x,y) \propto  e^{-i\phi(x_{in},y_{in})}
+            e^{\frac{-i\pi}{\lambda d} [(x-x_{in})^2+(y-y_{in})^2 ]}
             \label{eq:8}
-            \end{equation}
-            Using $S_{i,j,a,b} = \delta_{j,b}\delta_{i,a+b}$, where $N$ represents the camera pixel count. Additionally, we use $\tilde{\textbf{R}}^{(ud)}_{n_{i,j}} = \tilde{\textbf{R}}_{N-1-i,j}$ i.e. flipping each column of $\tilde{\textbf{R}}$, a measure that was taken for the sake of index convenience.
-            (By denoting $\textbf{R}^{(ud)}_{{i,j}} = \textbf{R}_{N-1-i,j}$ we can get $\tilde{\textbf{R}}^{(ud)} = \tilde{\textbf{A}}^{(ud)}\tilde{\textbf{A}}^\dagger$)
-            % 
-            
-            
-            
-            \subsection*{Memory Complexity}
-            Given that we capture only $M$ images from distinct random illuminations, each containing $N$ pixels, where $M<<N$, it is advantageous to avoid explicitly constructing the matrix $\textbf{R}_{virt}$ as ${\hat{\textbf{A}}}{\hat{\textbf{A}}}^{\dagger}$, an $N$x$N$, matrix, due to its high memory demand. All the necessary information should be encapsulated within $\hat{\textbf{A}}$, which is of size $N$x$M$. As a result, we show an equivalent mathematical expression for a CLASS iteration using $\hat{\textbf{A}}$ without directly computing $\textbf{R}_{virt}$.
-            
-            We note that since the DFT matrix \( \mathcal{F} \) is unitary, we can apply a two-dimensional Fourier transform to the measured images before including them in \( {\hat{\textbf{A}}} \), thus obtaining \( \tilde{\textbf{R}}_{virt} = \mathcal{F}\textbf{R}_{virt}\mathcal{F}^{\dagger} = \mathcal{F}{\hat{\textbf{A}}}{\hat{\textbf{A}}}^{\dagger}\mathcal{F}^{\dagger} = \mathcal{F}{\hat{\textbf{A}}}\mathcal{F}^T(\mathcal{F}{\hat{\textbf{A}}}\mathcal{F}^T)^{\dagger} \). Therefore, we can concentrate on $\tilde{\textbf{A}}=\mathcal{F}{\hat{\textbf{A}}}\mathcal{F}^{T}$.
-            
-            First, we find the vector elements of $\vec{z} = \vec{1}^T\tilde{\textbf{R}}^{\dagger}_{n_s}\tilde{\textbf{R}}_{n_s}$ (Eq.~\ref{eq:7}):
-            
+            \end{eqnarray}
+            Upon reflection from the effective object $O_{eff}$, the detection transfer matrix is applied:
             \begin{align}
-            & z_j = \sum^{N-1}_{i=0}(\tilde{\textbf{R}}^{\dagger}_{s}\tilde{\textbf{R}}_{s})_{i,j} = \sum^{N-1}_{i=0} \sum^{2N-2}_{m=0}(\tilde{\textbf{R}}^{*}_{s_{m,i}}\tilde{\textbf{R}}_{s_{m,j}}) \nonumber &\\&\underset{(S8)}{=}  \sum^{N-1}_{i=0}\sum^{2N-2}_{m=0}\sum^{N-1}_{k=0}\sum^{N-1}_{l=0}\sum^{N-1}_{a=0}\sum^{N-1}_{b=0}S_{m,j,a,b}\tilde{\textbf{R}}^{(ud)}_{a,b}S_{m,i,k,l}\tilde{\textbf{R}}^{(ud)^*}_{k,l} \nonumber &\\ 
-            &= \sum^{N-1}_{i=0}\sum^{N-1}_{k=0}\sum^{N-1}_{l=0}\sum^{N-1}_{a=0}\sum^{N-1}_{b=0}\tilde{\textbf{R}}^{(ud)^*}_{k,l}\tilde{\textbf{R}}^{(ud)}_{a,b}\sum^{2N-2}_{m=0}S_{m,j,a,b}S_{m,i,k,l} \nonumber &\\ 
-            &= \sum^{N-1}_{i=0}\sum^{N-1}_{k=0}\sum^{N-1}_{l=0}\sum^{N-1}_{a=0}\sum^{N-1}_{b=0}\tilde{\textbf{R}}^{(ud)^*}_{k,l}\tilde{\textbf{R}}^{(ud)}_{a,b}\delta_{j,b}\delta_{i,l}\sum^{2N-2}_{m=0}\delta_{m,a+b}\delta_{m,k+l} \nonumber &\\ 
-            &= (2N-1)\sum^{N-1}_{i=0}\sum^{N-1}_{k=0}\sum^{N-1}_{a=0}\tilde{\textbf{R}}^{(ud)}_{a,j}\tilde{\textbf{R}}^{(ud)^*}_{k,i}\delta_{a+j,k+i} \nonumber &\\ 
-            &\propto \sum^{N-1}_{i=0}\sum^{N-1}_{k=0}\sum^{N-1}_{a=0}\sum^{M-1}_{n=0}\sum^{M-1}_{m=0}\tilde{\textbf{A}}^{(ud)}_{a,n}\tilde{\textbf{A}}^*_{j,n}\tilde{\textbf{A}}^{(ud)^*}_{k,m}\tilde{\textbf{A}}_{i,m}\delta_{a+j,k+i} \nonumber &\\ 
-            &= \sum^{N-1}_{k=0}\sum^{N-1}_{a=0}\sum^{M-1}_{n=0}\tilde{\textbf{A}}^{(ud)}_{a,n}\tilde{\textbf{A}}^*_{j,n}\sum^{M-1}_{m=0}\tilde{\textbf{A}}^{(ud)^*}_{k,m}\tilde{\textbf{A}}_{a+j-k,m}\sum^{N-1}_{i=0}\delta_{a+j,k+i}
+            & {E}_{out}(x_{out},y_{out}) = e^{i\phi(x_{out},y_{out})} \frac{e^{\frac{i2\pi d}{\lambda}}}{i\lambda d} \iint {E}_{obj}(x',y')O_{eff}(x',y') 
+            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'  \nonumber &\\ 
+            &\propto e^{i\phi(x_{out},y_{out})} \iint e^{\frac{-i\pi}{\lambda d} [(x'-x_{in})^2+(y'-y_{in})^2 ]} O_{eff}(x',y') 
+            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'
              \nonumber &\\ 
-            &= \sum^{N-1}_{a=0}\langle \vec{\tilde{\textbf{A}}}_{j,:},\vec{\tilde{\textbf{A}}}^{(ud)}_{a,:} \rangle\sum^{min(N-1,a+j)}_{k=max(0,a+j-(N-1))}\langle \vec{\tilde{\textbf{A}}}^{(ud)}_{k,:},\vec{\tilde{\textbf{A}}}_{a+j-k,:} \rangle &
-            \tag{S9}
+            &= e^{i[\phi(x_{out},y_{out})-\phi(x_{in},y_{in})]}e^{\frac{i \pi}{\lambda d}(x^2_{out}+y^2_{out}-x^2_{in}-y^2_{in})} \iint O_{eff}(x',y')e^{-i\frac{2 \pi}{\lambda d}[(x'(x_{out}-x_{in})+y'(y_{out}-y_{in})]}dx'dy'\nonumber &\\ 
+            &\equiv e^{i\phi_{eff}(x_{out},y_{out})}\tilde{O}_{eff}(\frac{x_{out}-x_{in}}{\lambda d},\frac{y_{out}-y_{in}}{\lambda d}) e^{-i\phi_{eff}(x_{in},y_{in})}&
             \label{eq:9}
             \end{align}
             
-            where we denote $\vec{\tilde{\textbf{A}}}_{c,:}$ as the c-th column of $\tilde{\textbf{A}}$. By denoting ${\textbf{A}}^{(lr)}_{a,b}={\textbf{A}}_{a,M-1-b}$ and using full-sized convolution (with zero-padding) yields:
-            \begin{equation}
-            ({\textbf{A}}^{(ud)^*}*{\textbf{A}}^{(lr)})_{a+j,M-1} = \sum^{min(N-1,a+j)}_{k=max(0,a+j-(N-1))}\langle {\textbf{A}}^{(ud)}_{k,:},{\textbf{A}}_{a+j-k,:} \rangle \label{eq:10} \tag{S10}
-            \end{equation}
-            By plugging Eq.~\ref{eq:10} into Eq.~\ref{eq:9}, we obtain:
+            Where $\phi_{eff}(x,y) \stackrel{\text{def}} = \phi(x,y) + \frac{\pi}{\lambda d}(x^2+y^2)$ and $\tilde{O}_{eff}(\nu_x,\nu_y)$ is the Fourier spectrum of ${O}_{eff}$, leading to a scaled ${O}_{eff}$ with a scaling factor of ${\lambda d}$. 
             
-            \begin{equation}
-            \vec{z}=\sum^{N-1}_{a=0}(\tilde{\textbf{A}}^*\vec{\tilde{\textbf{A}}}_{a,:})\odot(\tilde{\textbf{A}}^{(ud)^*}*\tilde{\textbf{A}}^{(lr)})_{a:a+N,M-1}
-            \label{eq:11} \tag{S11}
-            \end{equation}
-            Where $\odot$ denotes the Hadamard Product (element-wise multiplication) between two vectors. And the phase correction for each iteration is received by $\hat{\vec{\phi}} = \frac{\vec{z}}{|\vec{z}|}$ (element-wise division).
-            
-            To furtherly remove the sum over $a$, we denote $\vec{b}\stackrel{\text{def}} = (\tilde{\textbf{A}}^{(ud)^*}*\tilde{\textbf{A}}^{(lr)})_{:,M-1}$, rewriting the expression of $\vec{z}$ as:
-            
-            \begin{equation}
-            z_i=(\sum^{N-1}_{a=0}(\tilde{\textbf{A}}^*\vec{\tilde{\textbf{A}}}_{a,:})\odot\vec{b}_{a:a+N})_i =\sum^{M-1}_{j=0} \tilde{\textbf{A}}^*_{i,j}\sum^{N-1}_{a=0}\tilde{\textbf{A}}^{(ud)}_{a,j}\vec{b}_{a+i}=\sum^{M-1}_{j=0} \tilde{\textbf{A}}^*_{i,j}(\vec{b} \star \tilde{\textbf{A}}^{(ud)})_{i,j}
-            \label{eq:12}  \tag{S12}
-            \end{equation}
-            where $\star$ is a 2D cross-correlation.
-            Finally, the correction can be written simply as:
-            \begin{equation}
-            \vec{z}_{t+1}=(\tilde{\textbf{A}}_t^* \odot ((\tilde{\textbf{A}}_t^{(ud)^*}*\tilde{\textbf{A}}_t^{(lr)})_{:,M-1} \star \tilde{\textbf{A}}_t^{(ud)}))\vec{1}
-            \label{eq:13}  \tag{S13}
-            \end{equation}
-            Therefore, after each iteration $t = 1...T$, we update the matrix using the formula
-            $\tilde{\textbf{A}}_{t+1}=diag\{\frac{\vec{z}_{t+1}}{|\vec{z}_{t+1}|}\}\tilde{\textbf{A}}_t$, where both the exponential function and the division are applied element-wise  (the function $diag\{\vec{x}\}$ constructs a diagonal matrix with the elements of vector $\vec{x}$ placed along its diagonal).
-            Since building this correction diagonal matrix is memory inefficient, we correct each q-th column of $\tilde{\textbf{A}}_t$ with the element-wise multiplication: $ \frac{\vec{z}_{t+1}}{|\vec{z}_{t+1}|} \odot \tilde{\textbf{A}}_{t_{:,q}}$.
-            
-            After all iterations, to restore the object approximation $\hat{O}_{eff}=diag\{\textbf{R}_{virt}\}$ we then calculate:
-            \begin{align}
-            \label{eq:14}  \tag{S14}
-            &\hat{O}_{eff_i}=\textbf{R}_{virt_{i,i}}=\mathcal{F}^{\dagger}\tilde{\textbf{R}}_{virt}\mathcal{F}_{i,i}=\mathcal{F}^{\dagger}\tilde{\textbf{A}}\tilde{\textbf{A}}^\dagger\mathcal{F}_{i,i} &\\ 
-            &= \mathcal{F}^{\dagger}\tilde{\textbf{A}}\mathcal{F}\mathcal{F}^{\dagger}\tilde{\textbf{A}}^\dagger\mathcal{F}_{i,i} \nonumber = \sum^{N-1}_{m=0}|\mathcal{F}^{\dagger}\tilde{\textbf{A}}\mathcal{F}|^2_{i,m} &
-            \end{align}
-            Overall, the object can be written as: $\vec{{O}}_{eff} =|iFFT2(\tilde{\textbf{A}})|^2\vec{1}$, which is the sum over the columns of $|{\hat{\textbf{A}}}|^2$.
-            We conclude that the improvement in the memory-efficient I-CLASS algorithm now has memory complexity $O(MN)$ instead of $O(N^2)$, an improvement of $N/M$, which in our experiments is $\sim$ $10^4$.
-            
-            
-            \subsection*{Regularized Fourier Reweighting}
-            
-            In the incoherent imaging scenario mentioned in the main text, non-unitary distortion and amplitude modulation cause 'haze' in the phase-corrected image. Thus, in estimating the Modulation Transfer Function (MTF), the absolute value of the Optical Transfer Function (OTF), is essential. 
-            
-            In the preceding discussion, and as demonstrated in Eq.~\ref{eq:5}, we observe that ${\tilde{\textbf{P}}_{det}}$ is structured as a diagonal matrix containing on its diagonal  ${\tilde{\textbf{P}}_{det_{i,i}}}=MTF(k_i)e^{i\phi_{det}(k_i)}$, while ${\tilde{\textbf{O}}_{eff}}$ takes the form of a convolution matrix. This allows us to express the elements of $\tilde{\textbf{R}}$ as follows:
-            
-            \begin{equation}
-            \tilde{\textbf{R}}_{i,j} = \sum_{a,b}{\tilde{\textbf{P}}_{det_{i,a}}} \tilde{\textbf{O}}_{eff_{a,b}}{\tilde{\textbf{P}}^{\dagger}_{det_{b,j}}}=\sum_{a,b}{\tilde{\textbf{P}}_{det_{i,i}}} \delta_{i,a} \vec{\tilde{O}}_{eff_{a-b}}{\tilde{\textbf{P}}^*_{det_{j,j}}} \delta_{b,j}
-            \label{eq:15}  \tag{S15}
-            \end{equation}
-            This formulation leads to the following expression for the diagonal elements:
-            
-            \begin{equation}
-            \tilde{\textbf{R}}_{i,i} = \vec{\tilde{O}}(0) {\tilde{\textbf{P}}_{det_{i,i}}}{\tilde{\textbf{P}}^*_{det_{i,i}}} \propto |{\tilde{\textbf{P}}_{det_{i,i}}}|^2
-            \label{eq:16}  \tag{S16}
-            \end{equation}
-            Consequently, this relationship enables the estimation of the MTF up to a scaling factor, by:
-            $\widehat{MTF} \equiv \sqrt{diag\{\tilde{\textbf{R}}\}}$. %We note that this scaling factor limits the quantitative reconstruction. 
-            Similarly to the approach outlined in Eq.~\ref{eq:14}, the MTF can be directly computed from $\tilde{\textbf{A}}$, bypassing the need for explicit calculation of $\tilde{\textbf{R}}$. This is achieved by summing over the columns of $|{\tilde{\textbf{A}}}|^2$.
-            
-            This can also be derived in an integral form, which is perhaps more natural for describing the forward optical physical model. Given the forward model \ref{eq:1}  $I_{m}(\vec{r}) = P(\vec{r'}) * (O(\vec{r'}) \cdot S_{m}(\vec{r'}))|_{\vec{r}}$ where $O(\vec{r})$ is the fluorophore distribution (the object function) and $S_{m}(\vec{r})$ is the illumination speckle pattern on the object plane. When assuming, as mentioned above, a delta-like speckle covariance: $C_S(\vec{r}_1,\vec{r}_2) \stackrel{\text{def}} = \langle S_m(\vec{r}_1)S_m(\vec{r}_2) \rangle_m - \langle S_m(\vec{r}_1) \rangle_m \langle S_m(\vec{r}_2) \rangle_m \propto\delta(\vec{r}_1-\vec{r}_2)$, and defining $\hat{S}_m(\vec{r})=S_m(\vec{r})-\langle S_{m'}(\vec{r})\rangle_{m'}$, we obtain $\langle \hat{S}_m(\vec{r}_1)\hat{S}_m(\vec{r}_2) \rangle_m =C_S(\vec{r}_1,\vec{r}_2) \propto\delta(\vec{r}_1-\vec{r}_2)$. Additionally, by defining $\tilde{\hat{I}}_m(\vec{r})\stackrel{\text{def}} = I_m(\vec{r})-\langle I_{m'}(\vec{r})\rangle_{m'}=P(\vec{r'}) * (O(\vec{r'}) \cdot (S_{m}(\vec{r'})-\langle S_{m'}(\vec{r})\rangle_{m'}))=P (\vec{r'})* (O(\vec{r'}) \cdot \hat{S}_{m}(\vec{r'}))|_{\vec{r}}$, we can apply the multiplication-convolution property of the Fourier transform to get: $\tilde{\hat{I}}_m(\vec{k})\stackrel{\text{def}} = OTF(\vec{k})\cdot(\tilde{O}(\vec{k})*\tilde{\hat{S}}_m(\vec{k}))$. Therefore, the spectrum covariance can be expressed as:
-            \begin{flalign}
-            &C_I(\vec{k}_1,\vec{k}_2) \stackrel{\text{def}} =  \langle \tilde{\hat{I}}_m(\vec{k}_1)\tilde{\hat{I}}^*_m(\vec{k}_2)   \rangle_m  \nonumber \\& =  
-            \langle (OTF(\vec{k}_1)\cdot(\tilde{O}(\vec{k}_1)*\tilde{\hat{S}}_m(\vec{k}_1))(OTF(\vec{k}_2)\cdot(\tilde{O}(\vec{k}_2)*\tilde{\hat{S}}_m(\vec{k}_2)))^* \rangle_m \nonumber  \\& =\langle OTF(\vec{k}_1)OTF^*(\vec{k}_2)(\tilde{O}(\vec{k}_1)*\tilde{\hat{S}}_m(\vec{k}_1))\cdot(\tilde{O}^*(\vec{k}_2)*\tilde{\hat{S}}^*_m(\vec{k}_2)) \rangle_m \nonumber  \\& =\langle OTF(\vec{k}_1)OTF^*(\vec{k}_2)\iint\tilde{O} (\vec{k}'-\vec{k}_1)\tilde{\hat{S}}_m(\vec{k}')d\vec{k}'\iint\tilde{O}^* (\vec{k}''-\vec{k}_2)\tilde{\hat{S}}^*_m(\vec{k}'')d\vec{k}'' \rangle_m  \nonumber  \\& =OTF(\vec{k}_1)OTF^*(\vec{k}_2)\iint\tilde{O} (\vec{k}'-\vec{k}_1)d\vec{k}'\iint\tilde{O}^* (\vec{k}''-\vec{k}_2) \nonumber  \\& \iiiint e^{-i\vec{k}'\cdot \vec{r}'}e^{i\vec{k}''\cdot \vec{r}''}\underbrace{\langle{\hat{S}_m(\vec{r}')}{\hat{S}_m(\vec{r}'')}}_{\delta(\vec{r}'-\vec{r}'' )}\rangle_md\vec{k}''d\vec{r}'d\vec{r}'' \nonumber  \\&= OTF(\vec{k}_1)OTF^*(\vec{k}_2)\iint\tilde{O} (\vec{k}'-\vec{k}_1)d\vec{k}'\iint\tilde{O}^* (\vec{k}''-\vec{k}_2) 
-            d\vec{k}''\underbrace{\iint e^{-i(\vec{k}'-\vec{k}'')\cdot \vec{r}'}d\vec{r}'}_{\delta(\vec{k}'-\vec{k}'')} \nonumber  \\&= OTF(\vec{k}_1)OTF^*(\vec{k}_2)\iint\tilde{O} (\vec{k}'-\vec{k}_1)\tilde{O}^* (\vec{k}'-\vec{k}_2)d\vec{k}'\nonumber  \\&= OTF(\vec{k}_1)OTF^*(\vec{k}_2)\iint\tilde{O} (\vec{k}'')\tilde{O}^* (\vec{k}''+\vec{k}_1-\vec{k}_2)d\vec{k}'' 
-            \label{eq:17}  \tag{S17}
-            \end{flalign}
-            Thus, similarly to Eq. \ref{eq:16}, we obtain on the 'diagonal' of the covariance term:
-            $C_I(\vec{k},\vec{k}) = |OTF(\vec{k})|^2\iint
-            |\tilde{O} (\vec{k}'')
-            |^2d\vec{k}''\propto |OTF(\vec{k})|^2$, and estimate the MTF by $\widehat{MTF}(\vec{k})\equiv\sqrt{C_I(\vec{k},\vec{k})}$
-            
-            
-            Overall, the $\vec{k}$-space amplitude correction is estimated by taking the amplitude correction $\widehat{MTF}$ as input for a regularized Fourier reweighting process, where each camera frame is reweighted independently with the same amplitude correction. %Fourier component of $\vec{{O}}_{CLASS}$, denoted as  $\vec{\tilde{O}}_{CLASS}$, is divided by a factor given by:
-            %\begin{equation}
-            %\vec{\tilde{O}}_{I-CLASS_{i}} \equiv \frac{ \vec{\tilde{O}}_{CLASS_{i}}}{\frac{\widehat{MTF}_i}{\max_{q} \widehat{MTF}_q }+\sigma}
-            %\label{eq:17}   \tag{S17}
-            %\end{equation}
-            \begin{equation}
-            \tilde{\textbf{A}}_{fixed}=\frac{\tilde{\textbf{A}}_T}{\widehat{MTF}+\sigma}
-            \label{eq:18}   \tag{S18}
-            \end{equation}
-            
-            \noindent where $\sigma$ is the regularization parameter, and $\tilde{\textbf{A}}_T$ are the phase-corrected frames.
-            Although one can utilize various deconvolution methods, such as Wiener or Richardson-Lucy, our empirical observations have shown that regularized deconvolution yields superior results using the regularization of Eq.\ref{eq:18}.
-            
-            The impact of different regularization parameters is demonstrated through I-CLASS corrections in Fig.~\ref{fig1_supp}. Fig.~\ref{fig1_supp}A features the CLASS correction, similar to taking the regularization parameter $\sigma $ to $\infty$. Fig.~\ref{fig1_supp}B displays the result of an excessively high regularization parameter, leading to haze in the image. Fig.~\ref{fig1_supp}C demonstrates an optimal balance between noise reduction and the preservation of high-frequency details. Lastly, Fig.~\ref{fig1_supp}D presents the effect of setting the regularization parameter too low, resulting in the inclusion of noisy high-frequency bands.
-
-            \begin{minipage}{\linewidth}
-            	\centering
-            	\includegraphics [width=0.95\textwidth]{figures/figure_S5.pdf}
-                \captionof{figure}{\footnotesize\textbf{Regularized Fourier-reweighting with varying regularization parameter}. (A) Corrected confocal image via phase-only OTF correction shows substantial hazing due to uncorrected amplitude attenuation. (B) The result of a too-high regularization parameter resulted in the inclusion of haze. (C) Shows the scenario where the regularization parameter optimally reduces noise while preserving high-frequency details. (D) Illustrates the effect when the regularization parameter (sigma) is set too low, including noisy high-frequency bands. Scale bars, 200 $\mu m$. Insets in (A-D) compare the marked square areas.}\label{fig1_supp}
-            \end{minipage} 
-            \noindent In summary, the I-CLASS algorithm proceeds as follows: First, it applies the memory-efficient version of the CTR-CLASS phase correction to all camera frames. Next, it estimates the MTF from the diagonal of the Fourier-transformed reflection matrix. Then, it performs Fourier-reweighting on all camera frames using the estimated MTF. Lastly, it calculates the square root of the variance of the corrected frames, which is the final I-CLASS corrected image.
-            % In summary, the I-CLASS algorithm proceeds as follows in three steps: initially, it employs the memory-efficient version of the CTR-CLASS phase correction on all camera frames, followed by estimating the MTF from the diagonal of the Fourier-transformed reflection matrix applying deconvolution with the estimated MTF on all camera frames and finally calculating the square root of the variance image.
-
+            So $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ has a structure of a matrix similar to an isoplanatic imaging object beyond scattering layers system reflection matrix in the $\vec{k}$-basis. This matrix format aligns with the input requirements for the CLASS algorithm \cite{kang17,lee22}.
 
         \end{quote}
         
@@ -682,7 +528,37 @@ Additional improvements of this point can will be the focus of future work.
         Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using the Fresnel operator, as detailed in our new Methods section "Fresnel Propagation via Fourier-Domain Transfer Function" and demonstrated in our new supplementary section "Digital Autofocus through Fresnel Propagation."
     \end{ourresponse}
 
+    \begin{ourresponse}
+        We thank the reviewer for raising this important point.
 
+       \textit{ Reconstructing in the scattering layer plane is a \textbf{matter of convenience} based on practical considerations, rather than a fundamental requirement of our method.}
+        
+        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially alo amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al. (``Field of view advantage of conjugate adaptive optics in microscopy applications,'' Appl. Opt., 2015), and Kwon et al [].
+In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e. the scattering layer transmission-matrix is a diagonal matrix, i.e. can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
+In our case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus result in an output which is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp focused image of the target is obtained (see the new Supplementary Fig.XX).
+        
+        \begin{tcolorbox}[enhanced, colback=gray!5, colframe=black!50!blue, title=Mathematical Explanation]
+        From a mathematical perspective, measuring at the diffuser plane provides a natural structure for applying CLASS-based algorithms. In the diffuser plane, our measurement matrix $A$ can be expressed as:
+        
+        $$A = OP$$
+        \textbf{$E_{meas zdiff}(r)=O_{prop}(r)e^{i\phi_{scatt}(r)}$}
+
+where $O$ is a diagonal matrix containing the propagated object field, and $P$ is a matrix whose columns represent the different diffuser realizations (which are uncorrelated due to the rotation between acquisitions).
+        
+        The covariance matrix we compute from these measurements is:
+        $$AA^\dagger = OPP^\dagger O^\dagger = O|P|^2O^\dagger$$
+        
+        For uncorrelated columns in $P$, we will have $|P|^2$ as a diagonal matrix. This mathematical structure directly matches the form expected by CLASS algorithms:
+        \begin{itemize}
+            \item In conventional CLASS, the input has the form $POP^\dagger$, where $P$ is a convolution (Toeplitz) matrix and $O$ is diagonal
+            \item In our case, with the roles of object and scattering medium effectively reversed, we have $O|P|^2O^\dagger$, where here $O$ is a convolution (Toeplitz) matrix and $P$ is diagonal
+        \end{itemize}
+        
+        By measuring at the diffuser plane, we naturally obtain this required matrix structure without additional transformations, making this choice mathematically convenient.
+        \end{tcolorbox}
+        
+        Still, we emphasize that this measurement choice is largely arbitrary in our case, because once the full complex wavefront is recovered, we can computationally refocus it to any desired depth, as demonstrated by Kwon et al. (Nat. Commun., 2023). This digital propagation capability eliminates the need for precise a priori knowledge of the object-diffuser distance during data acquisition, as we can computationally determine the optimal focus plane during post-processing, as detailed in our new Methods section "Fresnel Propagation via Fourier-Domain Transfer Function" and demonstrated in our new supplementary section "Digital Autofocus through Fresnel Propagation."
+    \end{ourresponse}
 
 \end{enumerate}
 
@@ -755,8 +631,8 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         \begin{reviewercomment}
             In the introduction the authors claim that iterative phase retrieval lacks guaranteed convergence, which is technically not true. Convergence might take a VERY long time, but it will eventually happen (see \url{https://doi.org/10.1364/AO.21.002758}).
         \end{reviewercomment}
-           \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
-           \\
+         
+           ~\\
            \hlred{I recommend applying phase retrieval for millions of iterations with large M to show conergence graph}
         \begin{ourresponse}
         \hlyellow{
@@ -910,8 +786,9 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         \end{reviewercomment}
         \begin{ourresponse}
             \hlyellow{\textbf{Note from Ori:}
-            the reason is that this is not standard phase-retrieval but phase-retrieval of speckle correlation imaging experiment: in a standard phase-retrieval the algorithm is run on the real power spectrum on the object (or equivalently the exact fourier-transform autocorrelation of the object) calculated directly from the object, whereas in our case the phase retrieal is run on an ESTIMATE of the object’s autocorrelation from the speckle correlation. In particular, for speckle correlation imaging to work, the speckled PSF autocorrelation has to resemble a highly-peaked delta-like function. This is the case ONLY when the PSF contains an exteremly large number of speckles, since for a speckle field the autocorrelation peak to background ratio is proportional to the number of speckles contained in the PSF. This practically requires the cpatured scatterd light image to contain a number of speckles that is considerably larger than the number of bright resolution cells in the target, which is not the case in our experiemnts and simulations
-            }
+            the reason is that this is not standard phase-retrieval but phase-retrieval of speckle correlation imaging experiment: in a standard phase-retrieval the algorithm is run on the real power spectrum on the object (or equivalently the exact fourier-transform autocorrelation of the object) calculated directly from the object, whereas in our case the phase retrieal is run on an ESTIMATE of the object’s autocorrelation from the speckle correlation. In particular, for speckle correlation imaging to work, the speckled PSF autocorrelation has to resemble a highly-peaked delta-like function. This is the case ONLY when the PSF contains an exteremly large number of speckles, since for a speckle field the autocorrelation peak to background ratio is proportional to the number of speckles contained in the PSF. This practically requires the cpatured scatterd light image to contain a number of speckles that is considerably larger than the number of bright resolution cells in the target, which is not the case in our experiemnts and simulations]}
+  \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
+            
             
         \end{ourresponse}
         \hl{example 1}
