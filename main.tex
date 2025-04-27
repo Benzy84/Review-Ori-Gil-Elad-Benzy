@@ -154,13 +154,15 @@ As often with this group, this work is technically of excellent quality and its 
     
         In conventional CLASS or computational wavefront shaping, thick scatterers can be addressed by using multi-conjugate approaches with multi-layer scattering profiles. However, our approach presents a unique twist: in our formulation, the dynamic medium plays the role that would normally be occupied by the object in conventional CLASS implementations. This role reversal creates both challenges and opportunities.
         
-        The modeling and treatment of thick targets proposed in the recent work by Park et al. [https://www.nature.com/articles/s41467-025-56865-z] (Nature Communications, 2024) may offer a pathway forward. In that work, the authors developed techniques for handling thick objects rather than treating them as purely planar. Since in our case the dynamic medium mathematically functions as the "object," adapting these techniques could potentially allow us to extend our approach to volumetric scattering media.
+        The modeling and treatment of thick targets proposed in the recent work by Park et al. \cite{oh2025digital} may offer a pathway forward. In that work, the authors developed techniques for handling thick objects rather than treating them as purely planar. Since in our case the dynamic medium mathematically functions as the "object," adapting these techniques could potentially allow us to extend our approach to volumetric scattering media.
     
-        Additionally, another potential approach could be derived from the gradient-descent model-based algorithm recently developed by Haim et al. in their computational holographic wavefront shaping work \cite{haim2024image}. This method's flexibility in computational wavefront correction might offer alternative strategies for handling thick scattering media.
+        Additionally, another potential approach could be derived from the gradient-descent model-based algorithm recently developed by Haim et al. in their computational holographic wavefront shaping work \cite{haim2025image}. This method's flexibility in computational wavefront correction might offer alternative strategies for handling thick scattering media.
         
         We have added the following paragraph to the discussion section:
+        \begin{quote}
+            "While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Recent advances in modeling thick targets rather than planar ones, such as those presented by Park et al., suggest potential pathways for adaptation to our scenario, where the dynamic medium mathematically plays the role of the object. Future work could explore combining our approach with multi-conjugate modeling, treating thick media as a series of thin scattering layers at different depths, each contributing its own phase and amplitude distortions to the overall scattering process."
+        \end{quote}
         
-        "While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Recent advances in modeling thick targets rather than planar ones, such as those presented by Park et al., suggest potential pathways for adaptation to our scenario, where the dynamic medium mathematically plays the role of the object. Future work could explore combining our approach with multi-conjugate modeling, treating thick media as a series of thin scattering layers at different depths, each contributing its own phase and amplitude distortions to the overall scattering process."
     \end{ourresponse}
 
 
@@ -467,7 +469,7 @@ Additional improvements of this point can will be the focus of future work.
         \begin{quote}
             \subsection*{Fresnel Propagation via Fourier-Domain Transfer Function}
             \label{Fresnel_propagation}
-            In Fig.~\ref{fig5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However,since we measure the field on the diffuser plane, the I-CLASS algorithm reconstructs the complex field in the plane of the scattering layer, denoted as $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, we propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
+            In Fig.~\ref{fig5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However, since we measure the field on the diffuser plane, the I-CLASS algorithm reconstructs the complex field in the plane of the scattering layer, denoted as $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, we propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
             
             This propagation is efficiently implemented in the Fourier domain using the Fresnel transfer function:
             
@@ -510,26 +512,14 @@ Additional improvements of this point can will be the focus of future work.
         \begin{comment}
         \hlred{I would add that we measure on the diffuser plane and hence the multiplicative factor is with the propagated object, so that is the object that is reconstructed}
 
-    
-        We thank the reviewer for raising this important point.
-        
-        In conventional CLASS/I-CLASS implementations, the output of the algorithm is the scattering layer function at the pupil of the optical system, that is, at the Fourier plane of the target. CLASS algorithms specifically look for correlations in the k-space, where the reflection matrix becomes diagonal
-        \hlred{the reflection matrix is definitely not diagonal...} under the isoplanatic approximation and outputs the phase mask in this space.
-        
-        In our work, the roles are reversed: the object plays the role of the scattering medium. Consequently, the I-CLASS "scattering function" output is effectively the object function in k-space. This is why our reconstruction naturally occurs in the plane corresponding to the scattering layer.
-
 
         \hlred{Write equations... original CLASS $POP\quad \overrightarrow{}\tilde{P}\tilde{O}\tilde{P}$, Here $O_{prop}PO_{prop}$ where $O_{prop}$ is diagonal and $P$ is the envelope, no Fourier needed}
-        
-        This approach creates no fundamental limitation for our imaging capability. Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using Fresnel propagation, as detailed in the Methods section.
         \end{comment}
-        
-    \end{ourresponse}
 
-    \begin{ourresponse}
         We thank the reviewer for bringing this important point to our attention.
         
-        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al. (``Field of view advantage of conjugate adaptive optics in microscopy applications,'' Appl. Opt., 2015), and Kwon et al [].
+        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al.\cite{mertz2015field}, and \cite{kwon2023computational} and \cite{sunray2024beyond}.
+        
         In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e., the scattering layer transmission-matrix is a diagonal matrix, i.e., can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
         In our case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus results in an output that is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp focused image of the target is obtained (see the new Supplementary Fig.XX).
         \textbf{$E_{meas zdiff}(r)=O_{prop}(r)e^{i\phi_{scatt}(r)}$}
@@ -626,18 +616,20 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
     \item A few more minor points:
     \begin{enumerate}[label=3.\alph*.]
         \item \leavevmode\vspace{-\baselineskip}
-        \begin{reviewercomment}
+        \begin{solved_reviewercomment}
             In the introduction the authors claim that iterative phase retrieval lacks guaranteed convergence, which is technically not true. Convergence might take a VERY long time, but it will eventually happen (see \url{https://doi.org/10.1364/AO.21.002758}).
-        \end{reviewercomment}
+        \end{solved_reviewercomment}
          \begin{comment}
             ~\\
            \hlred{I recommend applying phase retrieval for millions of iterations with large M to show convergence graph}             
          \end{comment}
            
         \begin{ourresponse}
-        \hlyellow{
-            \textbf{Note from Ori:}
-            correct phrasing not that convergence is not gurranetedd but that it can take a very long time}
+            We thank the reviewer for their insight. We have revised the text to more accurately reflect the nature of iterative phase retrieval, acknowledging that convergence is possible, albeit potentially time-consuming. The revised sentence now reads:  
+            \begin{quote}
+                "However, despite this advantage, these techniques are hindered by their reliance on iterative phase retrieval \cite{fienup1978reconstruction}, which can require extensive computational time to converge."
+            \end{quote}
+            
         \end{ourresponse}
         
         \item \leavevmode\vspace{-\baselineskip}
@@ -787,7 +779,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         \begin{ourresponse}
             \hlyellow{\textbf{Note from Ori:}
             the reason is that this is not standard phase-retrieval but phase-retrieval of speckle correlation imaging experiment: in a standard phase-retrieval the algorithm is run on the real power spectrum on the object (or equivalently the exact fourier-transform autocorrelation of the object) calculated directly from the object, whereas in our case the phase retrieal is run on an ESTIMATE of the object’s autocorrelation from the speckle correlation. In particular, for speckle correlation imaging to work, the speckled PSF autocorrelation has to resemble a highly-peaked delta-like function. This is the case ONLY when the PSF contains an exteremly large number of speckles, since for a speckle field the autocorrelation peak to background ratio is proportional to the number of speckles contained in the PSF. This practically requires the cpatured scatterd light image to contain a number of speckles that is considerably larger than the number of bright resolution cells in the target, which is not the case in our experiemnts and simulations]}
-  \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
+        \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
             
             
         \end{ourresponse}
