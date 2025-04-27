@@ -214,22 +214,32 @@ As often with this group, this work is technically of excellent quality and its 
     \setcounter{enumi}{3}
     \item  \leavevmode\vspace{-\baselineskip}
     \begin{solved_reviewercomment}
-        The supplementary Section S2 that shows the impact of correlations between speckle patterns is very interesting and might have deserved a place in the main manuscript. In this Supplementary Section, these correlations arise from energy conservation (phase-distortions). Maybe a singular value (or equivalently eigenvalue) decomposition of the covariance matrix [10] can help in that case? The first singular vector would be less affected by these negative correlations than the CLASS algorithm. Can the authors comment on that? 
+        The supplementary Section S2 that shows the impact of correlations between speckle patterns is very interesting and might have deserved a place in the main manuscript. In this Supplementary Section, these correlations arise from energy conservation (phase-distortions). Maybe a singular value (or equivalently eigenvalue) decomposition of the covariance matrix \cite{badon2020distortion}(citation [10] in manuscript) can help in that case? The first singular vector would be less affected by these negative correlations than the CLASS algorithm. Can the authors comment on that? 
     \end{solved_reviewercomment}
     \begin{ourresponse}
-        % Add to the main text something like: "Our numerical study shows that correlations that arise from energy conservation in the speckle pattern can be the source for the xxxx. It would be interesting to study whether a singular value decomposition (SVD) of the covariance matrix [10] can help to address these effects?  In this work,  we have heuristically addressed this issue by applying a modulation to the total energy of captured images during post-processing, which effectively mitigates the observed correlation artifacts (see Supplementary Figure S2).
+        \begin{comment}
+            \hlred{But citation [10]  doesn't perform SVD on the covariance matrix: A. it is not on the covariance but on the full matrix, and B. it is also not on the matrix but on the 'de-scanned' / 'distortion' matrix, which is different. This cannot apply here where the energy conservation creates a problem in the covariance calculation, **before applying algorithm**}
+
+            \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
+        \end{comment}
+        
 
         We thank the reviewer for this insightful comment. Following this recommendation, we have added the following discussion to the main manuscript:
         
         \begin{quote}
-        \hlred{But citation [10] doesn't perform SVD on the covariance matrix: A. it is not on the covariance but on the full matrix, and B. it is also not on the matrix but on the 'de-scanned' / 'distortion' matrix, which is different. This cannot apply here where the energy conservation creates a problem in the covariance calculation, **before applying algorithm**}
-    
 
+            Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix \cite{badon2020distortion,jo2022through} can help to address these effects.
+            
+            % It was recently shown that SVD-based filtering of the distortion matrix \cite{badon2020distortion} or the reflection matrix \cite{jo2022through} can XXXXX. An in-depth study of the potential of advnaced filtering of the measurement or covariance matrix will be the focus of future work.
 
-        \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
+            It was recently shown that SVD-based filtering of the distortion matrix \cite{badon2020distortion} or the reflection matrix \cite{jo2022through} can help isolate single-scattering contributions from complex systems with multiple scattering. In the distortion matrix approach \cite{badon2020distortion}, the first singular vectors capture the most coherent signal contributions, while in \cite{jo2022through}, they showed that eigenvalue decomposition of a time-gated reflection matrix can effectively attenuate uncorrelated multiple scattering while retaining single-scattering signals with strong wave correlation. An in-depth study of the potential of advanced filtering of the measurement or covariance matrix will be the focus of future work.
 
-            Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix [10,Wonshik] can help to address these effects. It was recently shown that SVD based filtering of the distortion matrix [10] or the reflection matrix [Wonshik] can XXXXX. An in-depth study of the potential of advnaced filtering of the measurement or covariance matrix will be the focus of future work.
+            
             The full analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3.
+
+
+            
+            
         \end{quote}
         
         We maintained the detailed analysis in Supplementary Section S2 as you suggested, while bringing the key insight to readers' attention in the main text.
@@ -314,9 +324,11 @@ Additional improvements of this point can will be the focus of future work.
     \end{reviewercomment}
     \begin{ourresponse}
 
-        \hlred{\textbf{Elad's comment:}
-        
-        The descriptions in the methods part are not clear without the matrix description, and the MTF deconvolution part is not relevant here, it should be totally rephrased and organized, and in the supplementary it is also very long and most parts are not relevant to this paper, you don't have to derive all the CLASS algorithm again, I would just write something like $I=P*(O\cdot E_{in}*P_{in})$ and therefore $R=POP$ and CLASS is a matrix unitary decomposition algorithm, after that in few lines about CTR and just bring the final memory efficient term of each phase correction iteration, (maybe write in algorithm pattern as shown in CS papers) And write that the MTF estimation is just like speckle correlation methods. You can take my AO paper as reference, I explained there more briefly}
+        \begin{comment}
+            \hlred{\textbf{Elad's comment:}
+            
+            The descriptions in the methods part are not clear without the matrix description, and the MTF deconvolution part is not relevant here, it should be totally rephrased and organized, and in the supplementary it is also very long and most parts are not relevant to this paper, you don't have to derive all the CLASS algorithm again, I would just write something like $I=P*(O\cdot E_{in}*P_{in})$ and therefore $R=POP$ and CLASS is a matrix unitary decomposition algorithm, after that in few lines about CTR and just bring the final memory efficient term of each phase correction iteration, (maybe write in algorithm pattern as shown in CS papers) And write that the MTF estimation is just like speckle correlation methods. You can take my AO paper as reference, I explained there more briefly}
+        \end{comment}
 
     
         \hlblue{for now, this is just a copy from the AO paper, it has to be edited}
@@ -511,39 +523,26 @@ Additional improvements of this point can will be the focus of future work.
         
         This approach creates no fundamental limitation for our imaging capability. Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using Fresnel propagation, as detailed in the Methods section.
         \end{comment}
-        We thank the reviewer for raising this important point.
-    
-        Reconstructing in the diffuser plane is a matter of convenience rather than a fundamental requirement. In principle, we could have followed the same route as in the incoherent experiments—image the object plane, apply a 2-D Fourier transform, run CLASS, and obtain the restored $\tilde{O}(\vec{k})$. Our choice to work in the diffuser plane for the coherent case was based on practical considerations related to optical efficiency.
         
-        In conventional CLASS/I-CLASS implementations, the output of the algorithm is the scattering layer function at the pupil of the optical system, that is, at the Fourier plane of the target. CLASS algorithms specifically look for correlations in k-space, where the transmission matrix of the scattering layer becomes diagonally structured under the isoplanatic approximation, and outputs the phase mask in this space.
-        
-        Within a single isoplanatic patch, the measured field obeys $I_m(\vec{r})=P_m(\vec{r})*O(\vec{r})$. Taking a 2D Fourier transform turns this convolution into a point-wise product $\tilde{I}_m(\vec{k})=\tilde{P}_m(\vec{k})\cdot\tilde{O}(\vec{k})$, where every spatial frequency $\vec{k}$ is multiplied by its corresponding transfer coefficient $\tilde{P}_m(\vec{k})$. CLASS/I-CLASS exploit this "diagonal" (i.e., per-$\vec{k}$) structure to retrieve $\tilde{O}$.
-        
-        In our coherent experiment (Fig. 5), the field at the scattering layer is already naturally represented in k-space:
-        $E^{diff}_m(\vec{k})=\tilde{P}_m(\vec{k})\cdot\tilde{O}_{eff}(\vec{k})$,
-        where $\tilde{O}_{eff}(\vec{k}) = \tilde{O}(\vec{k})e^{i\phi_{prop}(\vec{k})}$ includes the Fresnel propagation term.
-        
-        We chose to perform the reconstruction in the diffuser plane since correcting aberrations at their origin provides optimal results. This principle of correcting aberrations in the plane conjugate to where they originate is well-established in adaptive optics (see Choi et al., Nat. Commun. 13, 7939, 2022) and offers optimal correction efficiency.
-        
-        Since we recover the complete complex wavefront, we can numerically propagate it to any desired axial plane using the Fresnel operator, as detailed in our new Methods section "Fresnel Propagation via Fourier-Domain Transfer Function" and demonstrated in our new supplementary section "Digital Autofocus through Fresnel Propagation."
     \end{ourresponse}
 
     \begin{ourresponse}
-        We thank the reviewer for raising this important point.
-
-       \textit{ Reconstructing in the scattering layer plane is a \textbf{matter of convenience} based on practical considerations, rather than a fundamental requirement of our method.}
+        We thank the reviewer for bringing this important point to our attention.
         
-        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially alo amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al. (``Field of view advantage of conjugate adaptive optics in microscopy applications,'' Appl. Opt., 2015), and Kwon et al [].
-In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e. the scattering layer transmission-matrix is a diagonal matrix, i.e. can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
-In our case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus result in an output which is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp focused image of the target is obtained (see the new Supplementary Fig.XX).
-        
-        \begin{tcolorbox}[enhanced, colback=gray!5, colframe=black!50!blue, title=Mathematical Explanation]
-        From a mathematical perspective, measuring at the diffuser plane provides a natural structure for applying CLASS-based algorithms. In the diffuser plane, our measurement matrix $A$ can be expressed as:
-        
-        $$A = OP$$
+        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al. (``Field of view advantage of conjugate adaptive optics in microscopy applications,'' Appl. Opt., 2015), and Kwon et al [].
+        In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e., the scattering layer transmission-matrix is a diagonal matrix, i.e., can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
+        In our case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus results in an output that is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp focused image of the target is obtained (see the new Supplementary Fig.XX).
         \textbf{$E_{meas zdiff}(r)=O_{prop}(r)e^{i\phi_{scatt}(r)}$}
 
-where $O$ is a diagonal matrix containing the propagated object field, and $P$ is a matrix whose columns represent the different diffuser realizations (which are uncorrelated due to the rotation between acquisitions).
+        \begin{comment}
+            \begin{tcolorbox}[enhanced, colback=gray!5, colframe=black!50!blue, title=Mathematical Explanation]
+        From a mathematical perspective, measuring at the diffuser plane provides a natural structure for applying CLASS-based algorithms. In the diffuser plane, our measurement matrix $A$ can be expressed as:
+        
+        $A = OP$
+
+        
+
+        where $O$ is a diagonal matrix containing the propagated object field, and $P$ is a matrix whose columns represent the different diffuser realizations (which are uncorrelated due to the rotation between acquisitions).
         
         The covariance matrix we compute from these measurements is:
         $$AA^\dagger = OPP^\dagger O^\dagger = O|P|^2O^\dagger$$
@@ -556,8 +555,7 @@ where $O$ is a diagonal matrix containing the propagated object field, and $P$ i
         
         By measuring at the diffuser plane, we naturally obtain this required matrix structure without additional transformations, making this choice mathematically convenient.
         \end{tcolorbox}
-        
-        Still, we emphasize that this measurement choice is largely arbitrary in our case, because once the full complex wavefront is recovered, we can computationally refocus it to any desired depth, as demonstrated by Kwon et al. (Nat. Commun., 2023). This digital propagation capability eliminates the need for precise a priori knowledge of the object-diffuser distance during data acquisition, as we can computationally determine the optimal focus plane during post-processing, as detailed in our new Methods section "Fresnel Propagation via Fourier-Domain Transfer Function" and demonstrated in our new supplementary section "Digital Autofocus through Fresnel Propagation."
+        \end{comment}
     \end{ourresponse}
 
 \end{enumerate}
@@ -631,9 +629,11 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         \begin{reviewercomment}
             In the introduction the authors claim that iterative phase retrieval lacks guaranteed convergence, which is technically not true. Convergence might take a VERY long time, but it will eventually happen (see \url{https://doi.org/10.1364/AO.21.002758}).
         \end{reviewercomment}
-         
-           ~\\
-           \hlred{I recommend applying phase retrieval for millions of iterations with large M to show conergence graph}
+         \begin{comment}
+            ~\\
+           \hlred{I recommend applying phase retrieval for millions of iterations with large M to show convergence graph}             
+         \end{comment}
+           
         \begin{ourresponse}
         \hlyellow{
             \textbf{Note from Ori:}
@@ -804,6 +804,8 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
     \end{enumerate}
 \end{enumerate}
 
+\bibliographystyle{plain}
+\bibliography{bib}
 
 \end{document}
 
