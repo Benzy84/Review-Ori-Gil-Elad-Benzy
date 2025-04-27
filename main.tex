@@ -121,9 +121,11 @@ As often with this group, this work is technically of excellent quality and its 
     
     In our coherent demonstration, we circumvented this challenge by focusing the illumination beam onto a small area of the diffuser (smaller than its correlation length), effectively sampling only a single "phase patch" as the diffuser rotates. However, we recognize this approach is not feasible for volumetric scattering media where maintaining constant illumination becomes challenging.
     
-    To address this limitation transparently in our manuscript, we have added the following clarification:
+    To address this limitation transparently in our manuscript, we have added the following clarification to the Discussion section:
     
-    "For coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin diffuser, volumetric scattering presents additional challenges that require further development."
+    \begin{quote}
+        "Additionally, we note that for coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin diffuser, volumetric scattering presents additional challenges that require further development."
+    \end{quote}
     
     Beyond this manuscript revision, we propose a hybrid approach that could extend our method to volumetric dynamic media without requiring focused illumination:
     \begin{enumerate}
@@ -518,11 +520,11 @@ Additional improvements of this point can will be the focus of future work.
 
         We thank the reviewer for bringing this important point to our attention.
         
-        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the work by Mertz et al.\cite{mertz2015field}, and \cite{kwon2023computational} and \cite{sunray2024beyond}.
+        This decision follows the principle of conjugation in adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane), we achieve more efficient correction across the field of view. This concept is well established in the literature, such as in the works by Mertz et al. \cite{mertz2015field}, Kwon et al. \cite{kwon2023computational}, and Sunray et al. \cite{sunray2024beyond}.
         
-        In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e., the scattering layer transmission-matrix is a diagonal matrix, i.e., can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
+        In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e., the scattering layer transmission-matrix is a diagonal matrix, i.e., can be effectively considered as a thin phase (and in I-CLASS also amplitude) mask. Mathematically, this can be represented as $E_{meas zdiff}(r)=O_{prop}(r)e^{i\phi_{scatt}(r)}$, where $O_{prop}(r)$ is the propagated object field and $e^{i\phi_{scatt}(r)}$ represents the phase distortion at the scattering layer. The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is thus the correction phase mask at the scattering layer plane. 
+
         In our case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus results in an output that is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp focused image of the target is obtained (see the new Supplementary Fig.XX).
-        \textbf{$E_{meas zdiff}(r)=O_{prop}(r)e^{i\phi_{scatt}(r)}$}
 
         \begin{comment}
             \begin{tcolorbox}[enhanced, colback=gray!5, colframe=black!50!blue, title=Mathematical Explanation]
@@ -604,8 +606,10 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         
     \end{solved_reviewercomment}
     \begin{ourresponse}
-        We thank the reviewer for this suggestion. 
-        We have added a clear statement immediately after Equation 1 in the "Principle" section that reads:
+        We appreciate the reviewer's concern about the isoplanatic patch limitation. We had already mentioned this constraint in the opening paragraph of the Principle section, highlighting that "all experiments and analysis in this work require the imaged object to be contained within the isoplanatic patch of the scattering medium; for objects larger than this patch, the approach presented here would not directly apply without additional modifications such as field segmentation."
+
+        To further emphasize this point and ensure clarity for non-specialist readers, we have also added an explicit note immediately following Equation 1 reiterating this constraint:
+        
         \begin{quote}
             "It is important to note that this convolution model is strictly valid only for objects within an isoplanatic patch. All experiments in this work were designed within this constraint, with potential extensions to larger fields of view or thick complex media, which are discussed in the final section."
         \end{quote}
