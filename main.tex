@@ -331,127 +331,33 @@ Additional improvements of this point can will be the focus of future work.
             The descriptions in the methods part are not clear without the matrix description, and the MTF deconvolution part is not relevant here, it should be totally rephrased and organized, and in the supplementary it is also very long and most parts are not relevant to this paper, you don't have to derive all the CLASS algorithm again, I would just write something like $I=P*(O\cdot E_{in}*P_{in})$ and therefore $R=POP$ and CLASS is a matrix unitary decomposition algorithm, after that in few lines about CTR and just bring the final memory efficient term of each phase correction iteration, (maybe write in algorithm pattern as shown in CS papers) And write that the MTF estimation is just like speckle correlation methods. You can take my AO paper as reference, I explained there more briefly}
         \end{comment}
 
-    
-        \hlblue{for now, this is just a copy from the AO paper, it has to be edited}
-
-        We employ the I-CLASS algorithm \cite{ weinberg2023noninvasive}, which is based on the CLASS algorithm \cite{kang17, kang2024implementation}, which corrects incident and reflected aberrations within an isoplanatic patch. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. In the specific case of CTR-CLASS, this further simplifies the estimation to two rank-1 vectors, as the incident and reflected aberrations are identical. CTR-CLASS is based on covariance analysis of random speckle illuminations, analogous to the retrieval of Green’s functions in passive correlation imaging [Maybe cite Wapenaar, Phys. Rev. Lett. 93, 254301 (2004)?], enabling a compressed estimation of the reflection matrix. As mentioned, we use dynamic scattering to replace the role of the random speckle illuminations, but as the covariance matrix of a set of camera frames of a rapidly varying dynamic scattering sample has the same mathematical form as a reflection matrix of a static medium, the same algorithm can be applied in this use case. We note that the addition of the $\vec{k}$-space amplitude correction, as demonstrated in the I-CLASS paper \cite{weinberg2023noninvasive}, is required for both the incoherent and coherent imaging cases, as in stellar speckle interferometry \cite{labeyrie1970attainment}.
+        \begin{comment}
+            **From Gil:**
+            We employ the I-CLASS algorithm \cite{ weinberg2023noninvasive}, which is based on the CLASS algorithm \cite{kang17, kang2024implementation}, which corrects incident and reflected aberrations within an isoplanatic patch. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. In the specific case of CTR-CLASS, this further simplifies the estimation to two rank-1 vectors, as the incident and reflected aberrations are identical. CTR-CLASS is based on covariance analysis of random speckle illuminations, analogous to the retrieval of Green’s functions in passive correlation imaging [Maybe cite Wapenaar, Phys. Rev. Lett. 93, 254301 (2004)?], enabling a compressed estimation of the reflection matrix. As mentioned, we use dynamic scattering to replace the role of the random speckle illuminations, but as the covariance matrix of a set of camera frames of a rapidly varying dynamic scattering sample has the same mathematical form as a reflection matrix of a static medium, the same algorithm can be applied in this use case. We note that the addition of the $\vec{k}$-space amplitude correction, as demonstrated in the I-CLASS paper \cite{weinberg2023noninvasive}, is required for both the incoherent and coherent imaging cases, as in stellar speckle interferometry \cite{labeyrie1970attainment}.
         
-        In the specific context of this paper... (add something similar to the \subsubsection*{Memory-efficient CLASS iterations}, but swap the roles of P and O - write the algo iterations)
-
-
+            In the specific context of this paper... (add something similar to the \subsubsection*{Memory-efficient CLASS iterations}, but swap the roles of P and O - write the algo iterations)
+        \end{comment}
         
-        \textbf{This is the part copied from, and has to be added to the main manuscript:}
-        \begin{quote}
-            \subsection{CTR-CLASS}
-            %Several key techniques for imaging through scattering layers within the 'memory-effect' region involve measuring the imaging system's transmission matrix. Recent advancements \cite{lee22,weinberg2023noninvasive} propose that, as the distortion caused by illumination does not hold any informative value, it's not necessary to measure the entire large matrix. Instead, one can effectively use a limited number ($M$) of random, uncorrelated illuminations for imaging, rather than analyzing the full matrix.
-            Following the work of Lee et al. \cite{lee22}, we consider $m=1...M$ measured scattered light fields, $\vec{A}_m$ obtained under random uncorrelated illuminations, $\vec{S}_m$. By representing the optical transmission matrix from the illumination plane to the target plane as $\bm{P}_{ill}$, and the transmission matrix from the target plane to the camera plane by $\bm{P}_{det}$, each measured light field can be written as $\vec{A}_m = \bm{P}_{det}\bm{O} \bm{P}_{ill} \vec{S}_m$. The matrix $\bm{O}$ is the object transmission matrix. For a thin object, the matrix $\bm{O}$ is a diagonal matrix with the object transmission function along its diagonal.
-            By incorporating the $M$ measurements, $\vec{A}_m$, as columns in a matrix $\bm{A}$, the entire measured dataset can be represented in a matrix form as:
-            \begin{eqnarray}
-            \bm{A} = \bm{P}_{det}\bm{O} \bm{P}_{ill} \bm{S}
-            \label{eq:1}
-            \end{eqnarray}
-            where $\bm{S}$ is a matrix containing the input random patterns in its columns. By leveraging the fact that the illumination patterns are uncorrelated, i.e. $\bm{S}\bm{S}^\dagger = \bm{I + \epsilon}$ (where $\bm{I}$ is the identity matrix and $\bm{\epsilon}$ is the statistical noise matrix which diminishes as the number of realizations $M$ increases, eventually becoming negligible with a significant number of such uncorrelated illumination patterns), and the time-reversal symmetry of light propagation ($\bm{P}_{ill}\bm{P}_{ill}^{\dagger}=\bm{I}$), we can analyze the covariance matrix of $\bm{A}$: $\bm{R}=\bm{A}\bm{A}^{\dagger}$, as follows:
-            \begin{eqnarray}
-            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^{\dagger} \bm{O}^\dagger \bm{P}^\dagger_{det} \nonumber \\ \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
-            \label{eq:2}
-            \end{eqnarray}
-            
-            where $\bm{O}_{eff} \equiv |\bm{O}|^2$ (see Supplementary S1 for further explanations). 
-            
-            Remarkably, as seen from Eq. 2, the covariance matrix $\bm{R}$ is mathematically analogous to the conventional reflection matrix from the camera plane to the object and back, when the target object is replaced by $\bm{O}_{eff}$. Hence, one can apply any conventional reflection-matrix analysis approach such as CLASS \cite{kang17,lee22} or distortion matrix \cite{badon2020distortion} on $\bm{R}$.
-            
-            We chose to apply the recently introduced memory-efficient version of the CTR-CLASS algorithm, whose code is publicly available \cite{weinberg2023noninvasive}, since it allows the application of the CLASS algorithm directly on high pixel-count holographic datasets without the need to explicitly compute the memory-demanding reflection matrix $\bm{R}$
- 
-        \end{quote}
 
-        \textbf{This is the part copied from, and has to be added to the supplementary:}
-        \begin{quote}
-            \section{CTR-CLASS}
+        We employ the I-CLASS algorithm \cite{weinberg2023noninvasive}, which is based on the CLASS algorithm \cite{kang17, kang2024implementation}, which corrects incident and reflected aberrations within an isoplanatic patch. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. In the specific case of CTR-CLASS, this further simplifies the estimation to two rank-1 vectors, as the incident and reflected aberrations are identical. CTR-CLASS is based on covariance analysis of random speckle illuminations, similar to the retrieval of Green's functions in passive correlation imaging \cite{wapenaar2004retrieving}, which enables a compressed estimation of the reflection matrix.
 
-            The linear nature of a coherent imaging system and the wave equation makes choosing a basis consisting of independent illumination patterns possible. By writing the matrix of the system in this basis (the Green's function), we can fully describe the imaging process. Furthermore, if this matrix is pre-measured, one can obtain the output for any given illumination pattern by multiplying the matrix with the corresponding pattern \cite{popoff2010measuring}.
-            For instance, one possible choice for the basis is the set of point-illuminations, which aligns with the description of the imaging system in real space ($\vec{r}$-basis), such that using controlled illumination field $\vec{E}_{in} (\vec{r})$ the output field ${\vec{E}_{out}}(\vec{r})$ can be described as:
-            \begin{eqnarray}
-            \vec{E}_{out} = \bm{R}_{sys}\vec{E}_{in}
-            \label{eq:1}
-            \end{eqnarray}
-            Conceptually, we can decompose the system's matrix into a product of three distinct matrices, each corresponding to a distinct phase in the imaging process:
-            
-            \begin{eqnarray}
-            \bm{R}_{sys} = \bm{P}_{det}\bm{O}\bm{P}_{ill}
-            \label{eq:2}
-            \end{eqnarray}
-            The first matrix $\bm{P}_{ill}$ represents the propagation through the optical system of the input field to the object plane. The second matrix $\bm{O}$ characterizes the interaction with the object, where this matrix is modeled as a diagonal matrix for thin objects, with the object reflection function $O(\vec{r})$ on its diagonal. The third matrix $\bm{P}_{det}$ governs the propagation of back from the object plane through the optical system to the detection. 
-            
-            However, due to the very high number of modes in most common systems, measuring the reflection matrix can be daunting and time-consuming. In many practical imaging scenarios, such comprehensive measurements may be unnecessary for imaging within the optical memory effect. Recognizing this, the CTR framework \cite{lee22} presents an alternative approach that exploits the time-reversal symmetry of the illumination process for a phase-only distortion - which translates into the fact the matrix $\bm{P}_{ill}$, which represents the illumination step, is approximated as a unitary matrix $(\bm{P}_{ill}\bm{P}^\dagger_{ill} \approx \mathbf{I})$.
-            Instead of measuring the reflection matrix $\bm{R}_{sys}$ in an orderly set of modes, such as the point illumination basis or plane waves basis (in k-space), it is suggested to illuminate a set of random, uncorrelated illumination patterns.
-            
-            The $M$ random illuminations used in the CTR methodology can be arranged in a matrix $\bm{S}$ in the $\vec{r}$-basis, where each illumination pattern corresponds to a matrix column. Due to their uncorrelated nature, the matrix \textbf{S} approximately satisfies the property $\bm{S} \bm{S}^\dagger = \mathbf{I} + \mathbf{\epsilon} \approx \mathbf{I}$, where $\bm{I}$ is the identity matrix and $\mathbf{\epsilon}$ represents the statistical noise matrix, which diminishes as the number of realizations $M$ increases and becomes negligible with a sufficient number of such realizations.
-            
-            
-            
-            
-            One can order the $M$ measurements in the columns of 'measurement matrix' $\bm{A}$ which can be written by:
-            \begin{eqnarray}
-            \bm{A} = \bm{R}_{sys}\bm{S} = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S}
-            \label{eq:3}
-            \end{eqnarray}
-            Then, rather than directly examining the reflection matrix $\bm{R}_{sys}$, the algorithm focuses on the matrix $\bm{R} \stackrel{\text{def}} = \bm{A}\bm{A}^\dagger$, which, from our analysis above can be written by:
-            \begin{eqnarray}
-            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^\dagger \bm{O}^\dagger \bm{P}^\dagger_{det} \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
-            \label{eq:4}
-            \end{eqnarray}
-            where $\bm{O}_{eff} \stackrel{\text{def}} = \bm{O}\bm{O}^\dagger$ and has $|{O}(\vec{r})|^2$ on its diagonal, as $\bm{O}$ is diagonal matrix as we consider thin objects.
-            
-            This matrix $\bm{R}$ has a similar structure to a full system reflection matrix in the real space ($\vec{r}$-basis), with the same illumination and detection transfer matrix up to phase conjugation.
-            In the context of imaging through a scattering medium within the memory-effect regime, we can further model the detection transfer matrix $ \bm{P}_{det}$ as a convolution Toeplitz matrix that represents the distorted point spread function (PSF) any point on the object is convoluted with.
-            
-            The CTR-CLASS algorithm takes advantage of this unique structure of matrix $\bm{R}$ and estimates $\bm{P}_{det}$ and $\bm{O}_{eff}$ using the CLASS algorithm \cite{kang17}. This is achieved by iteratively leveraging the shifted inter-column correlations within $\bm{R}$.
-            A recent improvement introduced a memory-efficient version of the CTR-CLASS algorithm, significantly reducing memory usage to $O(MN)$, where $N$ denotes the number of camera pixels \cite{weinberg2023noninvasive}. This advancement enables the application of the algorithm to megapixel-scale images without the need to explicitly compute $\bm{R}$, which is sized $O(N^2)$.
-            It's important to note that while any matrix-based scattering compensation method could theoretically be applied given $\bm{R}$, in this work, we specifically utilize the CLASS algorithm.
-            
-            \newpage
-            \section{CTR-CLASS correction in a conjugated plane}
-            As described above, the matrix $\bm{R}$ can be looked at as a reflection matrix for a system:
-            \begin{eqnarray}
-            \bm{R} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
-            \label{eq:5}
-            \end{eqnarray}
-            
-            Where for an 'isoplanatic' patch where the distortion does not rely on object coordinates, the matrix $\bm{P}_{det}(\vec{r}_{diff},\vec{r}_{obj})$ describes a transfer matrix from each point on the detection scattering phase mask $\vec{r}_{diff}$ is transmitted towards the object plane with coordinates $\vec{r}_{obj}$. Hence, the effective field in the effective object plane is: $\vec{E}_{obj} = \bm{P}_{det}\vec{E}_{in}$. Assuming free-space configuration and that the distance $d$ between the object and the scattering layer is large enough to apply the Fresnel diffraction approximation, we can derive given an input field ${E}_{in}(x,y)$ the field at the object plane:
-            \begin{eqnarray}
-            {E}_{obj}(x,y)= \frac{e^{\frac{i2 \pi d}{\lambda}}}{i\lambda d} \iint {E}_{in}(x',y') 
-            e^{\frac{-i\pi}{\lambda d} [ (x-x')^2+(y-y')^2 ] } dx'dy'
-            \label{eq:6}
-            \end{eqnarray}
-            where $\lambda$ is the field wavelength. Thus, in a similar way to Choi et al. \cite{choi2022flexible}, each element of $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ can be described as an input field of a point-illumination at $\vec{r}_{in}$ from the diffuser plane and point-detection $\vec{r}_{out}$ at the diffuser plane:
-            \begin{eqnarray}
-            {E}_{in}(x,y)= e^{-i\phi(x_{in},y_{in})}\delta(x-x_{in},y-y_{in})
-            \label{eq:7}
-            \end{eqnarray}
-            Where $\phi(x_{in},y_{in})$ is the phase distortion of the effective phase-mask and the sign is conjugated from Eq.~\ref{eq:5}. Using Eq.~\ref{eq:7} we obtain:
-            \begin{eqnarray}
-            {E}_{obj}(x,y) \propto  e^{-i\phi(x_{in},y_{in})}
-            e^{\frac{-i\pi}{\lambda d} [(x-x_{in})^2+(y-y_{in})^2 ]}
-            \label{eq:8}
-            \end{eqnarray}
-            Upon reflection from the effective object $O_{eff}$, the detection transfer matrix is applied:
-            \begin{align}
-            & {E}_{out}(x_{out},y_{out}) = e^{i\phi(x_{out},y_{out})} \frac{e^{\frac{i2\pi d}{\lambda}}}{i\lambda d} \iint {E}_{obj}(x',y')O_{eff}(x',y') 
-            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'  \nonumber &\\ 
-            &\propto e^{i\phi(x_{out},y_{out})} \iint e^{\frac{-i\pi}{\lambda d} [(x'-x_{in})^2+(y'-y_{in})^2 ]} O_{eff}(x',y') 
-            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'
-             \nonumber &\\ 
-            &= e^{i[\phi(x_{out},y_{out})-\phi(x_{in},y_{in})]}e^{\frac{i \pi}{\lambda d}(x^2_{out}+y^2_{out}-x^2_{in}-y^2_{in})} \iint O_{eff}(x',y')e^{-i\frac{2 \pi}{\lambda d}[(x'(x_{out}-x_{in})+y'(y_{out}-y_{in})]}dx'dy'\nonumber &\\ 
-            &\equiv e^{i\phi_{eff}(x_{out},y_{out})}\tilde{O}_{eff}(\frac{x_{out}-x_{in}}{\lambda d},\frac{y_{out}-y_{in}}{\lambda d}) e^{-i\phi_{eff}(x_{in},y_{in})}&
-            \label{eq:9}
-            \end{align}
-            
-            Where $\phi_{eff}(x,y) \stackrel{\text{def}} = \phi(x,y) + \frac{\pi}{\lambda d}(x^2+y^2)$ and $\tilde{O}_{eff}(\nu_x,\nu_y)$ is the Fourier spectrum of ${O}_{eff}$, leading to a scaled ${O}_{eff}$ with a scaling factor of ${\lambda d}$. 
-            
-            So $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ has a structure of a matrix similar to an isoplanatic imaging object beyond scattering layers system reflection matrix in the $\vec{k}$-basis. This matrix format aligns with the input requirements for the CLASS algorithm \cite{kang17,lee22}.
-
-        \end{quote}
+        In our dynamic scattering scenario, the key insight is the mathematical role exchange between the object and PSF compared to the standard CTR-CLASS framework. We arrange the captured camera frames as columns of a measurement matrix $\textbf{A}$, where each column represents one image realization. While conventional matrix imaging follows $I_m(\vec{r}) = P(\vec{r}) \ast O_m(\vec{r})$ with a static PSF and varying illuminated objects (represented as $\textbf{A} = \textbf{P}\textbf{O}$), our approach deals with $I_m(\vec{r}) = P_m(\vec{r}) \ast O(\vec{r}) = O(\vec{r}) \ast P_m(\vec{r})$, featuring a static object and varying PSFs, represented as $\textbf{A} = \textbf{O}\textbf{P}$. In this formulation, $\textbf{O}$ is a Toeplitz convolution matrix with the object function as the convolution kernel, and $\textbf{P}$ contains the different PSF realizations.
         
+        This mathematical duality allows us to apply the same algorithm to reconstruct the object instead of the scattering medium without modifying the core algorithm structure. Weinberg et al. \cite{weinberg2023noninvasive} enhanced the basic approach with both a memory-efficient implementation and amplitude correction, addressing not only phase but also amplitude distortions caused by scattering.
+        
+        For each iteration $t = 1...T$, the algorithm computes a correction vector:
+        \begin{eqnarray}
+            \vec{z}_{t+1}=\sum_{q=1}^{M}(\tilde{\textbf{A}}_t^* \odot ((\tilde{\textbf{A}}_t^{(ud)^*}*\tilde{\textbf{A}}_t^{(lr)})_{:,M-1} \star \tilde{\textbf{A}}_t^{(ud)}))_{:,q}
+        \end{eqnarray}
+        
+        The matrix is then updated through phase correction in the Fourier domain:
+        \begin{eqnarray}
+            \tilde{\textbf{A}}_{t+1}=diag\{e^{i\frac{\vec{z}_t}{|\vec{z}_t|}}\}\tilde{\textbf{A}}_t
+        \end{eqnarray}
+        
+        Here, $\tilde{\textbf{A}}$ denotes the 2D Fourier transform of the mean-subtracted measurement matrix, $\tilde{\textbf{A}}^{(ud)}$ is $\tilde{\textbf{A}}$ with each column flipped upside-down, and $\tilde{\textbf{A}}^{(lr)}$ is $\tilde{\textbf{A}}$ with rows flipped left-to-right. The symbols $\odot$, $*$, and $\star$ represent element-wise multiplication (Hadamard product), 2D convolution, and 2D correlation operators, respectively. The complex conjugate of a matrix is denoted by the superscript $*$, and $\textbf{X}_{:,q}$ represents the $q$-th column of matrix $\textbf{X}$.
+        
+        This approach enables reconstruction of complex objects through dynamic scattering media using only a small number of measurements (M=150 in our experiments), making it practical for imaging scenarios where rapidly varying scattering would otherwise prevent clear visualization.
     \end{ourresponse}
     
     
@@ -797,6 +703,122 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         
     \end{enumerate}
 \end{enumerate}
+
+
+\begin{comment}
+    \textbf{This is the part copied from, and has to be added to the main manuscript:}
+        \begin{quote}
+            \subsection{CTR-CLASS}
+            %Several key techniques for imaging through scattering layers within the 'memory-effect' region involve measuring the imaging system's transmission matrix. Recent advancements \cite{lee22,weinberg2023noninvasive} propose that, as the distortion caused by illumination does not hold any informative value, it's not necessary to measure the entire large matrix. Instead, one can effectively use a limited number ($M$) of random, uncorrelated illuminations for imaging, rather than analyzing the full matrix.
+            Following the work of Lee et al. \cite{lee22}, we consider $m=1...M$ measured scattered light fields, $\vec{A}_m$ obtained under random uncorrelated illuminations, $\vec{S}_m$. By representing the optical transmission matrix from the illumination plane to the target plane as $\bm{P}_{ill}$, and the transmission matrix from the target plane to the camera plane by $\bm{P}_{det}$, each measured light field can be written as $\vec{A}_m = \bm{P}_{det}\bm{O} \bm{P}_{ill} \vec{S}_m$. The matrix $\bm{O}$ is the object transmission matrix. For a thin object, the matrix $\bm{O}$ is a diagonal matrix with the object transmission function along its diagonal.
+            By incorporating the $M$ measurements, $\vec{A}_m$, as columns in a matrix $\bm{A}$, the entire measured dataset can be represented in a matrix form as:
+            \begin{eqnarray}
+            \bm{A} = \bm{P}_{det}\bm{O} \bm{P}_{ill} \bm{S}
+            \label{eq:1}
+            \end{eqnarray}
+            where $\bm{S}$ is a matrix containing the input random patterns in its columns. By leveraging the fact that the illumination patterns are uncorrelated, i.e. $\bm{S}\bm{S}^\dagger = \bm{I + \epsilon}$ (where $\bm{I}$ is the identity matrix and $\bm{\epsilon}$ is the statistical noise matrix which diminishes as the number of realizations $M$ increases, eventually becoming negligible with a significant number of such uncorrelated illumination patterns), and the time-reversal symmetry of light propagation ($\bm{P}_{ill}\bm{P}_{ill}^{\dagger}=\bm{I}$), we can analyze the covariance matrix of $\bm{A}$: $\bm{R}=\bm{A}\bm{A}^{\dagger}$, as follows:
+            \begin{eqnarray}
+            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^{\dagger} \bm{O}^\dagger \bm{P}^\dagger_{det} \nonumber \\ \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
+            \label{eq:2}
+            \end{eqnarray}
+            
+            where $\bm{O}_{eff} \equiv |\bm{O}|^2$ (see Supplementary S1 for further explanations). 
+            
+            Remarkably, as seen from Eq. 2, the covariance matrix $\bm{R}$ is mathematically analogous to the conventional reflection matrix from the camera plane to the object and back, when the target object is replaced by $\bm{O}_{eff}$. Hence, one can apply any conventional reflection-matrix analysis approach such as CLASS \cite{kang17,lee22} or distortion matrix \cite{badon2020distortion} on $\bm{R}$.
+            
+            We chose to apply the recently introduced memory-efficient version of the CTR-CLASS algorithm, whose code is publicly available \cite{weinberg2023noninvasive}, since it allows the application of the CLASS algorithm directly on high pixel-count holographic datasets without the need to explicitly compute the memory-demanding reflection matrix $\bm{R}$
+ 
+        \end{quote}
+
+        \textbf{This is the part copied from, and has to be added to the supplementary:}
+        \begin{quote}
+            \section{CTR-CLASS}
+
+            The linear nature of a coherent imaging system and the wave equation makes choosing a basis consisting of independent illumination patterns possible. By writing the matrix of the system in this basis (the Green's function), we can fully describe the imaging process. Furthermore, if this matrix is pre-measured, one can obtain the output for any given illumination pattern by multiplying the matrix with the corresponding pattern \cite{popoff2010measuring}.
+            For instance, one possible choice for the basis is the set of point-illuminations, which aligns with the description of the imaging system in real space ($\vec{r}$-basis), such that using controlled illumination field $\vec{E}_{in} (\vec{r})$ the output field ${\vec{E}_{out}}(\vec{r})$ can be described as:
+            \begin{eqnarray}
+            \vec{E}_{out} = \bm{R}_{sys}\vec{E}_{in}
+            \label{eq:1}
+            \end{eqnarray}
+            Conceptually, we can decompose the system's matrix into a product of three distinct matrices, each corresponding to a distinct phase in the imaging process:
+            
+            \begin{eqnarray}
+            \bm{R}_{sys} = \bm{P}_{det}\bm{O}\bm{P}_{ill}
+            \label{eq:2}
+            \end{eqnarray}
+            The first matrix $\bm{P}_{ill}$ represents the propagation through the optical system of the input field to the object plane. The second matrix $\bm{O}$ characterizes the interaction with the object, where this matrix is modeled as a diagonal matrix for thin objects, with the object reflection function $O(\vec{r})$ on its diagonal. The third matrix $\bm{P}_{det}$ governs the propagation of back from the object plane through the optical system to the detection. 
+            
+            However, due to the very high number of modes in most common systems, measuring the reflection matrix can be daunting and time-consuming. In many practical imaging scenarios, such comprehensive measurements may be unnecessary for imaging within the optical memory effect. Recognizing this, the CTR framework \cite{lee22} presents an alternative approach that exploits the time-reversal symmetry of the illumination process for a phase-only distortion - which translates into the fact the matrix $\bm{P}_{ill}$, which represents the illumination step, is approximated as a unitary matrix $(\bm{P}_{ill}\bm{P}^\dagger_{ill} \approx \mathbf{I})$.
+            Instead of measuring the reflection matrix $\bm{R}_{sys}$ in an orderly set of modes, such as the point illumination basis or plane waves basis (in k-space), it is suggested to illuminate a set of random, uncorrelated illumination patterns.
+            
+            The $M$ random illuminations used in the CTR methodology can be arranged in a matrix $\bm{S}$ in the $\vec{r}$-basis, where each illumination pattern corresponds to a matrix column. Due to their uncorrelated nature, the matrix \textbf{S} approximately satisfies the property $\bm{S} \bm{S}^\dagger = \mathbf{I} + \mathbf{\epsilon} \approx \mathbf{I}$, where $\bm{I}$ is the identity matrix and $\mathbf{\epsilon}$ represents the statistical noise matrix, which diminishes as the number of realizations $M$ increases and becomes negligible with a sufficient number of such realizations.
+            
+            
+            
+            
+            One can order the $M$ measurements in the columns of 'measurement matrix' $\bm{A}$ which can be written by:
+            \begin{eqnarray}
+            \bm{A} = \bm{R}_{sys}\bm{S} = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S}
+            \label{eq:3}
+            \end{eqnarray}
+            Then, rather than directly examining the reflection matrix $\bm{R}_{sys}$, the algorithm focuses on the matrix $\bm{R} \stackrel{\text{def}} = \bm{A}\bm{A}^\dagger$, which, from our analysis above can be written by:
+            \begin{eqnarray}
+            \bm{R}=\bm{A}\bm{A}^\dagger = \bm{P}_{det}\bm{O}\bm{P}_{ill}\bm{S} \bm{S}^\dagger\bm{P}_{ill}^\dagger \bm{O}^\dagger \bm{P}^\dagger_{det} \approx \bm{P}_{det}\bm{O}_{eff} \bm{P}^\dagger_{det} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
+            \label{eq:4}
+            \end{eqnarray}
+            where $\bm{O}_{eff} \stackrel{\text{def}} = \bm{O}\bm{O}^\dagger$ and has $|{O}(\vec{r})|^2$ on its diagonal, as $\bm{O}$ is diagonal matrix as we consider thin objects.
+            
+            This matrix $\bm{R}$ has a similar structure to a full system reflection matrix in the real space ($\vec{r}$-basis), with the same illumination and detection transfer matrix up to phase conjugation.
+            In the context of imaging through a scattering medium within the memory-effect regime, we can further model the detection transfer matrix $ \bm{P}_{det}$ as a convolution Toeplitz matrix that represents the distorted point spread function (PSF) any point on the object is convoluted with.
+            
+            The CTR-CLASS algorithm takes advantage of this unique structure of matrix $\bm{R}$ and estimates $\bm{P}_{det}$ and $\bm{O}_{eff}$ using the CLASS algorithm \cite{kang17}. This is achieved by iteratively leveraging the shifted inter-column correlations within $\bm{R}$.
+            A recent improvement introduced a memory-efficient version of the CTR-CLASS algorithm, significantly reducing memory usage to $O(MN)$, where $N$ denotes the number of camera pixels \cite{weinberg2023noninvasive}. This advancement enables the application of the algorithm to megapixel-scale images without the need to explicitly compute $\bm{R}$, which is sized $O(N^2)$.
+            It's important to note that while any matrix-based scattering compensation method could theoretically be applied given $\bm{R}$, in this work, we specifically utilize the CLASS algorithm.
+            
+            \newpage
+            \section{CTR-CLASS correction in a conjugated plane}
+            As described above, the matrix $\bm{R}$ can be looked at as a reflection matrix for a system:
+            \begin{eqnarray}
+            \bm{R} = \bm{P}_{det}\bm{O}_{eff} (\bm{P}^{*}_{det})^T
+            \label{eq:5}
+            \end{eqnarray}
+            
+            Where for an 'isoplanatic' patch where the distortion does not rely on object coordinates, the matrix $\bm{P}_{det}(\vec{r}_{diff},\vec{r}_{obj})$ describes a transfer matrix from each point on the detection scattering phase mask $\vec{r}_{diff}$ is transmitted towards the object plane with coordinates $\vec{r}_{obj}$. Hence, the effective field in the effective object plane is: $\vec{E}_{obj} = \bm{P}_{det}\vec{E}_{in}$. Assuming free-space configuration and that the distance $d$ between the object and the scattering layer is large enough to apply the Fresnel diffraction approximation, we can derive given an input field ${E}_{in}(x,y)$ the field at the object plane:
+            \begin{eqnarray}
+            {E}_{obj}(x,y)= \frac{e^{\frac{i2 \pi d}{\lambda}}}{i\lambda d} \iint {E}_{in}(x',y') 
+            e^{\frac{-i\pi}{\lambda d} [ (x-x')^2+(y-y')^2 ] } dx'dy'
+            \label{eq:6}
+            \end{eqnarray}
+            where $\lambda$ is the field wavelength. Thus, in a similar way to Choi et al. \cite{choi2022flexible}, each element of $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ can be described as an input field of a point-illumination at $\vec{r}_{in}$ from the diffuser plane and point-detection $\vec{r}_{out}$ at the diffuser plane:
+            \begin{eqnarray}
+            {E}_{in}(x,y)= e^{-i\phi(x_{in},y_{in})}\delta(x-x_{in},y-y_{in})
+            \label{eq:7}
+            \end{eqnarray}
+            Where $\phi(x_{in},y_{in})$ is the phase distortion of the effective phase-mask and the sign is conjugated from Eq.~\ref{eq:5}. Using Eq.~\ref{eq:7} we obtain:
+            \begin{eqnarray}
+            {E}_{obj}(x,y) \propto  e^{-i\phi(x_{in},y_{in})}
+            e^{\frac{-i\pi}{\lambda d} [(x-x_{in})^2+(y-y_{in})^2 ]}
+            \label{eq:8}
+            \end{eqnarray}
+            Upon reflection from the effective object $O_{eff}$, the detection transfer matrix is applied:
+            \begin{align}
+            & {E}_{out}(x_{out},y_{out}) = e^{i\phi(x_{out},y_{out})} \frac{e^{\frac{i2\pi d}{\lambda}}}{i\lambda d} \iint {E}_{obj}(x',y')O_{eff}(x',y') 
+            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'  \nonumber &\\ 
+            &\propto e^{i\phi(x_{out},y_{out})} \iint e^{\frac{-i\pi}{\lambda d} [(x'-x_{in})^2+(y'-y_{in})^2 ]} O_{eff}(x',y') 
+            e^{\frac{i\pi}{\lambda d} [ (x_{out}-x')^2+(y_{out}-y')^2 ] } dx'dy'
+             \nonumber &\\ 
+            &= e^{i[\phi(x_{out},y_{out})-\phi(x_{in},y_{in})]}e^{\frac{i \pi}{\lambda d}(x^2_{out}+y^2_{out}-x^2_{in}-y^2_{in})} \iint O_{eff}(x',y')e^{-i\frac{2 \pi}{\lambda d}[(x'(x_{out}-x_{in})+y'(y_{out}-y_{in})]}dx'dy'\nonumber &\\ 
+            &\equiv e^{i\phi_{eff}(x_{out},y_{out})}\tilde{O}_{eff}(\frac{x_{out}-x_{in}}{\lambda d},\frac{y_{out}-y_{in}}{\lambda d}) e^{-i\phi_{eff}(x_{in},y_{in})}&
+            \label{eq:9}
+            \end{align}
+            
+            Where $\phi_{eff}(x,y) \stackrel{\text{def}} = \phi(x,y) + \frac{\pi}{\lambda d}(x^2+y^2)$ and $\tilde{O}_{eff}(\nu_x,\nu_y)$ is the Fourier spectrum of ${O}_{eff}$, leading to a scaled ${O}_{eff}$ with a scaling factor of ${\lambda d}$. 
+            
+            So $\bm{R}(\vec{r}_{in},\vec{r}_{out})$ has a structure of a matrix similar to an isoplanatic imaging object beyond scattering layers system reflection matrix in the $\vec{k}$-basis. This matrix format aligns with the input requirements for the CLASS algorithm \cite{kang17,lee22}.
+
+        \end{quote}
+\end{comment}
+
 
 \bibliographystyle{plain}
 \bibliography{bib}
