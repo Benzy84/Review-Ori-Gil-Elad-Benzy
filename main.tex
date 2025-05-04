@@ -496,7 +496,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
 \textbf{Are the result novel?} Yes. The algorithm itself is not new, but its application is.
 
 \textbf{Is the paper written in a way such that somebody knowledgeable in optics but not an ultra-specialist in imaging through scattering media will be able to replicate the results and build up on them?} Not really. 
-\begin{enumerate}[label=\arabic*.]
+
 
     \begin{solved_reviewercomment}
         The main culprit is that the whole CRT-CLASS/I-CLASS are not well-known algorithms, and the only reference given to readers to make themselves familiar with them is not self-contained. \textbf{This has a very easy fix:} add a section in the supplementary information with an explanation of how and why the algorithm works (there is no space restriction there, so there is also no excuse to provide the necessary information).
@@ -505,7 +505,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         It is the same comment as the first referee.
     \end{ourresponse}
 
-    \item \leavevmode\vspace{-\baselineskip}
+\leavevmode\vspace{-\baselineskip}
     \begin{solved_reviewercomment}
         Another point that is likely to make the life on a non-specialist unnecessarily hard is that eq. 1 is only valid within the isoplanatic patch. For objects larger than the isoplanatic patch nothing of what is presented here will work. This is only briefly addressed at the end of the Discussion section (largely swiping it under the carpet) but if not tackled at the beginning is likely to confuse people.
         
@@ -522,9 +522,9 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         This addition ensures that readers are aware of this limitation from the outset, helping non-specialists better understand the applicability of our approach without having to wait until the Discussion section.
     \end{ourresponse}
     
-    \item A few more minor points:
-    \begin{enumerate}[label=3.\alph*.]
-        \item \leavevmode\vspace{-\baselineskip}
+A few more minor points:
+    
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             In the introduction the authors claim that iterative phase retrieval lacks guaranteed convergence, which is technically not true. Convergence might take a VERY long time, but it will eventually happen (see \url{https://doi.org/10.1364/AO.21.002758}).
         \end{solved_reviewercomment}
@@ -541,7 +541,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
             
         \end{ourresponse}
         
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             Just below the above statement there are two sentences beginning with "while" which looks like they are the leftover of some copy-paste during editing.
         \end{solved_reviewercomment}
@@ -552,7 +552,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
             \end{quote}
         \end{ourresponse}
         % \hlred{Write something about that it is not really cheating since in incoherent illumination passive constant illumination such as the sun...}
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             The results shown in Fig. 2 and 3, albeit impressive, require the target to be illuminated from behind, which makes this whole approach invasive. I know the author never explicitly claim non-invasiveness, but they also never make this point clear.
         \end{solved_reviewercomment}
@@ -570,7 +570,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
             Thus, although the particular results in Figures 2 and 3 are invasive, the manuscript demonstrates a non-invasive adaptation of our method (as shown in Figures 4 and 5).
         \end{ourresponse}
        
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             I might have missed it, but I don't think I have seen any discussion about the time needed for the I-CLASS algorithm to converge and give the claimed results.
         \end{solved_reviewercomment}
@@ -585,7 +585,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
             
 
         
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             For the results shown in Fig. 5 one needs to know the distance between the object and the scattering medium, as only the field at the scattering layer can be reconstructed, and one needs to know how far to propagate it back.
         \end{solved_reviewercomment}
@@ -623,7 +623,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         
         
         
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             I am not sure I understand how focussing the illumination on the scattering medium can reduce the fluctuations of \(E^{\text{ill}}_m\). Wouldn't it actually maximise them?    
         \end{solved_reviewercomment}
@@ -660,7 +660,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         
         \end{ourresponse}
         
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{solved_reviewercomment}
             I am slightly confused by the setup diagram in Fig. 5: The role of the polarizing beam splitter near the scattering medium is clear, as it allows to reject part of the unscattered light, thus maximizing the amount of useful signal, but the polarizing beam splitter closer to the camera seems to ensure that the signal and the reference have opposite polarizations, and thus can never interfere. Am I missing something, or is the diagram wrong?
         \end{solved_reviewercomment}
@@ -682,40 +682,95 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
             \end{minipage}
         \end{ourresponse}
                 
-        \item \leavevmode\vspace{-\baselineskip}
+    \leavevmode\vspace{-\baselineskip}
         \begin{reviewercomment}
             The comparison between I-CLASS and the phase retrieval algorithms in the supplementary information seems weird. The fact that the phase retrieval is shown to never be able to reconstruct any image more complex than a few dots looks too bad to be true, and is at odds with my personal experience.
         \end{reviewercomment}
-        \begin{ourresponse}
 
-            \begin{quote}
+        \begin{ourresponse}
+            We thank the reviewer for raising this concern about the comparison between I-CLASS and phase retrieval-based methods. The comparison shown in the supplementary information is between I-CLASS and speckle correlation imaging that uses phase retrieval on an \textbf{estimated} autocorrelation, not standard phase retrieval on the true object spectrum.
+            
+            Standard phase retrieval operates directly on the exact power spectrum of an object, whereas speckle correlation imaging first requires estimating the object's autocorrelation from multiple scattered light patterns. The quality of this estimation affects the subsequent phase retrieval results.
+            
+            Following the reviewer's comment, we have revisited our speckle correlation implementations and improved the results by applying a more rigorous approach:
+            
+            For autocorrelation estimation:
+            \begin{enumerate}
+                \item Calculate the autocorrelation of each scattered frame
+                \item Average all autocorrelations
+                \item Divide the result by the autocorrelation of the mean of the images, which provides an estimate of the envelope of the PSF and subtract the envelope from all frames
+                \item Subtract the minimum value to ensure non-negativity
+                \item Apply appropriate windowing (sqrt of Tukey window for USAF target and Tukey window $^(1/4)$ for the cameraman)
+            \end{enumerate}
+            
+            For phase retrieval, following Katz et al. (Nature Photonics, 2014):
+            \begin{enumerate}
+                \item Apply 300 iterations of HIO algorithm with decreasing beta parameters (from 2.0 to 1.2, decreasing by 0.2)
+                \item Follow with 300 iterations of error reduction
+                \item Implement object-specific constraints:
+                \begin{itemize}
+                    \item  For the cameraman: real, positive, and non-negative constraints
+                    \item  For the USAF target: same constraints plus an additional finite square support
+                \end{itemize}
+            \end{enumerate}
+            
+            
+            The updated figure now includes both our improved speckle correlation results and phase retrieval applied directly to the reference image for comparison. While our enhanced speckle correlation implementation shows better results than our original submission, I-CLASS still demonstrates better reconstruction quality, particularly for complex objects when the number of speckles in the PSF is limited, as is often the case in realistic experimental conditions.
+            
+            We have updated the supplementary section to reflect these improvements and provide a more comprehensive comparison.
+
+                        \begin{quote}
                 \section{Comparison with speckle-correlation phase-retrieval based reconstruction}
 
-                We present a numerical comparison between our proposed I-CLASS method and the speckle correlation imaging of Katz et al. \cite{katz14}, which is, in essence, equivalent to running a phase-retrieval algorithm on the estimated object autocorrelation (that is, its power spectrum) as originally proposed by Labeyrie's stellar speckle interferometry \cite{labeyrie1970attainment}. 
+                We present a numerical comparison between our proposed I-CLASS method and the speckle correlation imaging of Katz et al. \cite{katz14}, which is, in essence, equivalent to running a phase-retrieval algorithm on the \textbf{estimated} object autocorrelation (that is, its power spectrum) as originally proposed by Labeyrie's stellar speckle interferometry \cite{labeyrie1970attainment}. 
                 Both methods utilize similar experimental setups and image acquisition schemes, allowing for a direct performance evaluation. To perform this comparison, we focused on several numerically simulated isoplanatic imaging scenarios, demonstrating the superior performance of the matricial I-CLASS approach when reconstructing complex non-sparse natural target objects.
                 
-                The results of this study are presented in Fig.~\ref{fig_S4}, which displays a side-by-side comparison between the I-CLASS and speckle correlation reconstruction methods for two test objects (Fig.~\ref{fig_S4}a,e). We numerically simulate camera frames under dynamic scattering by Fourier transforming a random phase mask drawn from a uniform distribution over $[0, 2\pi]$ and taking the squared absolute value (Fig.~\ref{fig_S4}b,f). 
+                For the speckle correlation reconstruction, we employ a rigorous approach to estimate the autocorrelation:
+                \begin{enumerate}
+                    \item Calculate the autocorrelation of each scattered frame
+                    \item Average all autocorrelations
+                    \item Divide the result by the autocorrelation of the mean of the images, which provides an estimate of the envelope of the PSF and subtract the envelope from all frames
+                    \item Subtract the minimum value to ensure non-negativity
+                    \item Apply appropriate windowing (sqrt of Tukey window for USAF target and Tukey window $^{(1/4)}$ for the cameraman)
+                \end{enumerate}
                 
-                For the Cameraman (Fig.~\ref{fig_S4}a), the speckle correlation imaging approach (Fig.~\ref{fig_S4}c), which uses the Hybrid Input-Output (HIO) algorithm \cite{fienup1978reconstruction} for phase retrieval, shows noticeably lower performance compared to I-CLASS reconstruction (Fig.~\ref{fig_S4}d), as indicated by the correlation coefficients between the ground-truth image and the reconstructed images. Similarly, for the USAF resolution target (Fig.~\ref{fig_S4}e), while speckle correlation reconstruction (Fig.~\ref{fig_S4}g) performs somewhat better than with the more complex Cameraman image, the I-CLASS algorithm still demonstrates superior performance (Fig.~\ref{fig_S4}h).
+                For phase retrieval, following Katz et al. \cite{katz14}, we implement:
+                \begin{enumerate}
+                    \item 300 iterations of HIO algorithm with decreasing beta parameters (from 2.0 to 1.2, decreasing by 0.2)
+                    \item 300 additional iterations of error reduction
+                    \item Object-specific constraints:
+                    \begin{itemize}
+                        \item For the cameraman: real, positive, and non-negative constraints
+                        \item For the USAF target: same constraints plus an additional finite square support
+                    \end{itemize}
+                \end{enumerate}
                 
+                The results of this comparison are presented in Fig.~\ref{fig_S4}. The top row shows results for the Cameraman image while the bottom row shows results for the USAF resolution target. For each test object, we display the widefield reference (Fig.~\ref{fig_S4}a,f), an example frame distorted by scattering (Fig.~\ref{fig_S4}b,g), the speckle correlation reconstruction (Fig.~\ref{fig_S4}c,h), the I-CLASS reconstruction (Fig.~\ref{fig_S4}d,i), and phase retrieval applied directly to the reference image (Fig.~\ref{fig_S4}e,j).
                 
-                Our comparative analysis shows that I-CLASS provides better reconstructions for these test objects than the speckle correlation method.
+                While speckle correlation imaging produces recognizable reconstructions for both test objects, I-CLASS demonstrates higher reconstruction quality, particularly for the more complex Cameraman image.
                 
+                    \caption{\textbf{} 
+                    A comparison between I-CLASS and speckle correlation imaging for complex objects. \textbf{a,f} Numerically simulated target objects: the Cameraman image and USAF resolution target. \textbf{b,g} Example camera frames simulated under dynamic scattering. \textbf{c,h} Speckle correlation imaging reconstructions using the HIO algorithm (see parameters in text). \textbf{d,i} I-CLASS reconstructions showing higher fidelity to the original objects. \textbf{e,j} Phase retrieval applied directly to the reference images. Scale bar: 10 px.}
+                    \label{fig_S4}
 
                 \begin{minipage}{\linewidth}
                 	\centering
-                    \includegraphics[width=0.93\linewidth]{figures/figure_S4_for_referee.pdf}
+                    \includegraphics[width=0.93\linewidth]{figures/figure_S4.pdf}
                          \renewcommand{\thefigure}{S4}
                     \captionof{figure}{\footnotesize\textbf{Numerical example imaging through dynamic scattering media.} 
-                    Comparison of the I-CLASS and speckle correlation imaging for non-sparse objects. \textbf{a,e} Numerically simulated target objects: the Cameraman image and USAF resolution target. \textbf{b,f} Example camera frames simulated under dynamic scattering. \textbf{c,g} Speckle correlation imaging reconstructions using the HIO algorithm shows limited reconstruction capability, particularly for the more complex Cameraman image. \textbf{d,h} I-CLASS reconstructions demonstrate consistently high fidelity, showing higher correlation coefficients with the ground-truth images for both simulated objects. HIO parameters: $\beta = 1$, 100 realizations, 1000 iterations. Scale bar: 10 px.}
+                    A comparison between I-CLASS and speckle correlation imaging for complex objects. \textbf{a,f} Numerically simulated target objects: the Cameraman image and USAF resolution target. \textbf{b,g} Example camera frames simulated under dynamic scattering. \textbf{c,h} Speckle correlation imaging reconstructions using the HIO algorithm (see parameters in text). \textbf{d,i} I-CLASS reconstructions showing higher fidelity to the original objects. \textbf{e,j} Phase retrieval applied directly to the reference images. Scale bar: 10 px.}
                     \label{fig_S4_2}
                 \end{minipage}
-
             \end{quote}
+
+        \end{ourresponse}
+        
+        \begin{ourresponse}
+
             \hlyellow{\textbf{Note from Ori:}
             the reason is that this is not standard phase-retrieval but phase-retrieval of speckle correlation imaging experiment: in a standard phase-retrieval the algorithm is run on the real power spectrum on the object (or equivalently the exact fourier-transform autocorrelation of the object) calculated directly from the object, whereas in our case the phase retrieval is run on an ESTIMATE of the object’s autocorrelation from the speckle correlation. In particular, for speckle correlation imaging to work, the speckled PSF autocorrelation has to resemble a highly-peaked delta-like function. This is the case ONLY when the PSF contains an extremely large number of speckles, since for a speckle field the autocorrelation peak to background ratio is proportional to the number of speckles contained in the PSF. This practically requires the captured scattered light image to contain a number of speckles that is considerably larger than the number of bright resolution cells in the target, which is not the case in our experiemnts and simulations]}
-        \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
-            
+            \hlred{Here we need to answer that it is correct that if you have the correct PSD of the object given some constraint there is a global minimum and you probably eventually converge there, however given non ideal estimation of the PSD (statistical speckle statistics error + noise) it works much worse, regrading statistical noise I would discuss the small PSF regime, and about the shot noise, I would cite Jerome's Optica paper about covariance noise, and claim that since we use the entire matrix and not just the diagonal we have better SNR}
+                
             
         \end{ourresponse}
         \hl{example 1}
@@ -728,8 +783,6 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
         
         \hlyellow{example 5}
         
-    \end{enumerate}
-\end{enumerate}
 
 
 \begin{comment}
