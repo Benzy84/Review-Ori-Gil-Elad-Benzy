@@ -368,25 +368,13 @@ We thank the reviewer for this suggestion.
 We have added a comprehensive description of the I-CLASS algorithm to the Methods section as suggested.
 \begin{quote}
     \subsection*{I-CLASS algorithm for dynamic scattering compensation}
-        We employ the I-CLASS algorithm \cite{weinberg2024noninvasive}, an extension of the CLASS algorithm \cite{kang17, kang2024implementation} designed to correct incident and reflected aberrations within an isoplanatic patch. The CLASS algorithm decomposes the reflection matrix to separate the object from scattering distortions, while CTR-CLASS and I-CLASS apply the same decomposition principles to the covariance matrix. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. In the specific case of CTR-CLASS, this further simplifies the estimation to two rank-1 vectors, as the incident and reflected aberrations are identical. CTR-CLASS is based on covariance analysis of random speckle illuminations, similar to the retrieval of Green's functions in passive correlation imaging \cite{wapenaar2004retrieving}, which enables a compressed estimation of the reflection matrix.
+        We employ the I-CLASS algorithm \cite{weinberg2024noninvasive}, an extension of the CLASS algorithm \cite{kang17, kang2024implementation} designed to correct incident and reflected aberrations within an isoplanatic patch. The CLASS algorithm decomposes the reflection matrix to separate the object from scattering distortions, while CTR-CLASS and I-CLASS apply the same decomposition principles to the covariance matrix. Under the assumptions of isoplanatism and a thin planar object, the problem simplifies to estimating three rank-1 vectors: the incident aberration, the reflected aberration, and the thin planar object. CTR-CLASS is based on covariance analysis of random speckle illuminations, similar to the retrieval of Green's functions in passive correlation imaging \cite{wapenaar2004retrieving}, which enables a compressed estimation of the reflection matrix.
         
         In our dynamic scattering scenario, the key insight is the mathematical role exchange between the object and PSF compared to the standard CTR-CLASS framework. We arrange the captured camera frames as columns of a measurement matrix $\textbf{A}$, where each column represents one image realization. In conventional CTR-CLASS / I-CLASS (with static scattering), each recorded frame follows the convolution equation $I_m(\vec{r}) = P(\vec{r}) \ast O_m(\vec{r})$ with a static PSF and varying illuminated objects, which can be expressed in matrix form as $\textbf{A} = \textbf{P}\textbf{O}\textbf{S}$. In our dynamic scattering approach, the equation becomes $I_m(\vec{r}) = P_m(\vec{r}) \ast O(\vec{r})$, which due to convolution commutativity can be rewritten as $I_m(\vec{r}) = O(\vec{r}) \ast P_m(\vec{r})$. This is represented in matrix form as $\textbf{A} = \textbf{O}\textbf{P}$, where $\textbf{O}$ is now a Toeplitz convolution matrix with the object function as the convolution kernel, and $\textbf{P}$ contains the different PSF realizations as its columns.
 
         This mathematical duality allows us to apply the same algorithm to reconstruct the object instead of the scattering medium without modifying the core algorithm structure. Weinberg et al. \cite{weinberg2024noninvasive} enhanced the basic approach with both a memory-efficient implementation and amplitude correction, addressing not only phase but also amplitude distortions caused by scattering. The algorithm operates in the Fourier domain, where convolution becomes multiplication, making the decomposition more tractable. 
         
-        For each iteration $t = 1...T$, the algorithm computes a correction vector:
-        \begin{eqnarray}
-            \vec{z}_{t+1}=\sum_{q=1}^{M}(\tilde{\textbf{A}}_t^* \odot ((\tilde{\textbf{A}}_t^{(ud)^*}*\tilde{\textbf{A}}_t^{(lr)})_{:,M-1} \star \tilde{\textbf{A}}_t^{(ud)}))_{:,q}
-        \end{eqnarray}
-        
-        The matrix is then updated through phase correction in the Fourier domain:
-        \begin{eqnarray}
-            \tilde{\textbf{A}}_{t+1}=diag\{e^{i\frac{\vec{z}_t}{|\vec{z}_t|}}\}\tilde{\textbf{A}}_t
-        \end{eqnarray}
-        
-        Here, $\tilde{\textbf{A}}$ denotes the 2D Fourier transform of the mean-subtracted measurement matrix, $\tilde{\textbf{A}}^{(ud)}$ is $\tilde{\textbf{A}}$ with each column flipped upside-down, and $\tilde{\textbf{A}}^{(lr)}$ is $\tilde{\textbf{A}}$ with rows flipped left-to-right. The symbols $\odot$, $*$, and $\star$ represent element-wise multiplication (Hadamard product), 2D convolution, and 2D correlation operators, respectively. The complex conjugate of a matrix is denoted by the superscript $*$, and $\textbf{X}_{:,q}$ represents the $q$-th column of matrix $\textbf{X}$.
-        
-        This approach enables reconstruction of complex objects through dynamic scattering media using only a small number of measurements (M=150 in our experiments), making it practical for imaging scenarios where rapidly varying scattering would otherwise prevent clear visualization.
+        For each iteration ...
 \end{quote}
 
 \end{ourresponse}
@@ -978,6 +966,171 @@ the reason is that this is not standard phase-retrieval but phase-retrieval of s
 
         \end{quote}
 \end{comment}
+
+
+
+
+%--------------------------------------------------------------------
+% Supplementary Section – Algorithmic Foundations of
+% CLASS, CTR‑CLASS and Dynamic‑CLASS
+%--------------------------------------------------------------------
+\section{Matrix‑based scattering compensation algorithms}
+\label{supsec:algorithms}
+
+%====================================================================
+\subsection{1.\quad Single illumination: reflection‑matrix derivation}
+\label{subsec:R_derivation}
+
+\paragraph{Definitions.}~\\
+Assuming a thin aberrating layer in front of a reflective object that lies
+within the isoplanatic patch, we denote
+\begin{itemize}
+  \item $E_{\text{in}}(\mathbf r)$ – complex field impinging on the layer,
+  \item $P_{\text{ill}}(\mathbf r)$ – point‑spread function (PSF) for the forward path,
+  \item $O(\mathbf r)$ – complex reflectivity of the object,
+  \item $P_{\text{det}}(\mathbf r)$ – PSF for the return path,
+  \item $E_{\text{out}}(\mathbf r)$ – field reaching the detector.
+\end{itemize}
+
+\paragraph{Field equation.}~\\
+The round‑trip field is
+\begin{equation}
+E_{\text{out}}(\mathbf r)=
+P_{\text{det}} \ast
+\Bigl\{
+  O(\mathbf r)\,
+  \bigl[P_{\text{ill}}\ast E_{\text{in}}\bigr](\mathbf r)
+\Bigr\},
+\label{eq:doublepass_sup}
+\end{equation}
+where “$\ast$” denotes 2‑D convolution in the transverse coordinate
+$\mathbf r$.
+
+\paragraph{Discretisation and matrix form.}~\\
+Sampling on an $L\times L$ grid ($N=L^{2}$ pixels) and vectorising each field
+into an $N\times1$ column, $e_{\text{in}}$ or $e_{\text{out}}$, converts
+Eq.~\eqref{eq:doublepass_sup} to
+\begin{equation}
+e_{\text{out}}=
+P_{\text{det}}\;
+O\;
+P_{\text{ill}}\;
+e_{\text{in}},
+\label{eq:R_matrix_form}
+\end{equation}
+where
+\begin{enumerate}
+  \item $P_{\text{ill}}$ – $N\times N$ Toeplitz (convolution) matrix,
+  \item $O=\mathrm{diag}(O_{1},\dots,O_{N})$ – diagonal object matrix,
+  \item $P_{\text{det}}$ – $N\times N$ Toeplitz convolution matrix.
+\end{enumerate}
+
+\noindent\textbf{Multiple illuminations.}~\\
+Equation~\eqref{eq:R_matrix_form} is written for a \emph{single}
+illumination field.  If we illuminate the sample with $M$ different fields,
+we stack them as the columns of
+\(E_{\text{in}}\in\mathbb{C}^{N\times M}\).
+The corresponding detected fields form
+\(E_{\text{out}}\in\mathbb{C}^{N\times M}\),
+and Eq.~\eqref{eq:R_matrix_form} generalises to
+\[
+E_{\text{out}} = P_{\text{det}}\,O\,P_{\text{ill}}\,E_{\text{in}}.
+\]
+Thus both $E_{\text{in}}$ and $E_{\text{out}}$ are $N\times M$ matrices,
+each \emph{column} containing the input or output field for one
+illumination.
+\paragraph{Reflection atrix}~\\
+Collecting the operators that map the incident field to the detected field,
+we define the \emph{reflection matrix}
+\begin{equation}
+R \;=\; P_{\text{det}}\,
+        O\,
+        P_{\text{ill}},
+\qquad\Longrightarrow\qquad
+e_{\text{out}} = R\,e_{\text{in}}.
+\label{eq:R_def}
+\end{equation}
+\paragraph{CLASS decomposition.}~\\
+\(R\) is the product of a Toeplitz, a diagonal, and a Toeplitz matrix,
+the CLASS algorithm can exploit this specific structure to iteratively
+factor \(R\) into its three components \(P_{\text{ill}}\), \(P_{\text{det}}\),
+and \(O\), thereby recovering the aberration‑free object $O$.
+
+%====================================================================
+\subsection{2.\quad CTR/I‑CLASS: random‑illumination generalisation}
+\label{subsec:ctr_class}
+
+Illuminating the sample $m=1,\dots,M$ times with random, uncorrelated
+illumination patterns yields the imaging equation
+\begin{equation}
+I_{m}(\mathbf r)
+  = P(\mathbf r)\ast O_{m}(\mathbf r).
+\label{imaging_eq}
+\end{equation}
+
+Here $O_m$ is the object under the $m^{\text{th}}$ illumination.  For the
+matrix representation we collect the random illumination patterns in the
+columns of $S_{\text{ill}}\in\mathbb{C}^{N\times M}$.
+Defining $S = P_{\text{ill}} S_{\text{ill}}$ and stacking the detected
+fields column‑wise gives the measurement matrix
+\begin{equation}
+A \;=\; P_{\text{det}}\,
+        O\,
+        P_{\text{ill}}\,
+        S_{\text{ill}}
+     =\; P_{\text{det}}\,
+        O\,
+        S.
+\label{eq:A_def}
+\end{equation}
+The covariance matrix is
+\begin{equation}
+\hat{A}\,\hat{A}^{\dagger}
+      = P_{\text{det}}\,
+        O\,
+        \bigl(\hat{S}\,\hat{S}^{\dagger}\bigr)\,
+        O^{\dagger}\,
+        P_{\text{det}}^{\dagger}.
+\label{eq:A_cov}
+\end{equation}
+For uncorrelated illumination it can be shown [citations] that
+$\hat{S}\hat{S}^{\dagger}\propto I$, leading to
+\begin{equation}
+\hat{A}\,\hat{A}^{\dagger}
+      = P_{\text{det}}\,
+        O\,O^{\dagger}\,
+        P_{\text{det}}^{\dagger}
+      = P_{\text{det}}\,
+        |O|^{2}\,
+        P_{\text{det}}^{\dagger}.
+\label{eq:A_cov2}
+\end{equation}
+This restores the same TDT form as Eq.~\eqref{eq:R_def}, so CLASS operates
+on $\hat{A}\hat{A}^{\dagger}$ exactly as on $R$, constituting
+CTR‑CLASS/I‑CLASS.
+
+%====================================================================
+\subsection{3.\quad Dynamic scattering: exchanging roles of object and PSF}
+\label{subsec:dyn_class}
+
+With rapidly varying detection PSFs $P_{m}$ and a static object $O$, each
+short‑exposure frame obeys
+\[
+I_{m}(\mathbf r)
+  = P_{m}(\mathbf r)\ast O(\mathbf r)
+  = O(\mathbf r)\ast P_{m}(\mathbf r).
+\]
+(We neglect $P_{\text{ill}}$: in the coherent case we showed that for a
+small spot the illumination is unaffected by the varying scattering
+(see~...), and in the incoherent case multiple speckle illuminations are
+summed within each realisation of the scattering medium so that the
+effective illumination is constant (see~...).)
+
+Thus we obtain the same imaging‑equation form as in
+Eq.~\eqref{imaging_eq} and can apply exactly the same algorithm used for
+the random‑illumination case (CTR‑CLASS/I‑CLASS).
+
+%=
 
 
 \bibliographystyle{plain}
