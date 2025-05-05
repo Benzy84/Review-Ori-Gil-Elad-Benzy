@@ -23,6 +23,7 @@
 \usepackage{enumitem,amssymb}
 \usepackage{bm}% bold math
 \usepackage{enumitem}
+\usepackage{float}
 
 
 % Define custom colors
@@ -80,15 +81,18 @@
 
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 Coherent spot size simulation: achieve more stastics and try to solve it
+
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 \st{Analytic} dependence on M (covariance estimator + rank of object) 
 
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 Phase retrieval: (a) number of iterations (show plateau) (b) noise + number of realizations (needs good approximation of AC)
+
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 Show convergence graph in some measurements + heatmap of iterations as function of M / function of sparsity
-\item[$\square$]
-Modify [Kang et al., Nat. Commun., 2023] and if possible try and simulate such solution
+
+\item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
+\st{Modify [Kang et al., Nat. Commun., 2023] and if possible try and simulate such solution}
 
 \item[$\square$]
 Mosaicing experiment
@@ -96,11 +100,12 @@ Mosaicing experiment
 \item[$\square$]
 SVD and show depndence of singular vector and energy conservation
 
-\item[$\square$]
+\item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{55}}}$\square$]
 Figure of different multiplicative factors and their dependence + Explain more the multiplication of different constants 
 
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 Heatmap of sparsity and M with noise
+
 \item[\rlap{\raisebox{0.3ex}{\hspace{0.4ex}\scriptsize \ding{51}}}$\square$]
 Heatmap of sparsity and M
 
@@ -204,14 +209,14 @@ As often with this group, this work is technically of excellent quality and its 
         To ensure statistical robustness, each data point in these heatmaps represents the average outcome from 10 independent numerical experiments.
 
         
-        \begin{minipage}{\linewidth}
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.93\textwidth]{figures/figure_S8.pdf}
             \renewcommand{\thefigure}{S8}
-            \captionof{figure}{\footnotesize \textbf{ Reconstruction fidelity as a function of number of realizations and object sparsity.} 
+            \captionof{figure}{\footnotesize\textbf{Reconstruction fidelity as a function of number of realizations and object sparsity.} 
             Cross-correlation scores between reconstructed and ground truth images are shown as heatmaps for different imaging scenarios. \textbf{a} Example simulated objects with different sparsity levels: $2^{12}$ (left) and $2^8$ (right) bright points. \textbf{b} Incoherent imaging results under different SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). \textbf{c} Coherent imaging results under the same SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). The horizontal axis shows the number of realizations (M), and the vertical axis shows object sparsity (represented as the number of bright points). Color scale indicates correlation coefficient from 0 to 1. Each data point represents the average result from 10 distinct numerical experiments with different random objects under identical parameters. For all simulations, a camera pixel count of N=350$^2$ was used.}
             \label{fig_S8}
-        \end{minipage}
+        \end{figure}
 
         These results demonstrate that sparser objects can be reconstructed with fewer realizations, while complex objects need substantially more measurements. Higher SNR conditions predictably improve reconstruction quality, and coherent imaging appears to require more measurements than incoherent imaging for equivalent fidelity.
 
@@ -314,13 +319,13 @@ where $\alpha$ controls the total range of modulation with corresponding modulat
 \end{comment}
 
 
-\begin{minipage}{\linewidth}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.93\textwidth]{figures/Figure_S9.pdf}
     \renewcommand{\thefigure}{S9}
-    \captionof{figure}{\footnotesize \textbf{Effect of modulation depth on reconstruction quality.} The similarity score (y-axis) shows the Pearson correlation coefficient between the reconstructed and ground-truth images as modulation depth increases. Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
+    \captionof{figure}{\footnotesize\textbf{Effect of modulation depth on reconstruction quality.} The similarity score (y-axis) shows the Pearson correlation coefficient between the reconstructed and ground-truth images as modulation depth increases. Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
     \label{fig_S9}
-\end{minipage}
+\end{figure}
 %\hlred{Explain  what is the similarity score in the caption, change y-label to correlation, write in the caption 'Pearson correlation'}
 
 % \hlred{Add $\alpha$ to x label}
@@ -676,13 +681,13 @@ Thank you for the opportunity to clarify the computational performance of our al
         For a more comprehensive demonstration of this digital autofocus capability, we refer readers to Supplementary Movie S3, which shows the continuous evolution of the reconstructed field as the propagation distance is varied from the diffuser plane (z = 0) to beyond the object plane.
 
         \vspace{1em}
-        \begin{minipage}{\linewidth}
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.93\textwidth]{figures/figure_S6.pdf}
             \renewcommand{\thefigure}{S6}
             \captionof{figure}{\footnotesize\textbf{Digital autofocus capability through numerical propagation of the reconstructed complex field.} The reconstructed field intensity is shown at three different propagation distances: \textbf{a} z = 5.3 cm (before the object plane), \textbf{b} z = 7.15 cm (at the object plane, where optimal focus is achieved), and \textbf{c} z = 9.0 cm (after the object plane). The sharp focus visible in panel \textbf{b} confirms the correct object plane location, demonstrating that precise knowledge of the object-diffuser distance is not required during data acquisition as optimal focus can be determined computationally during post-processing. Scale bars: 1 mm.}
             \label{fig_S6}
-        \end{minipage}
+        \end{figure}
     \end{quote}
 \end{ourresponse}
 
@@ -708,14 +713,15 @@ In our coherent imaging configuration (Fig.~\ref{fig_5} of the main text), maint
 
 This requirement might appear contradictory, as one might expect that any illumination passing through a dynamic scatterer would inevitably result in varying illumination patterns. However, the key insight is that the relationship between the illumination spot size on the diffuser and the diffuser's correlation length determines whether the illumination at the object plane remains approximately constant between different diffuser realizations.
 
-\begin{minipage}{\linewidth}
+
+\begin{figure}[H]
 \centering
-\includegraphics[width=0.93\textwidth]{figures/figure_S7.pdf}
+\includegraphics[width=0.99\textwidth]{figures/figure_S7.pdf}
 \renewcommand{\thefigure}{S7}
-\captionof{figure}{\footnotesize \textbf {Effect of illumination spot size on imaging through dynamic scattering.} 
-Numerical simulations demonstrating how the ratio of illumination spot size ($d_{spot}$) to diffuser correlation length ($d_{corr}$) affects illumination at the object plane and reconstruction quality. Each column represents a different spot size ratio: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=1$ (middle), and $\frac{d_{spot}}{d_{corr}}=10$ (right). \textbf{a-c} Illumination phase pattern on the diffuser surface. The colorbar indicates phase values from $-\pi$ to $\pi$. The white inset in (a) shows the zoomed-in beam spot. \textbf{d-f} Resulting intensity patterns at the object plane after numerical propagation through the diffuser. The grayscale colorbar indicates normalized intensity. \textbf{g-i} Effective object (target object multiplied by the illumination pattern). \textbf{j-l} Reconstructed images after applying the I-CLASS algorithm. Note how a small spot size relative to the diffuser correlation length (left column) maintains relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) create varying speckle patterns that degrade reconstruction quality.}
+\captionof{figure}{\footnotesize\textbf{Effect of illumination spot size on imaging through dynamic scattering.} 
+Numerical simulations demonstrating how the ratio of illumination spot size ($d_{spot}$) to diffuser correlation length ($d_{corr}$) affects illumination at the object plane and reconstruction quality. Each column represents a different spot size ratio: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=1$ (middle), and $\frac{d_{spot}}{d_{corr}}=10$ (right). \textbf{a-c} Illumination phase pattern on the diffuser surface. The colorbar indicates phase values from $-\pi$ to $\pi$. The white inset in (a) shows the zoomed-in beam spot. \textbf{d-f} Resulting intensity patterns at the object plane after numerical propagation through the diffuser. The grayscale colorbar indicates normalized intensity. \textbf{g-i} Effective object (target object multiplied by the illumination pattern). \textbf{j-l} Reconstructed images after applying the I-CLASS algorithm. Note how a small spot size relative to the diffuser correlation length (left column) maintains relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) create varying speckle patterns that degrade reconstruction quality}
 \label{fig_S7}
-\end{minipage}
+\end{figure}
 
 Fig.~\ref{fig_S7} demonstrates this principle through numerical simulation. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of the diffuser with the illumination spot superimposed for three cases: where the spot size is 0.1, 1, and 10 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using Fourier transform propagation.
 
@@ -730,8 +736,6 @@ In our experimental implementation described in the main text, we carefully focu
 
 \end{ourresponse}
 
-
-
 \begin{enumerate}[label=\arabic*., resume]
 \item \leavevmode
 \end{enumerate}
@@ -744,7 +748,7 @@ In our experimental implementation described in the main text, we carefully focu
     We thank the reviewer for their careful examination of our experimental setup. The reviewer is correct - this was an error in our diagram. It should indeed be a non-polarizing beam splitter (BS), not a polarizing beam splitter (PBS). We have corrected this in the revised manuscript.
             
     \vspace{1em}
-    \begin{minipage}{\linewidth}
+    \begin{figure}[H]
         \centering
         \includegraphics[width=0.93\linewidth]{figures/figure_5.pdf}
         \renewcommand{\thefigure}{5}
@@ -755,7 +759,7 @@ In our experimental implementation described in the main text, we carefully focu
         \textbf{e} Complex-valued field amplitude PSFs (APSFs), estimated from the captured fields after effective deconvolution of the reconstructed object field. 
         \textbf{f} Reference intensity image of the object without the diffuser present. Scale bars, 1$mm$}
         \label{fig_5}
-    \end{minipage}
+    \end{figure}
 \end{ourresponse}
         
 \begin{enumerate}[label=\arabic*., resume]
@@ -830,14 +834,14 @@ In our experimental implementation described in the main text, we carefully focu
         
         While speckle correlation imaging produces recognizable reconstructions for both test objects, I-CLASS demonstrates higher reconstruction quality, particularly for the more complex Cameraman image.
 
-        \begin{minipage}{\linewidth}
+        \begin{figure}[H]
             \centering
             \includegraphics[width=0.93\linewidth]{figures/figure_S4.pdf}
-                 \renewcommand{\thefigure}{S4}
+            \renewcommand{\thefigure}{S4}
             \captionof{figure}{\footnotesize\textbf{Numerical example imaging through dynamic scattering media.} 
             A comparison between I-CLASS and speckle correlation imaging for complex objects. \textbf{a,f} Numerically simulated target objects: the Cameraman image and USAF resolution target. \textbf{b,g} Example camera frames simulated under dynamic scattering. \textbf{c,h} Speckle correlation imaging reconstructions using the HIO algorithm (see parameters in text). \textbf{d,i} I-CLASS reconstructions showing higher fidelity to the original objects. \textbf{e,j} Phase retrieval applied directly to the reference images. Scale bar: 10 px.}
             \label{fig_S4}
-        \end{minipage}
+        \end{figure}
     \end{quote}
 
 \end{ourresponse}
