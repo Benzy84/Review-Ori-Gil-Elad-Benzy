@@ -631,7 +631,7 @@ I might have missed it, but I don't think I have seen any discussion about the t
 Thank you for the opportunity to clarify the computational performance of our algorithm. To give readers a practical sense of the method's efficiency, we've added a runtime specification in the Experimental Parameters section:
 
 \begin{quote}
-    The algorithm run time on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 200ms$ per iteration for 150 camera frames at a resolution of $1400 \times 1400$ pixels and around $\sim 50ms$ per iteration for 150 camera frames at a resolution of $700 \times 700$ pixels.
+    The algorithm run time on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels.
 \end{quote}
 \end{ourresponse}
 
@@ -1131,6 +1131,111 @@ Eq.~\eqref{imaging_eq} and can apply exactly the same algorithm used for
 the random‑illumination case (CTR‑CLASS/I‑CLASS).
 
 %=
+
+
+\begin{ourresponse}
+\subsection*{I-CLASS algorithm for dynamic scattering compensation}
+
+The I-CLASS algorithm builds upon the fundamental principles of reflection-matrix-based imaging techniques. To understand its operation, we'll first establish the mathematical foundation of conventional reflection-matrix imaging, then show how this extends to random illumination via CTR-CLASS/I-CLASS, and finally explain how these principles apply to dynamic scattering.
+
+\subsubsection*{Reflection-Matrix Foundations}
+
+In conventional imaging with a thin object within the isoplanatic patch, the relationship between a single input complex field $E_{in}(\vec{r})$ and the output measured field $E_{out}(\vec{r})$ is described by:
+
+\begin{equation}
+E_{out}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in}(\vec{r}))]
+\end{equation}
+
+where $P_{ill}(\vec{r})$ and $P_{det}(\vec{r})$ represent the illumination and detection point spread functions (PSFs), respectively, $O(\vec{r})$ is the object reflectivity function, and $*$ denotes convolution.
+
+When measuring with multiple different input fields $E_{in,m}(\vec{r})$ for $m=1...M$, we obtain a set of output fields:
+
+\begin{equation}
+E_{out,m}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in,m}(\vec{r}))]
+\end{equation}
+
+When sampling these equations on a discrete grid with $N$ pixels and arranging the fields into column vectors, this relationship can be expressed in matrix form as:
+
+\begin{equation}
+\vec{E}_{out} = \mathbf{R} \vec{E}_{in} = \mathbf{P}_{det} \mathbf{O} \mathbf{P}_{ill} \vec{E}_{in}
+\end{equation}
+
+Here, $\mathbf{P}_{ill}$ and $\mathbf{P}_{det}$ are $N \times N$ Toeplitz (convolution) matrices representing the illumination and detection PSFs, and $\mathbf{O}$ is a diagonal matrix with the object reflectivity on its diagonal. Together, these form the reflection matrix $\mathbf{R} = \mathbf{P}_{det} \mathbf{O} \mathbf{P}_{ill}$, which has a characteristic Toeplitz-Diagonal-Toeplitz (TDT) structure.
+
+The CLASS algorithm is fundamentally a matrix decomposition method that can take any matrix with this TDT structure and decompose it into its constituent matrices. This allows recovery of the aberration-free object $\mathbf{O}$ by separating it from the distortions introduced by the PSFs.
+
+\subsubsection*{CTR-CLASS and I-CLASS: Covariance-Based Approach}
+When we cannot directly measure the full reflection matrix, the CTR-CLASS approach provides an alternative. Instead of acquiring the full matrix, we illuminate the sample with $M$ different random patterns. For each illumination, the field equation becomes:
+
+\begin{equation}
+E_{out,m}(\vec{r}) = P_{det}(\vec{r}) * O_m(\vec{r})
+\end{equation}
+
+where $O_m(\vec{r}) = O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in,m}(\vec{r}))$ represents the effective object, which is the illuminated object in the $m$-th measurement.
+
+Arranging these $M$ measurements as columns of a matrix $\mathbf{A}$, we have:
+
+\begin{equation}
+\mathbf{A} = \mathbf{P}_{det} \mathbf{O} \mathbf{P}_{ill} \mathbf{S}_{ill} = \mathbf{P}_{det} \mathbf{O} \mathbf{S}
+\end{equation}
+
+where $\mathbf{S}_{ill}$ contains the random illumination patterns in its columns, and $\mathbf{S} = \mathbf{P}_{ill} \mathbf{S}_{ill}$ represents the effective illumination patterns at the object plane. Importantly, if the input illumination patterns $\mathbf{S}_{ill}$ are random and uncorrelated, then the effective patterns $\mathbf{S}$ at the object plane also remain uncorrelated, as the fixed linear operator $\mathbf{P}_{ill}$ preserves this statistical property.
+
+For such uncorrelated illumination patterns, the covariance matrix of $\mathbf{A}$ has the form:
+
+\begin{equation}
+\hat{\mathbf{A}} \hat{\mathbf{A}}^{\dagger} = \mathbf{P}_{det} \mathbf{O} (\hat{\mathbf{S}} \hat{\mathbf{S}}^{\dagger}) \mathbf{O}^{\dagger} \mathbf{P}_{det}^{\dagger} \approx \mathbf{P}_{det} |O|^2 \mathbf{P}_{det}^{\dagger}
+\end{equation}
+
+Since $\hat{\mathbf{S}} \hat{\mathbf{S}}^{\dagger} \approx \mathbf{I}$ for uncorrelated illuminations, the covariance matrix maintains the same TDT structure as the conventional reflection matrix, with $|O|^2$ replacing $O$. Thus, the CLASS algorithm can be applied directly to this covariance matrix to retrieve both the squared object intensity $|O|^2$ and the PSF $P_{det}$. Once $P_{det}$ is known, the original object $O$ can be recovered through deconvolution if phase information is required.
+
+The key insight here is that with the equation structure $E_m = P O_m$ (where $O_m$ varies with each measurement while $P$ remains fixed), we can reconstruct the object using this algorithm.
+
+\subsubsection*{Dynamic Scattering: Object and PSF Role Exchange}
+
+In our dynamic scattering scenario, the fundamental imaging equation changes. Instead of having a static PSF and varying illuminations, we have a static object and varying PSFs due to the dynamic scattering medium, the imaging equation in this case will be:
+
+\begin{equation}
+I_m(\vec{r}) = P_m(\vec{r}) * O(\vec{r}) = O(\vec{r}) * P_m(\vec{r})
+\end{equation}
+
+Where $P_m$ is the PSF for the $m$-th realization of the dynamic scatterer. The crucial insight is that due to the commutativity of convolution, this equation has exactly the same mathematical form as the random illumination case described above, but with the roles of the object and PSF interchanged.
+
+(For the coherent imaging case, we can safely ignore variations in the illumination PSF $P_{ill}$ by focusing the illumination beam to a spot size smaller than the correlation length of the diffuser. This ensures that the illumination samples only a single "phase patch" of the diffuser, resulting in a relatively constant illumination pattern at the object plane across different diffuser realizations (see Supplementary Section on "Effect of illumination spot size").
+
+For the incoherent imaging case, the rapid rotation of the diffuser in the illumination path creates many speckle patterns within each camera exposure, effectively resulting in spatially uniform illumination. This allows us to focus solely on the variations in the detection PSF.)
+
+Due to this mathematical equivalence between the dynamic scattering and random illumination scenarios, we can apply the same CTR-CLASS/I-CLASS algorithm to reconstruct the object, with only a reinterpretation of the results needed.
+
+\subsubsection*{I-CLASS Implementation}
+
+The I-CLASS algorithm extends the CLASS approach with two key improvements:
+\begin{enumerate}
+    \item a memory-efficient implementation that avoids explicitly computing the full $N \times N$ covariance matrix
+    \item correction for both phase and amplitude distortions.
+\end{enumerate}
+For each iteration $t$ of the algorithm, the phase correction is calculated using:
+
+\begin{equation}
+\vec{z}_{t+1} = \sum_{q=1}^{M} (\tilde{\mathbf{A}}_t^* \odot ((\tilde{\mathbf{A}}_t^{(ud)*} * \tilde{\mathbf{A}}_t^{(lr)})_{:,M-1} \star \tilde{\mathbf{A}}_t^{(ud)}))_{:,q}
+\end{equation}
+
+where $\tilde{\mathbf{A}}$ is the 2D Fourier transform of $\hat{\mathbf{A}}$, $\tilde{\mathbf{A}}^{(ud)}$ is $\tilde{\mathbf{A}}$ with each column flipped upside-down, $\tilde{\mathbf{A}}^{(lr)}$ is $\tilde{\mathbf{A}}$ with its rows flipped left-to-right, $\odot$ denotes the Hadamard product, $*$ denotes 2D convolution, and $\star$ denotes 2D correlation.
+
+The phase correction is then applied as:
+
+\begin{equation}
+\tilde{\mathbf{A}}_{t+1} = diag\{e^{i\frac{\vec{z}_t}{|\vec{z}_t|}}\} \tilde{\mathbf{A}}_t
+\end{equation}
+
+Where the exponential and division operations are element-wise.
+
+Beyond phase correction, I-CLASS also estimates the amplitude distortions in the Fourier domain (the Modulation Transfer Function, MTF) from the diagonal of the covariance matrix in the Fourier domain. This amplitude information is used to correct for the amplitude aberrations.
+
+In the conventional I-CLASS application, after applying both phase and amplitude corrections, the algorithm produces the PSF's phase and amplitude, and $|O|^2$ as the components of the covariance matrix. However, in our case with the "role exchange" between object and PSF, the algorithm instead produces the phase (in the coherent case) and amplitude of the reconstructed object, along with $|PSF|^2$. This role reversal is the key insight that allows us to apply the same algorithm to dynamic scattering media.
+
+\end{ourresponse}
+
 
 
 \bibliographystyle{plain}
