@@ -190,21 +190,20 @@ We recognize that the approach applied for thin scattering layers would indeed n
 
      \begin{quote}
      "
-    One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilies the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however without leveraging the potential of matrix-based techniques.
+    One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
     In such a solution, for each realization of the dynamic scatterer one would: (I) rapidly acquire multiple ($K \gg 1$) coherence-gated holograms under different speckle illuminations (created with an additional diffuser or SLM in the illumination path); (II) Incoherently sum the intensity patterns of the holographically measured fields to incoherently-compounded "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$  that can then be (III) processed using I-CLASS as in our incoherent experiments.
-    This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging . The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
+    This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
 
-    Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed. We numerically study the required number of additional acquisitions on the reconstruction quality in Supplementary Section XX.
-    %forward for complex volumetric media while maintaining the benefits of coherent imaging.
+    Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed.
     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{weinberg2024ptychographic}.
     \end{quote}
 
-In this discussion we have added the following references to the revised manuscript :
+In this discussion, we have added the following references to the revised manuscript:
 [xx]
 [yy]
 
-Thirdly, we have performed two numerical studies on the effects of imperfect (in)homogeneous illumination on reconstruction fidelity in the case of coherent imaging. One of the studies focuses on the case of a single coherent illumination with a focused beam, and the other on the hybrid incoherent-compounding approach suggested above.
-The results of these studies are presented in the new Supplementary Sections XX,YY, which reads:
+Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on reconstruction fidelity in the case of coherent imaging. The study focuses on the case of a single coherent illumination with a focused beam.
+The results of this study are presented in the new Supplementary Sections XX, which reads:
 
     \begin{quote}
     \section*{Supplementary Section SXX: Effect of illumination spot size and homogeneity on coherent imaging through dynamic scattering}
@@ -371,34 +370,6 @@ As discussed above, we addressed the off-diagonal correlations in the covariance
 
 Where $\alpha$ controls the total range of modulation with corresponding modulation depth: $\frac{max(f_m)-min(f_m)}{max(f_m)+min(f_m)}=\frac{\alpha-1}{\alpha+1}$.
 
-\begin{comment}
-    We can rewrite this equation directly in terms of the modulation depth $d$ by solving for $\alpha$:
-
-    \begin{align}
-    d &= \frac{\alpha-1}{\alpha+1} \\
-    d(\alpha+1) &= \alpha-1 \\
-    d\alpha + d &= \alpha - 1 \\
-    d\alpha - \alpha &= -1 - d \\
-    \alpha(d-1) &= -1 - d \\
-    \alpha &= \frac{-1-d}{d-1} = \frac{1+d}{1-d}
-    \end{align}
-
-    Substituting this into our original equation:
-    
-    \begin{align}
-    f_m &= 1 + \frac{m-1}{M-1} \cdot \left(\frac{1+d}{1-d} - 1\right) \\
-    &= 1 + \frac{m-1}{M-1} \cdot \frac{1+d-(1-d)}{1-d} \\
-    &= 1 + \frac{m-1}{M-1} \cdot \frac{2d}{1-d}
-    \end{align}
-    
-    Therefore, the multiplication factor for the $m$-th frame in terms of modulation depth $d$ is:
-    
-    \begin{equation}
-        f_m = 1 + \frac{m-1}{M-1} \cdot \frac{2d}{1-d}
-    \end{equation}
-\end{comment}
-
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.93\textwidth]{figures/Figure_S9.pdf}
@@ -406,16 +377,10 @@ Where $\alpha$ controls the total range of modulation with corresponding modulat
     \captionof{figure}{\footnotesize\textbf{Effect of modulation depth on reconstruction quality.} The similarity score (y-axis) shows the Pearson correlation coefficient between the reconstructed and ground-truth images as modulation depth increases. Example reconstructions demonstrate the progressive elimination of background haze as modulation increases, while at higher modulation depths, some haze begins to appear within the object itself. The red circle indicates our chosen modulation depth, which offers a good trade-off in this balance.}
     \label{fig_S9}
 \end{figure}
-%\hlred{Explain  what is the similarity score in the caption, change y-label to correlation, write in the caption 'Pearson correlation'}
-
-% \hlred{Add $\alpha$ to x label}
 
 
 Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As the modulation depth increases, this background haze diminishes progressively. At very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of an imperfect estimation of the MTF in the I-CLASS algorithm \cite{weinberg2024noninvasive}.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. 
 Additional improvements for addressing this point, such as SVD filtering, will be the focus of future work.
-
-%\hlred{Maybe show the $PP^T$ for different $\alpha$-s}
-
 
 \end{quote}
 \end{ourresponse}
@@ -603,13 +568,13 @@ To this end, we have added a new supplementary section ("I-CLASS and matrix-base
 This new supplementary section reads:
 
 \begin{quote}
-    \subsection*{Matrix-based scattering compensation algorithms}
+    \section*{Matrix-based scattering compensation algorithms}
 
 In this section, we provide the background and mathematical foundation for the I-CLASS algorithm used to reconstruct the target objects in our work. 
 The I-CLASS algorithm builds upon the fundamental principles of reflection-matrix-based imaging techniques \cite{lee22}. To understand its operation, we first establish the mathematical foundation of the reflection-matrix formalism for imaging through static scattering media, and explain the basics of the original CLASS algorithm, applied to imaging with deterministic controlled illuminations, such as plane waves or scanning beams \cite{yoon2020laser}. 
 We then proceed to show how the matricial formalism and the CLASS algorithm were extended to the case of random illuminations via CTR-CLASS \cite{lee22}, and the extension to phase and amplitude correction by I-CLASS \cite{weinberg2024noninvasive}. Finally, we explain how these principles apply to dynamic scattering by the exchange of roles between the scattering medium and the target object.
 
-\subsubsection*{Reflection-matrix formalism}
+\subsection*{Reflection-matrix formalism}
 
 We begin by considering the simplest scenario of coherent imaging a reflective planar target object through a scattering layer. For simplicity, we assume isoplanatism, i.e., that the imaged field is a convolution of the field at the object plane by a complex-valued field point spread function (PSF). This is indeed the case when imaging objects that are smaller than the isoplanatic patch size\cite{bertolotti2022imaging, weinberg2024noninvasive}.
 Under these conditions, the measured output field is given by:
@@ -653,7 +618,7 @@ The CLASS algorithm \cite{choi2022flexible} is fundamentally a matrix decomposit
 Importantly, such a decomposition is made possible due to the fact that while the full reflection matrix contains $N\times N = N^2$ elements (measurements), it is the product of three matrices where in each matrix there are only $N$ unknown elements. Thus the challenge is to retrieve the $3N$ unknowns (target object and two PSFs) from $N^2$ measurements.
 
 
-\subsubsection*{The CLASS algorithm}
+\subsection*{The CLASS algorithm}
 
 The CLASS algorithm \cite{kang17,kang2024implementation} iteratively decomposes the reflection matrix to recover both the object and the phase distortions. Working in Fourier space is advantageous since convolution operations become simpler multiplications.
 
@@ -791,7 +756,7 @@ After convergence, we can:
 \end{itemize}
 
  
-\subsubsection*{CTR-CLASS and I-CLASS: retrieving a reflection matrix from measurements using unknown input fields}
+\subsection*{CTR-CLASS and I-CLASS: retrieving a reflection matrix from measurements using unknown input fields}
 In the case that the input fields for measuring the reflection matrix cannot be controlled or are unknown, one can still measure the resulting scattered light field and retrieve a 'virtual reflection matrix' from the covariance matrix of these fields. This concept for 'compressive time-reversed' (CTR) measurement of the reflection matrix was introduced by Lee et al. \cite{lee22}, and forms the basis for what is termed a CTR-CLASS approach.
 In CTR-CLASS, instead of acquiring the full matrix by $N$ measurements, one illuminate the object with $M\leq N$ different random and unknown fields, $S_{m}(\vec{r})=P_{ill}*E_{in,m}(\vec{r})$. For each illumination, the field equation becomes:
 
@@ -822,7 +787,7 @@ The result of Supp.Eq.~\ref{eq: cov form} shows that the covariance matrix of sc
 
 While the CLASS algorithm was developed to compensate for phase-only distortions, i.e. to the case where the illumination or detection PSF are each given by a Fourier transform of a phase-only mask, the recently introduced I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS correction (or equivalently, matrix decomposition) to the case where both amplitude and phase distortions exists. 
 
-\subsubsection*{Dynamic scattering correction: exchange of roles between the target object and the scattering PSF} 
+\subsection*{Dynamic scattering correction: exchange of roles between the target object and the scattering PSF} 
 In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $M$ varying illuminations of the conventional (or CTR) reflection matrix acquisition, we consider a static object and varying PSFs due to the dynamic scattering medium. The imaging equation in this case becomes:
 
 \begin{equation}
@@ -836,7 +801,7 @@ We note that to achieve a fixed object illumination throughout the different mea
 
 Due to this mathematical equivalence of the imaging equation between the dynamic scattering and random illumination scenarios (Supplementary Eqs. XX and YY) , the covariance matrix of the acquired dataset 'measurement matrix' $\textbf{A}$ has the same TDT structure as that of the covariance matrix of CTR-CLASS, and thus the I-CLASS algorithm can be used to reconstruct the object by naively applying it on the covariance matrix.
 
-\subsubsection*{I-CLASS algorithm}
+\subsection*{I-CLASS algorithm}
 
 The I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS algorithm \cite{choi2022flexible} estimation of phase distortions to allow both phase and amplitude distortions in conventional reflection matrix measurements. 
 Specifically, in I-CLASS the phase corrections are found in the exact same manner as the CLASS algorithm. Following the standard CLASS phase-correction, I-CLASS estimates the amplitude distortions in the Fourier domain (the Modulation Transfer Function, MTF) from the diagonal of the covariance matrix in the Fourier domain. This amplitude information is used to correct for the amplitude aberrations by Fourier-reweighting.
@@ -969,7 +934,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
     
     This numerical propagation capability allows us to determine the correct object plane computationally by finding the propagation distance at which the target features achieve optimal focus—eliminating the need for precise a priori knowledge of the object-diffuser distance during data acquisition. This is analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media.
     
-    To comprehensively address this point, we have added Supplementary Movie S3, which shows the continuous evolution of the reconstructed field as it is propagated from the diffuser plane through the optimal focus plane and beyond. We have also created a new supplementary section titled "Digital Autofocus through Fresnel Propagation" that demonstrates this capability in detail, which we reproduce below for the reviewer's convenience:
+    To comprehensively address this point, we have added a new supplementary section titled "Digital Autofocus through Fresnel Propagation" that demonstrates this capability in detail.
 
     \begin{quote}
         \section*{Digital autofocus by Fresnel propagation}
@@ -980,9 +945,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
         
         By computationally varying the propagation distance and observing the resulting reconstructed intensity distributions, we can identify the optimal object plane where the finest features of the target come into focus. This process is analogous to the physical process of adjusting the focus in a conventional microscope, but performed entirely in post-processing.
         
-        Figure~S6 demonstrates this capability by showing the reconstructed field intensity at three distinct propagation distances: before the object plane (z = 5.3 cm), at the object plane where optimal focus is achieved (z = 7.15 cm), and after the object plane (z = 9 cm). The sharp focus observed at z = 7.15 cm confirms that this is indeed the correct object plane, with clear resolution of the fine features in the USAF target.
-        
-        For a more comprehensive demonstration of this digital autofocus capability, we refer readers to Supplementary Movie S3, which shows the continuous evolution of the reconstructed field as the propagation distance is varied from the diffuser plane (z = 0) to beyond the object plane.
+        Figure ~\ref{fig_S6} demonstrates this capability by showing the reconstructed field intensity at three distinct propagation distances: before the object plane (z = 5.3 cm), at the object plane where optimal focus is achieved (z = 7.15 cm), and after the object plane (z = 9 cm). The sharp focus observed at z = 7.15 cm confirms that this is indeed the correct object plane, with clear resolution of the fine features in the USAF target.
 
         \vspace{1em}
         \begin{figure}[H]
@@ -992,6 +955,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
             \captionof{figure}{\footnotesize\textbf{Digital autofocus capability through numerical propagation of the reconstructed complex field.} The reconstructed field intensity is shown at three different propagation distances: \textbf{a} z = 5.3 cm (before the object plane), \textbf{b} z = 7.15 cm (at the object plane, where optimal focus is achieved), and \textbf{c} z = 9.0 cm (after the object plane). The sharp focus visible in panel \textbf{b} confirms the correct object plane location, demonstrating that precise knowledge of the object-diffuser distance is not required during data acquisition as optimal focus can be determined computationally during post-processing. Scale bars: 1 mm.}
             \label{fig_S6}
         \end{figure}
+
     \end{quote}
 \end{ourresponse}
 
