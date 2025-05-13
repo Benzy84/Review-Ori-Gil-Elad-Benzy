@@ -5,6 +5,7 @@
 % check that all capitalizations in titles are the same
 % quotes should be in a different text color
 % לבדוק איך צריך להכניס משוואות בסופלמנטרי
+% לשנות משוואות אולי בסופלמנטרי שיהיו עם S
 
 \documentclass[12pt]{article}
 % Increase margin width for todos
@@ -179,16 +180,18 @@ As often with this group, this work is technically of excellent quality and its 
 
 \begin{ourresponse}
     We thank the referee for raising this point, which was not sufficiently emphasized in the original manuscript. 
-We recognize that the approach applied for thin scattering layers would indeed not be as effective for volumetric scattering media, where maintaining an effective constant illumination may become challenging.
+    We recognize that the approach applied for thin scattering layers would indeed not be as effective for volumetric scattering media, where maintaining an effective constant illumination may become challenging.
     
-    To address this limitation transparently in our manuscript, we have made the following three revisions to our manuscript: first, we added the following clarification to the Discussion Section:
+    To address this limitation transparently in our manuscript, we have made the following two revisions to our manuscript: first, we added the following clarification to the Discussion Section:
     
     \begin{quote}
         "We note that for coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin scattering layer by focusing the illumination to a spot that is smaller than the coherence area of the scattering layer, thick volumetric scattering presents a challenge that requires additional or alternative solutions."
     \end{quote}
+    
      Secondly, we suggest a potential mitigation technique for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick media, while maintaining the capability of coherence gating, crucial for practical reflection-based microscopy and 3D imaging, and highlight the potential of focused illumination in imaging through dynamically-bent multi-core fibers (MCFs):
 
      \begin{quote}
+     
      "One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
      In such a solution, for each realization of the dynamic scatterer one would: (I) rapidly acquire multiple ($K \gg 1$) coherence-gated holograms under different speckle illuminations (created with an additional diffuser or SLM in the illumination path); (II) Incoherently sum the intensity patterns of the holographically measured fields to incoherently-compounded "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$  that can then be (III) processed using I-CLASS as in our incoherent experiments.
      This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
@@ -202,6 +205,18 @@ In this discussion, we have added the following references to the revised manusc
 [yy]
 
 
+In this discussion, we have added the following references to the revised manuscript:
+\cite{liba2017speckle, idell1987image, salhov2018depth, metzler2020deepinverse, gateau2017complementary, choi2022flexible, haim2025image, weinberg2024ptychographic}
+
+where:
+\begin{enumerate}
+    \item \cite{liba2017speckle} discusses speckle reduction techniques in OCT
+    \item \cite{idell1987image, salhov2018depth, metzler2020deepinverse} demonstrate imaging through scattering layers via correlography
+    \item \cite{gateau2017complementary} presents complementary speckle illuminations for more homogeneous illumination
+    \item \cite{choi2022flexible, haim2025image} show applications with multi-core fibers
+    \item \cite{weinberg2024ptychographic} demonstrates single-mode excitation in fiber cores
+
+\end{enumerate}
 Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on the reconstruction fidelity in the case of coherent imaging with a beam focused at the scattering layer plane.
 The results of this study are presented in the new Supplementary Sections XX, which reads:
 
@@ -271,17 +286,9 @@ In our experimental implementation described in the main text, we carefully focu
 \begin{ourresponse}
     We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNRR").
 
-
-    
-    
-    % \hlred{Take from I-CLASS / Acusto-optic the paragraph about the theoretical dependence on M which is logarithmic (from the CTR paper) and add that there are additional factors to this theory such as the object complexity and SNR}.
-    
     \begin{quote}
         \section*{Dependence of reconstruction fidelity on number of realizations, object sparsity, and SNR}
 
-        % \hlred{I suggest inserting something about how statistical siginficant is this result? how many experiments are in each heatmap cell? and what is the std between expereimnts (you have 3 random variables, the random object, the shot noise and the PSFs, maybe freeze 2 each time and run it to understand if they have the same effect}.
-
-        
         To study the dependence of the reconstruction quality on the number of realizations, object complexity, and SNR, we carried an in-depth numerical study where we numerically simulate reconstructions using a different number of random realizations (M) for different object complexities (as given by the object sparsity) for both incoherent and coherent imaging scenarios.
         The results of these analyses are presented as reconstruction fidelity heatmaps in Fig.~\ref{fig_S8}
         To ensure statistical robustness, each data point in these heatmaps represents the average outcome from 10 independent numerical experiments.
@@ -325,13 +332,14 @@ In our experimental implementation described in the main text, we carefully focu
         \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
     \end{comment}
     
-We thank the reviewer for this insightful comment.
+We thank the reviewer for this insightful comment and suggestion.
 
-1. Regarding the SVD approach: The reviewer raises an interesting point about using singular value decomposition (SVD) to address correlations arising from energy conservation, referencing the work by Badon et al.\cite{badon2020distortion} We note that in this approach, SVD is performed on the distortion matrix rather than on the covariance matrix in our case. While the contexts differ, the principle of using SVD to filter out undesired correlations is valuable. It would be interesting to explore whether a similar decomposition approach could help identify and remove the systematic correlations arising from energy conservation in our measurement matrix. An in-depth study of such advanced filtering techniques for the measurement or covariance matrix will be the focus of future work.
+Regarding the SVD approach: The reviewer raises an interesting point about using singular value decomposition (SVD) to address correlations arising from energy conservation, referencing the work by Badon et al.\cite{badon2020distortion} We note that in this approach, SVD is performed on the distortion matrix rather than on the covariance matrix in our case. While the contexts differ, the principle of using SVD to filter out undesired correlations is valuable. It would be interesting to explore whether a similar decomposition approach could help identify and remove the systematic correlations arising from energy conservation in our measurement matrix. An in-depth study of such advanced filtering techniques for the measurement or covariance matrix will be the focus of future work.
 
-2. Following the reviewer's suggestion, we have added the following discussion to the main manuscript: 
+Following the reviewer's suggestion, we have added the following discussion to the main manuscript: 
 \begin{quote}
-    "Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix can help to address these effects. It was recently shown that SVD-based filtering of the reflection matrix \cite{jo2022through} can effectively separate the correlated signal. An in-depth study of the potential of advanced filtering of the measurement or covariance matrix will be the focus of future work. The full analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3."
+    "Our analysis revealed that energy conservation in phase-only speckle patterns may introduce spatial correlations that can cause background haze in the reconstructions (see Supplementary Fig. XX). Here, we addressed this by simply applying varying intensity scaling across frames during post-processing (see Supplementary section 2). It would be interesting to study more advanced processing techniques to identify and filter these correlations and/or their effects. In particular, it would be interesting to study matricial processing approaches, such as singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix. It was recently shown that SVD-based analysis and filtering of the reflection matrix or the distortion matrix \cite{jo2022through, badon2016smart, badon2020distortion},  can effectively separate correlated signals such as those originating from different isoplanatic patches, or that are less affected by noise. 
+    An analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3."
 \end{quote}
 We maintained the detailed analysis in Supplementary Section S2 as suggested, while bringing the key insight to readers' attention in the main text.
 
@@ -348,7 +356,7 @@ We maintained the detailed analysis in Supplementary Section S2 as suggested, wh
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-We thank the reviewer for raising this point, which was not properly addressed in the original manuscript. To address this, we added to the revised manuscript a systematic study examining how the choice of modulation depth affects reconstruction quality. The results of this study have been added to the Supplementary Materials section discussing the amplitude modulation.
+We thank the reviewer for raising this point, which was not properly addressed in the original manuscript. To address this, we added to the revised manuscript a systematic study examining how the choice of modulation depth affects reconstruction quality. The results of this study have been added to the Supplementary Materials section 2, which discusses amplitude modulation.
 
 
 
@@ -607,28 +615,23 @@ The CLASS algorithm \cite{choi2022flexible} is fundamentally a matrix decomposit
 Importantly, such a decomposition is made possible due to the fact that while the full reflection matrix contains $N\times N = N^2$ elements (measurements), it is the product of three matrices where in each matrix there are only $N$ unknown elements. Thus the challenge is to retrieve the $3N$ unknowns (target object and two PSFs) from $N^2$ measurements.
 
 
-\subsection*{The CLASS algorithm}
+\subsection*{The CLASS scattering-compensation algorithm}
 
-The CLASS algorithm \cite{kang17,kang2024implementation} iteratively decomposes the reflection matrix to recover both the object and the phase distortions. Working in Fourier space is advantageous since convolution operations become simpler multiplications.
+The CLASS algorithm \cite{kang17,kang2024implementation}  decomposes a reflection matrix given by: $\mathbf{R}=\mathbf{P}_{\mathrm{det}}\mathbf{O}\mathbf{P}_{\mathrm{ill}}$ that possess a Toeplitz–Diagonal–Toeplitz (TDT) product structure, to the three matrices that compose it. Thus, simultaneously recovering, in an iterative manner, the object and the illumination and detection isoplanatic distortions. 
 
-In real space, we have $\mathbf{R}=\mathbf{P}_{\mathrm{det}}\mathbf{O}\mathbf{P}_{\mathrm{ill}}$, which is a Toeplitz–Diagonal–Toeplitz (TDT) product. After a two-dimensional Fourier transform, this becomes the Diagonal–Toeplitz–Diagonal (DTD) form:
+The process begins by Fourier transforming the reflection matrix from real space to the Fourier space coordinates. Since in real space the reflection matrix has a Toeplitz–Diagonal–Toeplitz (TDT) product, after a two-dimensional Fourier transform, the reflection matrix in Fourier space coordinates possess a Diagonal–Toeplitz–Diagonal (DTD) structure:
 \begin{equation}\label{eq:Rtilde_def}
 \tilde{\mathbf{R}}=
 \tilde{\mathbf{P}}_{\mathrm{det}}\,
 \tilde{\mathbf{O}}\,
 \tilde{\mathbf{P}}_{\mathrm{ill}}
 \end{equation}
+The diagonal structure of the illumination and detection isoplanatic distortions matrices in Fourier coordinates is easily understood as the complex amplitude transfer function (or the OTF in incoherent imaging) of the scattering medium, i.e. the phase of a thin phase-mask scattering layer model.
+The CLASS algorithm operates under the assumption that both
+$\tilde{\mathbf{P}}_{\mathrm{ill}}$ and $\tilde{\mathbf{P}}_{\mathrm{det}}$ represent pure phase-only masks, i.e. $\tilde{\mathbf{P}}_{\mathrm{ill}} = \operatorname{diag}(e^{i\phi_1},e^{i\phi_2},\dots)$, where $\phi_k$ denotes the illumination phase distortion at the  $k$-th Fourier component, and similarly for  $\tilde{\mathbf{P}}_{\mathrm{det}}$ with the detection-path phase distortions.
+We note that the assumption of phase-only distortions is relaxed in the recent I-CLASS algorithm \cite{weinberg2024noninvasive}, explained below.
 
-\paragraph{Notation.}
-Here, $\phi_k$ denotes the illumination phase distortion at pixel $k$, so
-$\tilde{\mathbf{P}}_{\mathrm{ill}} = \operatorname{diag}(e^{i\phi_1},e^{i\phi_2},\dots)$;
-$O_\ell$ is the $\ell$-th Fourier coefficient of the object that appears
-shifted along each column of the Toeplitz matrix $\tilde{\mathbf{O}}$.
-The algorithm operates under the assumption that both
-$\tilde{\mathbf{P}}_{\mathrm{ill}}$ and $\tilde{\mathbf{P}}_{\mathrm{det}}$
-are phase-only masks.
-
-To illustrate the core idea of CLASS, we present a simple $3\times3$ toy example before extending to the full $N\times N$ case:
+To illustrate the basic working principle of CLASS, we present a simple $3\times3$ toy-model example that can be easily extended to the general $N\times N$ case:
 
 \textbf{1. Setting up the toy matrices.}
 We define our matrices as:
@@ -638,59 +641,65 @@ We define our matrices as:
 \quad
 \tilde{\mathbf{O}}
   =\begin{bmatrix}
-     O_1 & O_3 & O_2\\
-     O_2 & O_1 & O_3\\
-     O_3 & O_2 & O_1
+     \tilde{O}_1 & \tilde{O}_3 & \tilde{O}_2\\
+     \tilde{O}_2 & \tilde{O}_1 & \tilde{O}_3\\
+     \tilde{O}_3 & \tilde{O}_2 & \tilde{O}_1
    \end{bmatrix},
 \]
-and $\tilde{\mathbf{P}}_{\mathrm{det}}$ has diagonal elements
-$\{e^{i\psi_1},e^{i\psi_2},e^{i\psi_3}\}$.
+and $\tilde{\mathbf{P}}_{\mathrm{det}}=\operatorname{diag}\!\bigl(e^{i\psi_1},e^{i\psi_2},e^{i\psi_3}\bigr)$ .
+
 
 \textbf{2. Alternating correction approach.} 
-The key insight of CLASS is to alternately correct the illumination and detection distortions. When correcting one distortion, we temporarily ignore the other. For instance, to correct $\tilde{\mathbf{P}}_{ill}$, we conceptually treat $\tilde{\mathbf{R}}$ as if it were simply $\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{ill}$. In our example, this product is:
+The key insight that is the basis for the CLASS algorithm is that the multiplication of $\tilde{\mathbf{O}}$ from the right by the diagonal matrix $\tilde{\mathbf{P}}_{\mathrm{ill}}$ results in the multiplication of each k-th column of $\tilde{\mathbf{O}}$ by a single scalar value that is the phase distortion of the k-th component. In a similar fashion, the multiplication of $\tilde{\mathbf{O}}$ from the left by the diagonal matrix $\tilde{\mathbf{P}}_{\mathrm{det}}$ simply multiplies each row of  $\tilde{\mathbf{O}}$ by a different scalar value that represnets the detection distortions of this k-vector.
+
+CLASS iteratively finds these scalar values (i.e. Fourier space phase distortions) by calculating the correlations between (e.g. neighboring) columns and rows. It is based on alternately correcting the illumination and detection distortions, where in each step it considers illumination-only distortions or detection-only distortions. Correcting one set of distortions, while temporarily ignoring the others. 
+
+For instance, to correct $\tilde{\mathbf{P}}_{ill}$, CLASS conceptually treat $\tilde{\mathbf{R}}$ as if it were simply $\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{ill}$. In our toy-model example, this product is:
+
 \begin{equation}
-\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{ill} = 
+\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{\text{ill}} = 
 \begin{bmatrix}
-O_1 e^{i\phi_1} & O_3 e^{i\phi_2} & O_2 e^{i\phi_3} \\
-O_2 e^{i\phi_1} & O_1 e^{i\phi_2} & O_3 e^{i\phi_3} \\
-O_3 e^{i\phi_1} & O_2 e^{i\phi_2} & O_1 e^{i\phi_3}
+\tilde{O}_1 e^{i\phi_1} & \tilde{O}_3 e^{i\phi_2} & \tilde{O}_2 e^{i\phi_3} \\
+\tilde{O}_2 e^{i\phi_1} & \tilde{O}_1 e^{i\phi_2} & \tilde{O}_3 e^{i\phi_3} \\
+\tilde{O}_3 e^{i\phi_1} & \tilde{O}_2 e^{i\phi_2} & \tilde{O}_1 e^{i\phi_3}
 \end{bmatrix}
 \end{equation}
 
 \textbf{3. Column-shifting operation.} 
-The critical step in CLASS is to recognize that, due to the Toeplitz structure of $\tilde{\mathbf{O}}$, we can shift the columns of the matrix to align the object components. Specifically, we shift each column so that each row contains the same object component multiplied by different phase factors:
+A critical step in CLASS is to recognize that, due to the Toeplitz structure of $\tilde{\mathbf{O}}$, one can shift the columns of the matrix to align the object's Fourier-components. Specifically, we shift each column so that each row contains the same object component multiplied by a different phase factor:
 \begin{equation}
-(\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{ill})_{\text{shifted}} = 
+(\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{\text{ill}})_{\text{shifted}} = 
 \begin{bmatrix}
-O_1 e^{i\phi_1} & O_1 e^{i\phi_2} & O_1 e^{i\phi_3} \\
-O_2 e^{i\phi_1} & O_2 e^{i\phi_2} & O_2 e^{i\phi_3} \\
-O_3 e^{i\phi_1} & O_3 e^{i\phi_2} & O_3 e^{i\phi_3}
+\tilde{O}_1 e^{i\phi_1} & \tilde{O}_1 e^{i\phi_2} & \tilde{O}_1 e^{i\phi_3} \\
+\tilde{O}_2 e^{i\phi_1} & \tilde{O}_2 e^{i\phi_2} & \tilde{O}_2 e^{i\phi_3} \\
+\tilde{O}_3 e^{i\phi_1} & \tilde{O}_3 e^{i\phi_2} & \tilde{O}_3 e^{i\phi_3}
 \end{bmatrix}
 \end{equation}
 
-This alignment is the key that allows us to extract the phase distortions.
+This alignment is the key that allows CLASS to extract the phase distortions by cross-correlating the different matrix columns.
 
 \textbf{4. Extracting phase information.} 
-To extract the phase distortions, we perform two operations:
+To extract the phase distortions, CLASS performs two operations:
 
 a) Calculate the mean of each row to obtain a vector $\vec{T}$:
 \begin{equation}
 \vec{T} = 
 \begin{bmatrix}
-O_1 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3}) \\
-O_2 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3}) \\
-O_3 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3})
+\tilde{O}_1 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3}) \\
+\tilde{O}_2 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3}) \\
+\tilde{O}_3 \cdot \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3})
 \end{bmatrix}
 = 
 \begin{bmatrix}
-O_1 M \\
-O_2 M \\
-O_3 M
+\tilde{O}_1 M \\
+\tilde{O}_2 M \\
+\tilde{O}_3 M
 \end{bmatrix}
 \end{equation}
+
 where $M = \frac{1}{3}(e^{i\phi_1} + e^{i\phi_2} + e^{i\phi_3})$ represents a mean phase term.
 
-b) Multiply the transpose of the shifted matrix by the conjugate of $\vec{T}$:
+b) Calculate the scalar product of each of the matrix columns with the vector  $\vec{T}$ to find their relative phase shift. This is performed in a matricial notation by multiplying the transpose of the shifted matrix by the conjugate of $\vec{T}$:
 \begin{equation}
 \vec{v} = (\tilde{\mathbf{O}}\tilde{\mathbf{P}}_{ill})_{\text{shifted}}^T \vec{T}^* = 
 S \cdot |M| \cdot e^{-i\theta_M}
@@ -700,7 +709,7 @@ e^{i\phi_2} \\
 e^{i\phi_3}
 \end{bmatrix}
 \end{equation}
-where $S = |O_1|^2 + |O_2|^2 + |O_3|^2 > 0$ is a positive real scalar and $\theta_M$ is the phase of $M$.
+where $S = |\tilde{O}_1|^2 + |\tilde{O}_2|^2 + |\tilde{O}_3|^2 > 0$ is a positive real scalar and $\theta_M$ is the phase of $M$.
 
 The phase angle of each element in $\vec{v}$ now gives us:
 \begin{equation}
@@ -714,54 +723,45 @@ The phase angle of each element in $\vec{v}$ now gives us:
 
 This provides the relative phases of $\tilde{\mathbf{P}}_{ill}$ up to a global phase offset $\theta_M$, which is physically irrelevant as only relative phases matter for image reconstruction.
 
-\textbf{5. Applying illumination correction.} 
-We create a correction matrix using the extracted phase information:
+\textbf{5. Applying correction for the illumination distortions.} 
+In this step, each matrix column is multiplied by the conjugate of the phase distortion, to 'align' all columns. This is performed in matricial form by creating a correction matrix using the phase distortions estimated in the previous step:
 \begin{equation}
 \tilde{\mathbf{P}}_{ill}^{\text{correction}} = \text{diag}(e^{-i\arg(v_1)}, e^{-i\arg(v_2)}, e^{-i\arg(v_3)})
 \end{equation}
 
-Applying this correction to the reflection matrix:
+And applying this correction to the reflection matrix columns:
 \begin{equation}
 \tilde{\mathbf{R}}_{\text{corrected}} = \tilde{\mathbf{R}} \cdot \tilde{\mathbf{P}}_{ill}^{\text{correction}}
 \end{equation}
 
-\textbf{6. Detection distortion correction.} 
-After correcting the illumination distortion, we switch focus to the detection distortion by transposing the matrix:
-\begin{equation}
-\tilde{\mathbf{R}}^T = \tilde{\mathbf{P}}_{ill}^T \tilde{\mathbf{O}}^T \tilde{\mathbf{P}}_{det}^T  
-\end{equation}
-
-With this transposition, $\tilde{\mathbf{P}}_{det}^T$ now plays the role previously held by $\tilde{\mathbf{P}}_{ill}$, allowing us to apply the same procedure to correct the detection distortion.
+\textbf{6. Detection phase distortions correction.} 
+After correcting the illumination distortion, CLASS performs the detection distortion by taking the transpose of the corrected reflection matrix, and repeating the same steps (3-5) to correct the detection distortions, as the rows and columns are now switched.  $\tilde{\mathbf{P}}_{det}^T$ now plays the role previously held by $\tilde{\mathbf{P}}_{ill}$, allowing us to apply the same procedure to correct the detection distortion.
 
 \textbf{7. Iterative refinement.} 
-The illumination and detection correction steps are alternated iteratively until the phase estimates converge. Convergence of this process under single-scattering conditions is proven in \cite{kang17}.
+The illumination and detection correction steps are alternated iteratively until the phase estimates converge. Convergence of this process under single-scattering conditions is proven in \cite{kang17}, and usually requires a few tens of iterations.
 
 \textbf{8. Reconstruction and extraction.} 
-After convergence, we can:
-\begin{itemize}
-    \item Apply the final phase corrections to obtain an aberration-free image
-    \item Extract the object information from the corrected reflection matrix
-    \item Recover the PSF profiles by applying the inverse corrections to a delta function
-\end{itemize}
+After convergence, applying the final phase correction to all matrix columns (and rows) results in an aberration-free reflection matrix, where each column represents an aberration-free frame. One can then use any single frame as the reconstruction or coherently compound the different frames to reconstruct an improved image, which is equivalent to reconstructing a confocal image from plane wave illumination. 
 
- 
+
 \subsection*{CTR-CLASS and I-CLASS: retrieving a reflection matrix from measurements using unknown input fields}
 In the case that the input fields for measuring the reflection matrix cannot be controlled or are unknown, one can still measure the resulting scattered light field and retrieve a 'virtual reflection matrix' from the covariance matrix of these fields. This concept for 'compressive time-reversed' (CTR) measurement of the reflection matrix was introduced by Lee et al. \cite{lee22}, and forms the basis for what is termed a CTR-CLASS approach.
 In CTR-CLASS, instead of acquiring the full matrix by $N$ measurements, one illuminate the object with $M\leq N$ different random and unknown fields, $S_{m}(\vec{r})=P_{ill}*E_{in,m}(\vec{r})$. For each illumination, the field equation becomes:
 
 \begin{equation}
 E_{out,m}(\vec{r}) =  P_{det}(\vec{r}) *[O(\vec{r}) S_{m}(\vec{r})] = P_{det}(\vec{r}) * O_m(\vec{r})
+\label{eq:static_p}
 \end{equation}
 
 where $O_m(\vec{r}) = O(\vec{r}) S_{m}(\vec{r})$ represents the m-th reflected field from the object.
 
-Arranging these $M$ measurements as columns of a 'measuremebnt matrix', $\mathbf{A}$, we have:
+Arranging these $M$ measurements as columns of a 'measurement matrix', $\mathbf{A}$, we have:
 
 \begin{equation}
 \mathbf{A} = \mathbf{P}_{det} \mathbf{O} \mathbf{S}
 \end{equation}
 
-where $\mathbf{S} $ is a matrix that contains the illumination patterns at the object plane,$S_{m}(\vec{r})$, as its columns. 
+Where $\mathbf{S} $ is a matrix that contains the illumination patterns at the object plane,$S_{m}(\vec{r})$, as its columns. 
 
 Importantly, if the illumination patterns are random and uncorrelated, the covariance matrix of $\mathbf{A}$ takes the form:
 
@@ -777,7 +777,7 @@ The result of Supp.Eq.~\ref{eq: cov form} shows that the covariance matrix of sc
 While the CLASS algorithm was developed to compensate for phase-only distortions, i.e. to the case where the illumination or detection PSF are each given by a Fourier transform of a phase-only mask, the recently introduced I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS correction (or equivalently, matrix decomposition) to the case where both amplitude and phase distortions exists. 
 
 \subsection*{Dynamic scattering correction: exchange of roles between the target object and the scattering PSF} 
-In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $m=1..M$ varying illuminations of the conventional reflection matrix acquisition, which can be described by: 
+In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq:static_p}) changes. Instead of considering the static scattering medium (PSF) and $m=1..M$ varying illuminations of the conventional reflection matrix acquisition, which can be described by: 
 
 \begin{equation}
 E_{out,m}(\vec{r}) = P_{det}(\vec{r}) *O_m(\vec{r}) 
@@ -787,11 +787,12 @@ where $O_m(\vec{r})$ is the field reflected from the object at the m-th illlumin
 
 \begin{equation}
 E_{out,m}(\vec{r}) = P_{m}(\vec{r}) * O(\vec{r}) = O(\vec{r}) * P_{m}(\vec{r})
+\label{eq:synamic_p}
 \end{equation}
 
 Where $P_m$ is the PSF for the $m$-th realization of the dynamic scatterer. The crucial insight presented in our work is that, due to the commutativity of the convolution operation, the equation for the dynamic medium case has exactly the same mathematical form as the random illumination case of conventional reflection matrix acquisition, but with the roles of the object and PSF interchanged.
 
-Due to this mathematical equivalence of the imaging equation between the dynamic scattering and random illumination scenarios (Supplementary Eqs. XX and YY) , the covariance matrix of the acquired dataset 'measurement matrix' $\textbf{A}$ has the same TDT structure as that of the covariance matrix of CTR-CLASS, and thus the I-CLASS algorithm can be used to reconstruct the object by naively applying it on the covariance matrix.
+Due to this mathematical equivalence of the imaging equation between the dynamic scattering and random illumination scenarios (Supplementary Eqs. ~\ref{eq:static_p} and ~\ref{eq:synamic_p}), the covariance matrix of the acquired dataset 'measurement matrix' $\textbf{A}$ has the same TDT structure as that of the covariance matrix of CTR-CLASS, and thus the I-CLASS algorithm can be used to reconstruct the object by naively applying it on the covariance matrix.
 
 We note that to achieve a fixed object illumination throughout the different measurements in the coherent imaging case, we utilized an illumination spot size at the scattering layer plane that is smaller than the correlation length of the diffuser (see Supplementary Section on "Effect of illumination spot size").
 
@@ -903,7 +904,7 @@ A few more minor points:
 I might have missed it, but I don't think I have seen any discussion about the time needed for the I-CLASS algorithm to converge and give the claimed results.
 \end{solved_reviewercomment}
 \begin{ourresponse}
-We thank the reviewer for raising this point, which was indeed not adequately discussed in the original manuscript. Following the reviewer's comment, we have added to the revised manuscript the information on the specific runtime for each iteration for the presented results on our system. This information was added to the \textbf{Materials and methods} section (in subsection \textbf{\subsection*{Experimental parameters}}), and it reads:
+We thank the reviewer for raising this point, which was indeed not adequately discussed in the original manuscript. Following the reviewer's comment, we have added to the revised manuscript the information on the specific runtime for each iteration for the presented results on our system. This information was added to the \textbf{Materials and methods}, and it reads:
 
 \begin{quote}
     The run time of the I-CLASS algorithm on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels. With our standard protocol of 1000 iterations, this yields total processing times of approximately 8 seconds and 70 seconds, respectively.
@@ -922,22 +923,20 @@ We thank the reviewer for raising this point, which was indeed not adequately di
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-    We thank the reviewer for this raising this point, which was perhaps not properly explained in the original manuscript. Since the I-CLASS algorithm reconstructs the complex field at the scattering layer plane, we can  digitially back-propagate it to any desired plane. 
+    We thank the reviewer for this raising this point, which was perhaps not properly explained in the original manuscript. Since the I-CLASS algorithm reconstructs the complex field at the scattering layer plane, we can digitally back-propagate it to any desired plane. 
     
-    In practice, once the reconstructed field is obtained in the scattering layer plane we digitally back-propagate it to several distances to find the plane where the object is at best focus. This "digital autofocus" capability is a fundamental strength of coherent computational imaging, analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media. 
-    Importanly, it eliminates the need for precise a priori knowledge of the object-diffuser distance during data acquisition or during I-CLASS iterations, and can allow imaging multiple planes, as was demonstrated in previous works (e.g. Haim et al. Nature Photonics, 2024). 
-    %As we now explain in detail in the Methods section titled "Fresnel Propagation via Fourier-Domain Transfer Function," we use the Fresnel propagation transfer function to computationally propagate the reconstructed field from the diffuser plane to any desired plane, including the object plane.
+    In practice, once the reconstructed field is obtained in the scattering layer plane, we digitally back-propagate it to several distances to find the plane where the object is at best focus. This "digital autofocus" capability is a fundamental strength of coherent computational imaging, analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media. 
+    Importantly, it eliminates the need for precise a priori knowledge of the object-diffuser distance during data acquisition or during I-CLASS iterations, and can allow imaging multiple planes, as was demonstrated in previous works (e.g. Haim et al.\cite{haim2025image}). 
     
-%    This numerical propagation capability allows us to determine the correct object plane computationally by finding the propagation distance at which the target features achieve optimal focus—eliminating the need for precise a priori knowledge of the object-diffuser distance during data acquisition. This is analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media.
-    
-    To address this point in the revised manuscript, we have added a new supplementary section titled "Digital Autofocus by Fresnel Propagation" that explains this capability and includes a ne figure presenting reconstructions in out of focus planes .
+    To address this point in the revised manuscript, we have added a new supplementary section titled "Digital Autofocus by Fresnel Propagation" that explains this capability and includes a new figure presenting reconstructions in out-of-focus planes.
 
     \begin{quote}
         \section*{Digital autofocus by Fresnel propagation}
         
         In holographic imaging through scattering media, a key advantage is the ability to numerically propagate the reconstructed complex field to any desired plane once the field is retrieved at a single reference plane. This capability, often termed digital autofocus, eliminates the necessity of knowing the exact object distance during data acquisition or during the I-CLASS iterations. 
         
-        In our coherent imaging experiments (Fig.~\ref{fig_5}) the I-CLASS algorithm reconstructs the complex-valued object field at the scattering layer plane (z = 0). This field can be digitally propagated to any desired plane using the Fresnel propagation operator (or angular spectrum propagator) described in the Methods section of the main text.\textbf{ }
+        In our coherent imaging experiments (Fig.~\ref{fig_5}), the I-CLASS algorithm reconstructs the complex-valued object field at the scattering layer plane (z = 0). This field can be digitally propagated to any desired plane using the Fresnel propagation operator (or angular spectrum propagator) described in the Methods section of the main text (\textbf{"Fresnel propagation via Fourier-domain transfer function"}).
+        
         By computationally varying the propagation distance and observing the resulting reconstructed intensity distributions, we identify the optimal object plane where the finest features of the target come into focus. This process is analogous to the physical process of adjusting the focus in a conventional microscope, but performed entirely in post-processing.
         
         Figure ~\ref{fig_S6} demonstrates this capability by showing the reconstructed field intensity at three distinct propagation distances: before the object plane (z = 5.3 cm), at the object plane where optimal focus is achieved (z = 7.15 cm), and after the object plane (z = 9 cm). The sharp focus observed at z = 7.15 cm confirms that this is indeed the correct object plane, having the highest resolution of the fine features of the USAF target.
@@ -964,18 +963,16 @@ We thank the reviewer for raising this point, which was indeed not adequately di
     I am not sure I understand how focusing the illumination on the scattering medium can reduce the fluctuations of \(E^{\text{ill}}_m\). Wouldn't it actually maximise them?    
 \end{solved_reviewercomment}
 \begin{ourresponse}
-We thank the reviewer for raising this question that was not expelained in detail in the original manuscript.
-%The reviewer's intuition that focusing on a scattering medium might maximize illumination fluctuations is valid for many scenarios. However, in our specific configuration, the opposite effect occurs due to a crucial relationship between the illumination spot size and the correlation length of the diffuser.
-To address this question comprehensively, we have added a new section ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material with in depth explanations and a set of numerical simulations that demonstrate and study the limitations of  this effect. For convenience, we reproduce the full section below:
+We thank the reviewer for raising this question, which was not discussed in sufficient detail in the original manuscript.
+
+To address this question comprehensively, we have added a new section ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material of the revised manuscript. The new supplementary section contains a thorough explanation and a set of numerical simulations, which demonstrate and study the limitations of the effect of focusing the illumination on the scattering layer surface. For convenience, we reproduce the full section below. In a nutshell, when the illumination beam is focused to a spot size that is sufficiently smaller than the coherence area of the scattering layer, it effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
 \begin{quote}
     \section*{Supplementary Section SXX: Effect of illumination spot size and homogeneity on coherent imaging through dynamic scattering}
 
-In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is important to ensure the 'fixed object' assumption of our model (Eqs. 6-7 of the main text). %, our method requires that the illumination field $E_m^{ill}(\vec{r})$ remains effectively constant across different acquisitions for our method to work properly.
-While obtaining a constant homogeneous illumination through a dynamic scatterer is rather straightforward with spatially-incoherent illumination, it is often challenging when spatially coherent illumination is considerede. Nonetheless, it can be achieved for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser, such that the spot size is  sufficiently smaller than the diffuser's coherence (or correlation) area. In this case, the illumination beam effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experiences scattering.
-Fig.~\ref{fig_S7} demonstrates and numerically studies the limitation of this approach. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of a thin scattering layer with the illumination spot superimposed for three cases: where the illumination spot diameter is 0.1, 1, and 10 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using Fourier transform propagation.
+In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is important to ensure the 'fixed object' assumption of our model (Eqs. 6-7 of the main text).
+While obtaining a constant homogeneous illumination through a dynamic scatterer is rather straightforward with spatially-incoherent illumination, it is often challenging when spatially coherent illumination is considered. Nonetheless, it can be achieved for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser, such that the spot size is sufficiently smaller than the diffuser's coherence (or correlation) area. In this case, the illumination beam effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
+Fig.~\ref{fig_S7} demonstrates and numerically studies the limitation of this approach. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of a thin scattering layer with the illumination spot superimposed for three cases: where the illumination spot diameter is 0.1, 0.3, and 0.5 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using angular spectrum propagation.
 The third row (Fig.~\ref{fig_S7}g-i) shows the effect of these illumination patterns on the effective object (the product of the object and the illumination), while the fourth row (Fig.~\ref{fig_S7}j-l) shows the reconstruction results. 
-
-
 
 
 \begin{figure}[H]
@@ -983,16 +980,16 @@ The third row (Fig.~\ref{fig_S7}g-i) shows the effect of these illumination patt
 \includegraphics[width=0.99\textwidth]{figures/figure_S7.pdf}
 \renewcommand{\thefigure}{S7}
 \captionof{figure}{\footnotesize\textbf{Effect of illumination spot size on imaging through dynamic scattering.} 
-Numerical simulations demonstrating how the ratio of illumination spot size ($d_{spot}$) to diffuser correlation length ($d_{corr}$) affects illumination at the object plane and reconstruction quality. Each column represents a different spot size ratio: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=1$ (middle), and $\frac{d_{spot}}{d_{corr}}=10$ (right). \textbf{a-c} Illumination phase pattern on the diffuser surface. The colorbar indicates phase values from $-\pi$ to $\pi$. The white inset in (a) shows the zoomed-in beam spot. \textbf{d-f} Resulting intensity patterns at the object plane after numerical propagation through the diffuser. The grayscale colorbar indicates normalized intensity. \textbf{g-i} Effective object (target object multiplied by the illumination pattern). \textbf{j-l} Reconstructed images after applying the I-CLASS algorithm. Note how a small spot size relative to the diffuser correlation length (left column) maintains relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) create varying speckle patterns that degrade reconstruction quality.}
+Numerical simulations demonstrating how the ratio between the illumination spot size ($d_{spot}$) to scattering layer (or diffuser) correlation length ($d_{corr}$, the square root of the scattering layer coherence area) affects the illumination at the object plane, and reconstruction quality. Each column represents a different spot size to correlation size ratio: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=0.3$ (middle), and $\frac{d_{spot}}{d_{corr}}=0.5$ (right). \textbf{a-c} Scattering layer phase pattern (color) and illumination spot size at the scattering layer surface (bright highlighted area). The colorbar indicates phase values from $-\pi$ to $\pi$. \textbf{d-f} Resulting illumination intensity patterns at the object plane after numerical propagation through the scattering layer and free space. The grayscale colorbar indicates normalized intensity. \textbf{g-i} Effective object reflected field (i.e., that target object reflectivity profile multiplied by the illumination pattern). \textbf{j-l}  I-CLASS reconstructed images from 150 scattering realizations. Note how the small illumination spot size relative to the scattering layer coherence area (left column) maintains a relatively uniform illumination at the object plane, and enables high-quality reconstruction, while larger spot sizes (middle and right columns) create varying speckle patterns, which degrade reconstruction quality.}
 \label{fig_S7}
 \end{figure}
 
-When the illumination spot is much smaller than the diffuser's correlation length (Fig.~\ref{fig_S7}a), it effectively samples only a single "phase patch" of the diffuser. As the diffuser rotates between realizations, this results in a relatively uniform illumination at the object plane that experiences only a global phase shift but maintains its spatial intensity pattern across different realizations. This consistency across different diffuser positions is crucial for our method to work properly. In other words, while the global phase of the illumination might change, its spatial distribution pattern remains effectively identical from one diffuser position to the next, satisfying our requirement for constant spatial illumination.
+When the illumination spot is much smaller than the scattering layer coherence area (Fig.~\ref{fig_S7}a), it effectively experiences a nearly constant phase, providing a relatively uniform illumination at the object plane. This consistency across different realizations of the scattering layer is required to maintain the assumption of our imaging model. Indeed, the I-CLASS reconstruction under these conditions is of rather high quality.
+Note that there exists a global phase shift of the illumination, but this global phase shift can be mathematically contained in the detection PSF, keeping the effective field reflected from the object fixed.
 
-In contrast, when the illumination spot size is comparable to or larger than the diffuser correlation length (Fig.~\ref{fig_S7}c), the beam simultaneously samples multiple uncorrelated regions of the diffuser. This produces complex speckle patterns at the object plane that vary significantly between diffuser positions, creating a different illumination pattern for each diffuser realization. This variation violates our assumption of constant illumination in Eq. 6-7 of the main text. As a result, the reconstruction quality clearly degrades as the spot size increases relative to the diffuser correlation length, demonstrating the importance of maintaining consistent illumination across different diffuser realizations.
+In contrast, when the illumination spot size is comparable to or larger than the diffuser correlation length (Fig.~\ref{fig_S7}c), the beam simultaneously samples multiple uncorrelated regions of the diffuser. This produces complex speckle patterns at the object plane that vary significantly between diffuser positions, creating a different illumination pattern for each diffuser realization. This variation violates our assumption of constant illumination in Eqs. 6-7 of the main text. As a result, the reconstruction quality gradually degrades as the spot size increases relative to the scattering layer coherence area. 
 
-
-In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length (which was $\sim 70 \mu m$), thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.
+In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length, thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.
 \end{quote}
 
 \end{ourresponse}
@@ -1006,7 +1003,7 @@ In our experimental implementation described in the main text, we carefully focu
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-    We thank the reviewer for noting this confusion. The reviewer is correct - there was a mistake in our original sketch. It should indeed be a non-polarizing beam splitter (BS), and not a polarizing beam splitter (PBS). We have corrected this in the revised manuscript. The corrected Figure and Figure caption now reads:
+    We thank the reviewer for spotting this confusion. There was indeed a mistake in our original sketch. The beam splitter should have been a non-polarizing beam splitter (BS), and not a polarizing beam splitter (PBS). We have corrected this in the revised manuscript. The corrected Figure and Figure caption now reads:
             
     \vspace{1em}
     \begin{figure}[H]
@@ -1032,76 +1029,57 @@ In our experimental implementation described in the main text, we carefully focu
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-    We thank the reviewer for raising this concern about the comparison between I-CLASS and phase retrieval-based methods.
+    We thank the reviewer for raising this concern about the comparison between I-CLASS and the reconstruction by speckle-correlation based phase-retrieval following Katz et al.\cite{katz14}. The main reason for the low quality "phase-retrieval" results is that the comparison shown in the supplementary figure is between I-CLASS and speckle correlation imaging that uses phase retrieval on an \textbf{estimated} autocorrelation, and not the standard phase retrieval on the true object power spectrum: conventional phase retrieval operates directly on the exact power spectrum of an object, whereas speckle correlation imaging first requires estimating the object's autocorrelation (or equivalently its power spectrum) from multiple scattered light patterns, generally following Antoine Labyrie's Stellar Speckle Interferometry (1970)\cite{labeyrie1970attainment}. The quality of this estimation is limited by statistical estimation noise due to the finite number of captured speckle grains (and in experiments also by photon shot noise and other noise sources) and thus affects the phase retrieval results.
+
+    The fact that the autocorrelation (or object power spectrum) is estimated from a set of distorted speckle patterns requires very specific and tailored signal conditioning, including envelope estimation and correction, windowing and background subtraction, as well as fine-tuning of the phase-retrieval reconstruction parameters including support constraints, number of iterations, choice of beta parameter, number of independent runs with random initial guesses, to name a few. Without a careful optimization of this rather large set of parameters, the reconstruction fidelity is unfortunately as poor as shown in our original figure. This is in contrast to the I-CLASS reconstruction algorithm, which has no free parameters except for the number of iterations, which does not have a very strong effect on the reconstruction fidelity.
     
-    The comparison shown in the supplementary information is between I-CLASS and speckle correlation imaging that uses phase retrieval on an \textbf{estimated} autocorrelation, not standard phase retrieval on the true object spectrum.
+    We acknowledge that in our original manuscript we have not provided a sufficiently clear nor detailed explanations for this important point, nor we have made a large effort to carefully tweak and optimize the speckle-correlation estimation and phase retrieval reconstruction. In addition, we have added to the supplementary figure the result of phase retrieval applied directly to the target object reference image power spectrum for comparison. 
     
-    Standard phase retrieval operates directly on the exact power spectrum of an object, whereas speckle correlation imaging first requires estimating the object's autocorrelation from multiple scattered light patterns. The quality of this estimation affects the subsequent phase retrieval results.
+    While our enhanced speckle correlation implementation shows significantly improved results than our original submission, I-CLASS still demonstrates superior reconstruction quality, even when compared to the best reconstruction obtained from 500 independent runs of the phase-retrieval algorithm on the estimated power spectrum. Most importantly, the I-CLASS matrix-based algorithmic reconstruction is extremely stable, providing solid results in every run, does not require any free parameters (e.g., choice of betas, iterative approach), signal conditioning (envelope correction, windowing, etc.), multiple runs with different initial guesses, or other tweaks that the phase-retrieval requires for achieving a reasonable reconstruction. 
     
-    Following the reviewer's comment, we have revisited our speckle correlation implementations and improved the results by applying a more rigorous approach:
-    
-    For autocorrelation estimation:
-    \begin{enumerate}
-        \item Calculate the autocorrelation of each scattered frame
-        \item Average all autocorrelations
-        \item Divide the result by the autocorrelation of the mean of the images, which provides an estimate of the envelope of the PSF and subtract the envelope from all frames
-        \item Subtract the minimum value to ensure non-negativity
-        \item Apply appropriate windowing (square root of Tukey window for USAF target and fourth root of Tukey window for the cameraman)
-    \end{enumerate}
-    
-    For phase retrieval, following Katz et al. (Nature Photonics, 2014):
-    \begin{enumerate}
-        \item Apply 300 iterations of HIO algorithm with decreasing beta parameters (from 2.0 to 1.2, decreasing by 0.2)
-        \item Follow with 300 iterations of error reduction
-        \item Implement object-specific constraints:
-        \begin{itemize}
-            \item  For the cameraman: real, positive, and non-negative constraints
-            \item  For the USAF target: same constraints plus an additional finite square support
-        \end{itemize}
-    \item Running the algorithm 500 times with 500 different random initial guesses, and choosing the lowest error reconstruction.
-    \end{enumerate}
-    
-    
-    The updated figure now includes both our improved speckle correlation results and phase retrieval applied directly to the reference image for comparison. While our enhanced speckle correlation implementation shows better results than our original submission, I-CLASS still demonstrates better reconstruction quality, particularly for complex objects when the number of speckles in the PSF is limited, as is often the case in realistic experimental conditions. Importantly, the I-CLASS matrix-based algorithm does not require any free parameters (e.g., choice of betas, iterative approach), signal conditioning (envelope correction, windowing, etc.), multiple runs with different initial guesses, or other tweaks that the phase-retrieval requires for achieving a reasonable reconstruction. 
-    
-    We have updated the supplementary section to reflect these improvements and provide a more comprehensive comparison.
+     The updated supplementary section and supplementary figure that reflect these improvements and provide a more comprehensive comparison appear below:
 
     \begin{quote}
         \section*{Comparison with speckle-correlation phase-retrieval based reconstruction}
 
-        We present a numerical comparison between our proposed I-CLASS method and the speckle correlation imaging of Katz et al. \cite{katz14}, which is, in essence, equivalent to running a phase-retrieval algorithm on the \textbf{estimated} object autocorrelation (that is, its power spectrum) as originally proposed by Labeyrie's stellar speckle interferometry \cite{labeyrie1970attainment}. 
-        Both methods utilize similar experimental setups and image acquisition schemes, allowing for a direct performance evaluation. To perform this comparison, we focused on several numerically simulated isoplanatic imaging scenarios, demonstrating the superior performance of the matricial I-CLASS approach when reconstructing complex non-sparse natural target objects.
+        In this section, we present a numerical comparison between our proposed matrix-based approach for the incoherent imaging case and the established speckle correlation phase-retrieval based imaging  \cite{bert12, katz14}. Inspired by Labeyrie's 1970 stellar speckle interferometry \cite{labeyrie1970attainment}, speckle correlation imaging \cite{bert12, katz14}. is composed of two steps: the first is an estimation of the object autocorrelation (that is, its power spectrum) from the measured speckle patterns autocorrelation (or power spectrum); and the second is a subsequent reconstruction of the object from this estimated power-spectrum using a phase-retrieval algorithm \cite{fienup1982phase}. 
+        Both methods utilize similar experimental setups and image acquisition schemes, allowing for a direct performance evaluation. To perform this comparison, we focused on several numerically simulated isoplanatic imaging scenarios. Our results demonstrate the superior performance of the matrix-based I-CLASS approach when reconstructing complex non-sparse natural target objects. 
         
-        For the speckle correlation reconstruction, we employ a rigorous approach to estimate the autocorrelation:
+        Importantly, in contrast to the I-CLASS reconstruction algorithm that has no free parameters except for the number of iterations, the estimation of the object's autocorrelation from measured speckle patterns and the phase retrieval algorithm require very careful optimization and tailoring of signal conditioning, including envelope estimation and correction, windowing and background subtraction, as well as fine-tuning of the phase-retrieval reconstruction algorithm parameters, including specific support constraints, number of iterations, choice of beta parameter, and number of independent runs with random initial guesses. The reconstruction fidelity obtained by phase retrieval of speckle correlations is extremely sensitive to the exact choice of signal conditioning and parameters, and without a precise and careful optimization of this rather large set of parameters, the reconstruction fidelity may be very poor for complex non-sparse objects. 
+
+        Figure ~\ref{fig_S4} presents the results of this numerical study. Each of the two rows of panels in Fig. ~\ref{fig_S4} displays the results for a different target object.  For each target object, we display the widefield reference image of the object taken without the scattering medium present (Fig.~\ref{fig_S4}a,f), a sample simulated captured frame distorted by scattering (Fig.~\ref{fig_S4}b,g), the speckle correlation phase-retrieval reconstruction (Fig.~\ref{fig_S4}c,h), the matrix-based I-CLASS reconstruction (Fig.~\ref{fig_S4}d,i), and the result of the same phase retrieval algorithm applied directly to the reference image power spectrum (Fig.~\ref{fig_S4}e,j).
+        
+        In all of the cases tested, our matrix-based approach demonstrated superior reconstruction fidelity than speckle correlations phase-retrieval based reconstructions. Most importantly, the I-CLASS matrix-based algorithmic reconstruction is extremely stable, providing solid results in every run, does not require any free parameters, signal conditioning, or other tweaks that speckle-correlation phase-retrieval requires for achieving a reasonable reconstruction. Strikingly, the matrix-based reconstruction demonstrates superior reconstruction quality even when compared to the best phase-retrieval speckle-correlation reconstruction obtained from 500 independent runs of the phase-retrieval algorithm on the optimized estimated power spectrum.
+        
+        For producing Supplementary Fig. ~\ref{fig_S4}, we have applied the implementation of I-CLASS algorithm given in Weinberg et al.\cite{weinberg2024noninvasive} directly on the simulated captured frames.
+        For the speckle-correlation reconstruction, we employed the reconstruction approach of Bertolotti et al. and Katz et al. \cite{bert12, katz14} following a rigorous optimization of the choice of signal conditioning and algorithmic parameters, which are as follows:
         \begin{enumerate}
-            \item Calculate the autocorrelation of each scattered frame
-            \item Average all autocorrelations
-            \item Divide the result by the autocorrelation of the mean of the images, which provides an estimate of the envelope of the PSF and subtract the envelope from all frames
-            \item Subtract the minimum value to ensure non-negativity
-            \item Apply appropriate windowing (sqrt of Tukey window for USAF target and Tukey window $^{(1/4)}$ for the cameraman)
+            \item Calculate the autocorrelation of each scattered light intensity frame.
+            \item Average all autocorrelations. The resulting autocorrelation suffers from an envelope given by the average envelope of the scattered light patterns.
+            \item Correct the autocorrelation envelope by dividing the result of step (2) by the autocorrelation of the mean of the images. This provides an estimate of the envelope of the PSF and normalizes this envelope from the raw average autocorrelation of all frames.
+            \item Subtract the minimum value of the resulting autocorrelation to account for the near constant background of 2:1 speckle intensity autocorrelation \cite{katz14}.
+            \item Apply appropriate windowing for optimal phase-retrieval results: a square-root of a Tukey window for the USAF target and a Tukey window taken to the power of $1/4$  for the camera-man target.
         \end{enumerate}
         
-        For phase retrieval, following Katz et al. \cite{katz14}, we implement:
+        For phase retrieval, following Katz et al. \cite{katz14}, we ran 500 independent runs of the following phase-retrieval algorithms, where in each run a different random initial guess for the object was used, and the lowest error reconstruction is presented in Fig. ~\ref{fig_S4},:
         \begin{enumerate}
-            \item 300 iterations of HIO algorithm with decreasing beta parameters (from 2.0 to 1.2, decreasing by 0.2)
-            \item 300 additional iterations of error reduction
-            \item Object-specific constraints:
+            \item 300 iterations of HIO algorithm with a decreasing value of beta parameter, from 2.0 to 1.2, in steps of 0.2. A total of $5\times300=1,500$ iterations.
+            \item 300 additional iterations of error reduction algorithm.
+            \item In each iteration we applied the following object-dependent constraints:
             \begin{itemize}
-                \item For the cameraman: real, positive, and non-negative constraints
-                \item For the USAF target: same constraints plus an additional finite square support
+                \item For the camera-man: real, positive, and non-negative constraints
+                \item For the USAF target: same constraints plus an additional finite square support constraint.
             \end{itemize}
+
         \end{enumerate}
         
-        The results of this comparison are presented in Fig.~\ref{fig_S4}. The top row shows results for the Cameraman image, while the bottom row shows results for the USAF resolution target. For each test object, we display the widefield reference (Fig.~\ref{fig_S4}a,f), an example frame distorted by scattering (Fig.~\ref{fig_S4}b,g), the speckle correlation reconstruction (Fig.~\ref{fig_S4}c,h), the I-CLASS reconstruction (Fig.~\ref{fig_S4}d,i), and phase retrieval applied directly to the reference image (Fig.~\ref{fig_S4}e,j).
-        
-        While speckle correlation imaging produces recognizable reconstructions for both test objects, I-CLASS demonstrates higher reconstruction quality, particularly for the more complex Cameraman image.
 
         \begin{figure}[H]
             \centering
             \includegraphics[width=0.93\linewidth]{figures/figure_S4.pdf}
             \renewcommand{\thefigure}{S4}
-            \captionof{figure}{\footnotesize\textbf{Numerical example imaging through dynamic scattering media.} 
-            A comparison between I-CLASS and speckle correlation imaging for complex objects. \textbf{a,f} Numerically simulated target objects: the Cameraman image and USAF resolution target. \textbf{b,g} Example camera frames simulated under dynamic scattering. \textbf{c,h} Speckle correlation imaging reconstructions using the HIO algorithm (see parameters in text). \textbf{d,i} I-CLASS reconstructions showing higher fidelity to the original objects. \textbf{e,j} Phase retrieval applied directly to the reference images. Scale bar: 10 px.}
+            \captionof{figure}{\footnotesize\textbf{Numerical comparison of imaging through dynamic scattering media with our matricial approach vs. speckle-correlation phase-retrieval based imaging.} 
+            A comparison between the matrix-based I-CLASS reconstruction and speckle correlation phase-retrieval based imaging \cite{bert12,katz14} . \textbf{a,f}  Simulated target objects. \textbf{b,g} Sample simulated captured single camera frames under dynamic scattering. \textbf{c,h} Best results of speckle correlation imaging reconstructions from 500 runs of  HIO phase-retrieval algorithm, followed by error-reduction algorithm, after careful optimization of object autocorrelation estimation (see details in text). \textbf{d,i} I-CLASS reconstructions showing superior fidelity from every single run with no free parameters or signal conditioning. \textbf{e,j} Phase retrieval applied directly to the reference images power spectrum, for comparison. Scale bar: 10 px.}
             \label{fig_S4}
         \end{figure}
     \end{quote}
