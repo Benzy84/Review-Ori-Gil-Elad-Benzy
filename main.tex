@@ -189,18 +189,18 @@ We recognize that the approach applied for thin scattering layers would indeed n
      Secondly, we suggest a potential mitigation technique for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick media, while maintaining the capability of coherence gating, crucial for practical reflection-based microscopy and 3D imaging, and highlight the potential of focused illumination in imaging through dynamically-bent multi-core fibers (MCFs):
 
      \begin{quote}
-     "
-    One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
-    In such a solution, for each realization of the dynamic scatterer one would: (I) rapidly acquire multiple ($K \gg 1$) coherence-gated holograms under different speckle illuminations (created with an additional diffuser or SLM in the illumination path); (II) Incoherently sum the intensity patterns of the holographically measured fields to incoherently-compounded "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$  that can then be (III) processed using I-CLASS as in our incoherent experiments.
-    This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
+     "One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
+     In such a solution, for each realization of the dynamic scatterer one would: (I) rapidly acquire multiple ($K \gg 1$) coherence-gated holograms under different speckle illuminations (created with an additional diffuser or SLM in the illumination path); (II) Incoherently sum the intensity patterns of the holographically measured fields to incoherently-compounded "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$  that can then be (III) processed using I-CLASS as in our incoherent experiments.
+     This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
 
-    Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed.
-    Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{weinberg2024ptychographic}.
-    \end{quote}
+     Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed.
+     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{weinberg2024ptychographic}.
+     \end{quote}
 
 In this discussion, we have added the following references to the revised manuscript:
 [xx]
 [yy]
+
 
 Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on the reconstruction fidelity in the case of coherent imaging with a beam focused at the scattering layer plane.
 The results of this study are presented in the new Supplementary Sections XX, which reads:
@@ -310,7 +310,6 @@ In our experimental implementation described in the main text, we carefully focu
 
 \textbf{More Specific Comments:}
 
-
 \begin{enumerate}[label=\arabic*., resume]
 \item \leavevmode
 \end{enumerate}
@@ -326,21 +325,15 @@ In our experimental implementation described in the main text, we carefully focu
         \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
     \end{comment}
     
+We thank the reviewer for this insightful comment.
 
-    We thank the reviewer for this insightful comment. Following this recommendation, we have added the following discussion to the main manuscript:
-    
-    \begin{quote}
-        Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the distortion matrix \cite{badon2020distortion,jo2022through} can help to address these effects .
-        
-        % It was recently shown that SVD-based filtering of the distortion matrix \cite{badon2020distortion} or the reflection matrix \cite{jo2022through} can XXXXX. An in-depth study of the potential of advnaced filtering of the measurement or covariance matrix will be the focus of future work.
+1. Regarding the SVD approach: The reviewer raises an interesting point about using singular value decomposition (SVD) to address correlations arising from energy conservation, referencing the work by Badon et al.\cite{badon2020distortion} We note that in this approach, SVD is performed on the distortion matrix rather than on the covariance matrix in our case. While the contexts differ, the principle of using SVD to filter out undesired correlations is valuable. It would be interesting to explore whether a similar decomposition approach could help identify and remove the systematic correlations arising from energy conservation in our measurement matrix. An in-depth study of such advanced filtering techniques for the measurement or covariance matrix will be the focus of future work.
 
-        It was recently shown that SVD-based filtering of the distortion matrix \cite{badon2020distortion} or the reflection matrix \cite{jo2022through} can help isolate single-scattering contributions from complex systems with multiple scattering. In the distortion matrix approach \cite{badon2020distortion}, the first singular vectors capture the most XXXX signal contributions, while in \cite{jo2022through}, they showed that eigenvalue decomposition of a time-gated reflection matrix can effectively attenuate uncorrelated multiple scattering while retaining single-scattering signals with strong wave correlation. An in-depth study of the potential of advanced filtering of the measurement or covariance matrix will be the focus of future work.
-
-        
-        The full analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3.
-    \end{quote}
-    
-    We maintained the detailed analysis in Supplementary Section S2 as you suggested, while bringing the key insight to readers' attention in the main text.
+2. Following the reviewer's suggestion, we have added the following discussion to the main manuscript: 
+\begin{quote}
+    "Our analysis revealed that energy conservation in phase-only speckle patterns introduces troublesome spatial correlations that can cause background haze in the reconstructions. We addressed this by simply applying varying intensity scaling across frames during post-processing. It would be interesting to study whether a singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix can help to address these effects. It was recently shown that SVD-based filtering of the reflection matrix \cite{jo2022through} can effectively separate the correlated signal. An in-depth study of the potential of advanced filtering of the measurement or covariance matrix will be the focus of future work. The full analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3."
+\end{quote}
+We maintained the detailed analysis in Supplementary Section S2 as suggested, while bringing the key insight to readers' attention in the main text.
 
 \end{ourresponse}
 
@@ -784,24 +777,23 @@ The result of Supp.Eq.~\ref{eq: cov form} shows that the covariance matrix of sc
 While the CLASS algorithm was developed to compensate for phase-only distortions, i.e. to the case where the illumination or detection PSF are each given by a Fourier transform of a phase-only mask, the recently introduced I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS correction (or equivalently, matrix decomposition) to the case where both amplitude and phase distortions exists. 
 
 \subsection*{Dynamic scattering correction: exchange of roles between the target object and the scattering PSF} 
-In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $M$ varying illuminations of the conventional (or CTR) reflection matrix acquisition, which can be 
+In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $m=1..M$ varying illuminations of the conventional reflection matrix acquisition, which can be described by: 
 
 \begin{equation}
-E_{out}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in}(\vec{r}))]
+E_{out,m}(\vec{r}) = P_{det}(\vec{r}) *O_m(\vec{r}) 
 \end{equation}
 
-we consider a static object and varying PSFs due to the dynamic scattering medium. The imaging equation in this case becomes:
+where $O_m(\vec{r})$ is the field reflected from the object at the m-th illlumination, we consider a static object imaged by a time-varying PSF that results from the dynamics of the scattering medium. The imaging equation in this case becomes:
 
 \begin{equation}
-I_m(\vec{r}) = P_m(\vec{r}) * O(\vec{r}) = O(\vec{r}) * P_m(\vec{r})
+E_{out,m}(\vec{r}) = P_{m}(\vec{r}) * O(\vec{r}) = O(\vec{r}) * P_{m}(\vec{r})
 \end{equation}
 
-Where $P_m$ is the PSF for the $m$-th realization of the dynamic scatterer. The crucial insight presented in our work is that, due to the commutativity of convolution, this equation has exactly the same mathematical form as the random illumination case of conventional reflection matrix acquisition, but with the roles of the object and PSF interchanged.
-
-We note that to achieve a fixed object illumination throughout the different measurements in the coherent imaging case, we utilized an illumination spot size at the scattering layer plane that is smaller than the correlation length of the diffuser (see Supplementary Section on "Effect of illumination spot size").
-
+Where $P_m$ is the PSF for the $m$-th realization of the dynamic scatterer. The crucial insight presented in our work is that, due to the commutativity of the convolution operation, the equation for the dynamic medium case has exactly the same mathematical form as the random illumination case of conventional reflection matrix acquisition, but with the roles of the object and PSF interchanged.
 
 Due to this mathematical equivalence of the imaging equation between the dynamic scattering and random illumination scenarios (Supplementary Eqs. XX and YY) , the covariance matrix of the acquired dataset 'measurement matrix' $\textbf{A}$ has the same TDT structure as that of the covariance matrix of CTR-CLASS, and thus the I-CLASS algorithm can be used to reconstruct the object by naively applying it on the covariance matrix.
+
+We note that to achieve a fixed object illumination throughout the different measurements in the coherent imaging case, we utilized an illumination spot size at the scattering layer plane that is smaller than the correlation length of the diffuser (see Supplementary Section on "Effect of illumination spot size").
 
 \subsection*{I-CLASS algorithm}
 
@@ -829,12 +821,12 @@ We believe these additions significantly improve the paper's accessibility and p
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-    We appreciate the reviewer's concern about the isoplanatic patch limitation. We note that we had already mentioned this constraint in the opening paragraph of the Principle section, highlighting that: 
+    We appreciate the reviewer's concern about the isoplanatic patch limitation. We note that we the original version of the manuscript already mentioned this constraint in the opening paragraph of the \textbf{Principle} section, highlighting that: 
     \begin{quote}
         \textbf{"all experiments and analysis in this work require the imaged object to be contained within the isoplanatic patch of the scattering medium; for objects larger than this patch, the approach presented here would not directly apply without additional modifications such as field segmentation."}
     \end{quote}
 
-    To further emphasize this point and ensure clarity for non-specialist readers, we have also added an explicit note immediately following Equation 1 reiterating this constraint:
+    To address the referee's concern, to further emphasize this point and ensure clarity for non-specialist readers, we have also added an explicit note immediately following Equation 1 reiterating this constraint:
     
     \begin{quote}
         "It is important to note that this convolution model is strictly valid only for objects within an isoplanatic patch. All experiments in this work were designed within this constraint. Potential extensions to larger fields of view or thick complex media are discussed in the Discussion section."
@@ -914,7 +906,7 @@ I might have missed it, but I don't think I have seen any discussion about the t
 We thank the reviewer for raising this point, which was indeed not adequately discussed in the original manuscript. Following the reviewer's comment, we have added to the revised manuscript the information on the specific runtime for each iteration for the presented results on our system. This information was added to the \textbf{Materials and methods} section (in subsection \textbf{\subsection*{Experimental parameters}}), and it reads:
 
 \begin{quote}
-    The run time of the I-CLASS algorithm on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels. XX
+    The run time of the I-CLASS algorithm on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels. With our standard protocol of 1000 iterations, this yields total processing times of approximately 8 seconds and 70 seconds, respectively.
 \end{quote}
 \end{ourresponse}
 
@@ -930,24 +922,25 @@ We thank the reviewer for raising this point, which was indeed not adequately di
 \end{solved_reviewercomment}
 
 \begin{ourresponse}
-    We thank the reviewer for this insightful question regarding the determination of the correct propagation distance. While the I-CLASS algorithm initially reconstructs the complex field at the scattering layer plane, a key advantage of our coherent imaging approach is that once we have retrieved the complex wavefront, we can numerically propagate it to any desired axial plane.
+    We thank the reviewer for this raising this point, which was perhaps not properly explained in the original manuscript. Since the I-CLASS algorithm reconstructs the complex field at the scattering layer plane, we can  digitially back-propagate it to any desired plane. 
     
-    This "digital autofocus" capability is a fundamental strength of coherent computational imaging. As we now explain in detail in the Methods section titled "Fresnel Propagation via Fourier-Domain Transfer Function," we use the Fresnel propagation transfer function to computationally propagate the reconstructed field from the diffuser plane to any desired plane, including the object plane.
+    In practice, once the reconstructed field is obtained in the scattering layer plane we digitally back-propagate it to several distances to find the plane where the object is at best focus. This "digital autofocus" capability is a fundamental strength of coherent computational imaging, analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media. 
+    Importanly, it eliminates the need for precise a priori knowledge of the object-diffuser distance during data acquisition or during I-CLASS iterations, and can allow imaging multiple planes, as was demonstrated in previous works (e.g. Haim et al. Nature Photonics, 2024). 
+    %As we now explain in detail in the Methods section titled "Fresnel Propagation via Fourier-Domain Transfer Function," we use the Fresnel propagation transfer function to computationally propagate the reconstructed field from the diffuser plane to any desired plane, including the object plane.
     
-    This numerical propagation capability allows us to determine the correct object plane computationally by finding the propagation distance at which the target features achieve optimal focus—eliminating the need for precise a priori knowledge of the object-diffuser distance during data acquisition. This is analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media.
+%    This numerical propagation capability allows us to determine the correct object plane computationally by finding the propagation distance at which the target features achieve optimal focus—eliminating the need for precise a priori knowledge of the object-diffuser distance during data acquisition. This is analogous to the focusing capability in digital holographic microscopy but applied to imaging through scattering media.
     
-    To comprehensively address this point, we have added a new supplementary section titled "Digital Autofocus through Fresnel Propagation" that demonstrates this capability in detail.
+    To address this point in the revised manuscript, we have added a new supplementary section titled "Digital Autofocus by Fresnel Propagation" that explains this capability and includes a ne figure presenting reconstructions in out of focus planes .
 
     \begin{quote}
         \section*{Digital autofocus by Fresnel propagation}
         
-        In holographic imaging through scattering media, a key advantage is the ability to numerically propagate the reconstructed complex field to any desired axial plane once the field is retrieved at a single reference plane. This capability, often called digital autofocus, eliminates the necessity of knowing the exact object distance during data acquisition.
+        In holographic imaging through scattering media, a key advantage is the ability to numerically propagate the reconstructed complex field to any desired plane once the field is retrieved at a single reference plane. This capability, often termed digital autofocus, eliminates the necessity of knowing the exact object distance during data acquisition or during the I-CLASS iterations. 
         
-        In our experiments from Fig.~\ref{fig_5} of the main text, the I-CLASS algorithm reconstructs the complex wavefront at the scattering layer plane (z = 0). However, as shown in Fig.~\ref{fig_S6}, this field can be digitally propagated to any desired plane using the Fresnel propagation operator described in the Methods section of the main text. 
+        In our coherent imaging experiments (Fig.~\ref{fig_5}) the I-CLASS algorithm reconstructs the complex-valued object field at the scattering layer plane (z = 0). This field can be digitally propagated to any desired plane using the Fresnel propagation operator (or angular spectrum propagator) described in the Methods section of the main text.\textbf{ }
+        By computationally varying the propagation distance and observing the resulting reconstructed intensity distributions, we identify the optimal object plane where the finest features of the target come into focus. This process is analogous to the physical process of adjusting the focus in a conventional microscope, but performed entirely in post-processing.
         
-        By computationally varying the propagation distance and observing the resulting reconstructed intensity distributions, we can identify the optimal object plane where the finest features of the target come into focus. This process is analogous to the physical process of adjusting the focus in a conventional microscope, but performed entirely in post-processing.
-        
-        Figure ~\ref{fig_S6} demonstrates this capability by showing the reconstructed field intensity at three distinct propagation distances: before the object plane (z = 5.3 cm), at the object plane where optimal focus is achieved (z = 7.15 cm), and after the object plane (z = 9 cm). The sharp focus observed at z = 7.15 cm confirms that this is indeed the correct object plane, with clear resolution of the fine features in the USAF target.
+        Figure ~\ref{fig_S6} demonstrates this capability by showing the reconstructed field intensity at three distinct propagation distances: before the object plane (z = 5.3 cm), at the object plane where optimal focus is achieved (z = 7.15 cm), and after the object plane (z = 9 cm). The sharp focus observed at z = 7.15 cm confirms that this is indeed the correct object plane, having the highest resolution of the fine features of the USAF target.
 
         \vspace{1em}
         \begin{figure}[H]
@@ -968,20 +961,18 @@ We thank the reviewer for raising this point, which was indeed not adequately di
 \end{enumerate}
 \vspace{-1em}
 \begin{solved_reviewercomment}
-    I am not sure I understand how focussing the illumination on the scattering medium can reduce the fluctuations of \(E^{\text{ill}}_m\). Wouldn't it actually maximise them?    
+    I am not sure I understand how focusing the illumination on the scattering medium can reduce the fluctuations of \(E^{\text{ill}}_m\). Wouldn't it actually maximise them?    
 \end{solved_reviewercomment}
 \begin{ourresponse}
-We thank the reviewer for this insightful question about an important aspect of our experimental design.
-
-The reviewer's intuition that focusing on a scattering medium might maximize illumination fluctuations is valid for many scenarios. However, in our specific configuration, the opposite effect occurs due to a crucial relationship between the illumination spot size and the correlation length of the diffuser.
-
-To address this question comprehensively, we have added a new section ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material with numerical simulations demonstrating this effect. For completeness, we reproduce the full section below:
+We thank the reviewer for raising this question that was not expelained in detail in the original manuscript.
+%The reviewer's intuition that focusing on a scattering medium might maximize illumination fluctuations is valid for many scenarios. However, in our specific configuration, the opposite effect occurs due to a crucial relationship between the illumination spot size and the correlation length of the diffuser.
+To address this question comprehensively, we have added a new section ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material with in depth explanations and a set of numerical simulations that demonstrate and study the limitations of  this effect. For convenience, we reproduce the full section below:
 \begin{quote}
     \section*{Supplementary Section SXX: Effect of illumination spot size and homogeneity on coherent imaging through dynamic scattering}
 
-In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is crucial for the successful application of our reconstruction algorithm (Eqs. 6-7 of the main text). %, our method requires that the illumination field $E_m^{ill}(\vec{r})$ remains effectively constant across different acquisitions for our method to work properly.
-While obtaining a constant illumination through a dynamic scatterer is often challenging, this can be acheived for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser to be sufficiently smaller than the  diffuser's coherence (or correlation) length.
-Fig.~\ref{fig_S7} demonstrates and studies the limitation of this approach through numerical simulation. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of the diffuser with the illumination spot superimposed for three cases: where the spot size is 0.1, 1, and 10 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using Fourier transform propagation.
+In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is important to ensure the 'fixed object' assumption of our model (Eqs. 6-7 of the main text). %, our method requires that the illumination field $E_m^{ill}(\vec{r})$ remains effectively constant across different acquisitions for our method to work properly.
+While obtaining a constant homogeneous illumination through a dynamic scatterer is rather straightforward with spatially-incoherent illumination, it is often challenging when spatially coherent illumination is considerede. Nonetheless, it can be achieved for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser, such that the spot size is  sufficiently smaller than the diffuser's coherence (or correlation) area. In this case, the illumination beam effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experiences scattering.
+Fig.~\ref{fig_S7} demonstrates and numerically studies the limitation of this approach. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of a thin scattering layer with the illumination spot superimposed for three cases: where the illumination spot diameter is 0.1, 1, and 10 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using Fourier transform propagation.
 The third row (Fig.~\ref{fig_S7}g-i) shows the effect of these illumination patterns on the effective object (the product of the object and the illumination), while the fourth row (Fig.~\ref{fig_S7}j-l) shows the reconstruction results. 
 
 
