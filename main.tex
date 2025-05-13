@@ -202,14 +202,14 @@ In this discussion, we have added the following references to the revised manusc
 [xx]
 [yy]
 
-Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on reconstruction fidelity in the case of coherent imaging. The study focuses on the case of a single coherent illumination with a focused beam.
+Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on the reconstruction fidelity in the case of coherent imaging with a beam focused at the scattering layer plane.
 The results of this study are presented in the new Supplementary Sections XX, which reads:
 
     \begin{quote}
     \section*{Supplementary Section SXX: Effect of illumination spot size and homogeneity on coherent imaging through dynamic scattering}
 
 In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is crucial for the successful application of our reconstruction algorithm (Eqs. 6-7 of the main text). %, our method requires that the illumination field $E_m^{ill}(\vec{r})$ remains effectively constant across different acquisitions for our method to work properly.
-While obtaining a constant illumination through a dynamic scatterer is often challenging, this can be acheived for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser to be sufficiently smaller than the  diffuser's coherence (or correlation) length.
+While obtaining a constant illumination through a dynamic scatterer is often challenging, this can be achieved for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser to be sufficiently smaller than the diffuser's coherence (or correlation) length.
 Fig.~\ref{fig_S7} demonstrates and studies the limitation of this approach through numerical simulation. The top row (Fig.~\ref{fig_S7}a-c) shows the phase pattern of the diffuser with the illumination spot superimposed for three cases: where the spot size is 0.1, 1, and 10 times the diffuser correlation length ($d_{\text{correlation}}$), respectively. The second row (Fig.~\ref{fig_S7}d-f) shows the resulting illumination intensity pattern at the object plane after the light has propagated through the diffuser, simulated using Fourier transform propagation.
 The third row (Fig.~\ref{fig_S7}g-i) shows the effect of these illumination patterns on the effective object (the product of the object and the illumination), while the fourth row (Fig.~\ref{fig_S7}j-l) shows the reconstruction results. 
 
@@ -590,14 +590,6 @@ E_{out}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{i
 \label{eq: fund. imaging}
 \end{equation}
 
-%where $P_{ill}(\vec{r})$ and $P_{det}(\vec{r})$ represent the illumination and detection point spread functions (PSFs), respectively, $O(\vec{r})$ is the object reflectivity function, and $*$ denotes convolution.
-
-%When the output field is measured for multiple different input fields $E_{in,m}(\vec{r})$ for $m=1...M$, i obtain a set of output fields:
-
-%\begin{equation}
-%E_{out,m}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in,m}(\vec{r}))]
-%\end{equation}
-
 When sampling these fields and PSFs on a discrete grid with $N$ pixels, and arranging the fields into column vectors with $N$ entries each, the linear relationship given by Supp.Eq. ~\ref{eq: fund. imaging} above can be expressed in matricial form as:
 \begin{equation}
 \vec{E}_{out} = \mathbf{P}_{det} \mathbf{O} \mathbf{P}_{ill} \vec{E}_{in} \equiv \mathbf{R} \vec{E}_{in} 
@@ -611,7 +603,11 @@ Here, $\mathbf{P}_{ill}$ and $\mathbf{P}_{det}$ are $N \times N$ Toeplitz (convo
 \end{equation}
 
 
-For a static scattering medium and object scenario, one can measure the reflection matrix column by column by illuminating the medium with $m=1..N$ controlled input fields (basis vectors,) and recording the output scattered light fields for each of these $m=1..N$ modes: $\vec{E}_{out,m} =  \mathbf{R} \vec{E}_{in,m} $.
+For a static scattering medium and object scenario, one can measure the reflection matrix, $\textbf{R}$, column by column by illuminating the medium with $m=1..N$ controlled input fields (basis vectors,) and recording the output scattered light fields for each of these $m=1..N$ modes, which in matricial form translates to: 
+
+\begin{equation}
+    \vec{E}_{out,m} =  \mathbf{R} \vec{E}_{in,m}
+\end{equation}
 
 Once the reflection matrix is measured, the challenge of reconstructing the image of the hidden object from the scattered light measurements is equivalent to decomposing the reflection matrix into its three components. 
 The CLASS algorithm \cite{choi2022flexible} is fundamentally a matrix decomposition method that can take any matrix with this TDT structure and decompose it into its constituent matrices. This allows recovery of the aberration-free object reflectivity function, $\mathbf{O}$, by separating it from the distortions introduced by the PSFs. 
@@ -788,7 +784,13 @@ The result of Supp.Eq.~\ref{eq: cov form} shows that the covariance matrix of sc
 While the CLASS algorithm was developed to compensate for phase-only distortions, i.e. to the case where the illumination or detection PSF are each given by a Fourier transform of a phase-only mask, the recently introduced I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS correction (or equivalently, matrix decomposition) to the case where both amplitude and phase distortions exists. 
 
 \subsection*{Dynamic scattering correction: exchange of roles between the target object and the scattering PSF} 
-In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $M$ varying illuminations of the conventional (or CTR) reflection matrix acquisition, we consider a static object and varying PSFs due to the dynamic scattering medium. The imaging equation in this case becomes:
+In the dynamic scattering scenario considered in this work, the fundamental imaging equation (Eq. ~\ref{eq: fund. imaging}) changes. Instead of considering the static scattering medium (PSF) and $M$ varying illuminations of the conventional (or CTR) reflection matrix acquisition, which can be 
+
+\begin{equation}
+E_{out}(\vec{r}) = P_{det}(\vec{r}) * [O(\vec{r}) \cdot (P_{ill}(\vec{r}) * E_{in}(\vec{r}))]
+\end{equation}
+
+we consider a static object and varying PSFs due to the dynamic scattering medium. The imaging equation in this case becomes:
 
 \begin{equation}
 I_m(\vec{r}) = P_m(\vec{r}) * O(\vec{r}) = O(\vec{r}) * P_m(\vec{r})
