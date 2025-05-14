@@ -169,12 +169,13 @@ In this work, the authors extend the matrix approach of optical imaging they hav
 
 As often with this group, this work is technically of excellent quality and its presentation is elegant. The experiments based on rotating diffusers are rather simple and allow the authors to illustrate nicely the concept. However, one can wonder whether the idea proposed by the authors can go beyond imaging through a thin dynamic diffusive layer and to which extent it can be applied to real 3D imaging situations like for biomedical or LiDAR applications. I detail below the main points that, in my opinion, would deserve more discussion before publication.
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
+    
     We thank the Reviewer for their general positive evaluation of our work, recognizing its significance in extending matrix-based scattering compensation algorithms to dynamic scattering media, and its potential impact.
     We agree that the important question on the effects of thick scattering media and applications in coherent imaging deserves more discussion. We address it in our point-by-point replies below.
     %%%% Add this to the discussion: %%%%
     % In conclusion, this work demonstrates the versatility and universality of matrix approaches to imaging in complex media, extending their applicability from static to dynamic scattering environments.
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 \begin{enumerate}[label=\arabic*.]
@@ -878,13 +879,13 @@ A few more minor points:
 \end{solved_reviewercomment}
 
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the reviewer for this correction. We have revised the text to more accurately reflect the nature of iterative phase retrieval, acknowledging that convergence is possible, albeit potentially time-consuming. The revised sentence now reads:  
     \begin{quote}
         "However, despite this advantage, these techniques are hindered by their reliance on iterative phase retrieval \cite{fienup1978reconstruction}, which can require a very large number of iterations to converge, as well as specific support priors and potentialy a large number of initial guesses."
     \end{quote}
     
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 
@@ -895,13 +896,13 @@ A few more minor points:
 \begin{solved_reviewercomment}
     Just below the above statement there are two sentences beginning with "while" which looks like they are the leftover of some copy-paste during editing.
 \end{solved_reviewercomment}
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the reviewer for their careful reading. We have removed the redundant sentence and simplified the text to improve clarity and flow. The revised text now reads:
     \begin{quote}
         "While deterministic bispectrum reconstruction can address the convergence challenge of phase retrieval, it still requires averaging a large number of speckle grains, limiting the reconstruction to relatively simple objects."
     \end{quote}
-\end{ourresponse}
-% \hlred{Write something about that it is not really cheating since in incoherent illumination passive constant illumination such as the sun...}
+\end{finished_ourresponse}
+
 
         
 \begin{enumerate}[label=\arabic*., resume]
@@ -912,16 +913,16 @@ A few more minor points:
     The results shown in Fig. 2 and 3, albeit impressive, require the target to be illuminated from behind, which makes this whole approach invasive. I know the author never explicitly claim non-invasiveness, but they also never make this point clear.
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the reviewer for highlighting this point.
     We agree that the initial results presented in Figures 2 and 3 require illumination from behind the sample, which makes the presented experiments invasive. However, it is worth noting that the addition of a scattering medium between the light source and the target in these experiments would not change the imaging performance as long as sufficiently high intensity is passed through such a scattering medium, as the incoherent imaging configuration only requires homogeneous illumination of the target.
     
-    To clarify this explicitly in the revised manuscript, we added the following note:
+    To clarify this explicitly in the revised manuscript, we added the following note to the results section:
     \begin{quote}
         "Note that although these initial experiments utilize a transmission geometry with illumination from behind the target, the addition of a scattering medium between the light source and the target in these experiments would not change the imaging performance as long as a sufficiently high intensity is passed through the scattering medium, as the incoherent imaging configuration only requires homogeneous illumination of the target. Additionally, our subsequent experimental demonstrations in epi-illumination and detection in fluorescence microscopy (Fig.4) and coherent holographic imaging Fig.~\ref{fig_5}) demonstrate applicability to noninvasive imaging across diverse optical configurations and imaging modalities."
     \end{quote}
 
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 
