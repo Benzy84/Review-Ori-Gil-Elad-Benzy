@@ -265,7 +265,7 @@ In our experimental implementation described in the main text, we carefully focu
     Another issue of three-dimensional scattering is that it breaks the isoplanatic assumption on which the current approach relies. The authors mention in the discussion the idea of mosaicking the field-of-view but it somehow requires a roughly focused incident wave-field and only applies to moderate scattering. Another route is a multi-conjugate adaptive optics scheme in which multiple scattering trajectories are rectified by compensating aberrations from a stack of phase screens conjugated with different planes inside the scattering medium [Kang et al., Nat. Commun., 2023]. Would the current approach proposed by the authors be compatible with such a multi-conjugate strategy? It might be relevant to discuss this point in the conclusion.
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the reviewer for highlighting this important limitation. We have indeed demonstrated reconstruction only under isoplanatic conditions in our current proof-of-principle. The extension to thick scattering media represents an important challenge and direction for future research.
 
     Indeed, in conventional reflection-matrix-based imaging or computational wavefront shaping, thick scatterers can be addressed by either mosaicking, in the case of moderate scattering, or using multi-conjugate approaches leveraging a multi-layer scattering model. However, while mosaicking can still be similarly applied on our datasets, our approach presents a unique twist: in our formulation, the dynamic medium plays the role that would normally be occupied by the object in conventional reflection-matrix implementation, and vice versa. This roles reversal means that the multi-conjugate, multi-slice approach that was recently effectively applied for computational scattering correction would now address a thick target object rather than a thick medium. Addressing a thick scattering medium in our case is thus analogous to addressing a thick target object in conventional reflection matrix works. Interestingly, in this respect, the modeling and treatment of thick targets proposed in the recent work by Park et al. \cite{oh2025digital} may offer a pathway forward. In this work, the authors present a technique that allows for handling thick target objects rather than treating them as purely planar. 
@@ -275,7 +275,7 @@ In our experimental implementation described in the main text, we carefully focu
     To address this point in the revised manuscript, we have added the following paragraph to the discussion section:
     \begin{quote}
         "While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Beyond the direct application of mosaicking approaches, which are effective for moderate scattering \cite{lee22, najar2024harnessing}, applying a multi-conjugate, "multi-slice" correction \cite{kang2023tracing, haim2025image} would be very attractive. However, since in our formulation the dynamic medium plays the role that would normally be occupied by the object in conventional reflection-matrix implementation, and vice versa, the conventional multi-conjugate approach would only address a thick target object rather than a thick scattering medium. Addressing a thick scattering medium thus requires a solution analogous to addressing a thick target object in conventional reflection matrix imaging. Interestingly, the recent approach of Park et al. \cite{oh2025digital}, where thick target objects are considered, may offer a potential path forward. 
-        Alternatively, it may be possible to leverage the recent model-based gradient descent optimization approach  \cite{haim2025image}, which can flexibly handle a multi-parameter model, to integrate the case of a thick medium in the dynamic measurements formalism. 
+        Alternatively, it may be possible to leverage the recent model-based gradient descent optimization approach  \cite{haim2025image}, which can flexibly handle a multi-parameter model, to integrate the case of a thick medium in the dynamic measurements formalism."
     \end{quote}
 
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
@@ -285,7 +285,7 @@ In our experimental implementation described in the main text, we carefully focu
     \item \cite{oh2025digital} - Oh et al., Nature Communications, 2025
     \end{itemize}
     
-\end{ourresponse}
+\end{finished_ourresponse}
 
 \begin{enumerate}[label=\arabic*., resume]
 \item \leavevmode
@@ -295,7 +295,7 @@ In our experimental implementation described in the main text, we carefully focu
     One last point which is not really discussed in the paper is the number of required independent frames \(M\) to converge towards a reliable estimation of the object, or, in other words, the scaling of the estimator bias with respect to this number \(M\). An analytical formulation of the problem could be performed to derive this number, which is important for future implementations of the method. I guess this number will depend on the object complexity/sparsity.
 \end{solved_reviewercomment}
     
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNR").
 
     \begin{quote}
@@ -311,8 +311,8 @@ In our experimental implementation described in the main text, we carefully focu
             \centering
             \includegraphics[width=0.85\textwidth]{figures/figure_S8.pdf}
             \renewcommand{\thefigure}{S8}
-            \captionof{figure}{\footnotesize\textbf{Reconstruction fidelity as a function of the number of realizations, signal to noise (SNR) and object sparsity.} 
-            Numerical results studying the reconstruction fidelity as a function of the imaging parameters. Simulated objects (a) consist of a varying number (sparsity) of bright points over a dark background. For each studied case, defined by object sparsity, SNR, and number of realization, 10 distinct numerical experiments with different random distributions and scattering realization were simulated and reconstructed. For all simulations, a camera pixel count of $N=350\times 350$ was used, and an XXX-pixels wide scattering PSF. Cross-correlation scores between reconstructed and ground truth images are shown as heatmaps for the different studied scenarios. \textbf{a} Sample simulated objects with different sparsity levels: $2^{12}$ (left) and $2^8$ (right) bright points. \textbf{b} Results for the incoherent imaging case under different SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). \textbf{c} Coherent imaging results under the same SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). The horizontal axis is the number of realizations (M), and the vertical axis is the object sparsity. Color scale indicates correlation coefficient from 0 to 1. }
+            \captionof{figure}{\footnotesize\textbf{Reconstruction fidelity as a function of the number of realizations, signal to noise (SNR), and object sparsity.} 
+            Numerical results studying the reconstruction fidelity as a function of the imaging parameters. Simulated objects (a) consist of a varying number (sparsity) of bright points over a dark background. For each studied case, defined by object sparsity, SNR, and number of realizations, 10 distinct numerical experiments with different random distributions and scattering realizations were simulated and reconstructed. For all simulations, a camera pixel count of $N=350\times 350$ was used, and an $\sim$18-pixel wide scattering PSF. Cross-correlation scores between reconstructed and ground truth images are shown as heatmaps for the different studied scenarios. \textbf{a} Sample simulated objects with different sparsity levels: $2^{12}$ (left) and $2^8$ (right) bright points. \textbf{b} Results for the incoherent imaging case under different SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). \textbf{c} Coherent imaging results under the same SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). The horizontal axis is the number of realizations (M), and the vertical axis is the object sparsity. The color scale indicates the correlation coefficient from 0 to 1.}
             \label{fig_S8}
         \end{figure}
 
@@ -322,9 +322,8 @@ In our experimental implementation described in the main text, we carefully focu
     \end{quote}
 
         We note that the theoretical analysis of CTR-CLASS convergence, as established in previous work by Lee et al. \cite{lee22}, indicates a logarithmic dependence of the required number of measurements on the degrees of freedom (i.e., the number of camera pixels $N$). However, this theoretical scaling is modified in practice by additional factors, including object complexity (sparsity) and signal-to-noise ratio (SNR). These factors play important roles in determining the practical minimum number of frames needed for successful reconstruction.
+\end{finished_ourresponse}
 
-
-\end{ourresponse}
 
 
 
