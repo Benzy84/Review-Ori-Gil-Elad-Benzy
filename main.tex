@@ -186,7 +186,7 @@ As often with this group, this work is technically of excellent quality and its 
     For instance, in the coherent imaging experiment depicted in Fig.~\ref{fig_5}, the approach requires a constant incident wave-field, which is complicated if one wants to image through a dynamic scattering medium. In the present experiment, the authors circumvent this issue by focusing the incident wave-field in the diffuser plane such that the beam waist is contained in one coherence length of the diffuser. However, in practical situations, the scattering medium is three-dimensional, and the condition of a constant incident wave-field becomes impossible to fulfill. In real life, dynamic scattering impacts both the incident and reflected wave-fields. The authors do not discuss really this apparent contradiction between the assumption of a constant incident wave-field and dynamic scattering that will break this invariance.
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the referee for raising this point, which was not sufficiently emphasized in the original manuscript. 
     We recognize that the approach applied for thin scattering layers would indeed not be as effective for volumetric scattering media, where maintaining an effective constant illumination may become challenging.
     
@@ -196,7 +196,7 @@ As often with this group, this work is technically of excellent quality and its 
         "We note that for coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin scattering layer by focusing the illumination to a spot that is smaller than the coherence area of the scattering layer, thick volumetric scattering presents a challenge that requires additional or alternative solutions."
     \end{quote}
     
-     Secondly, we suggest a potential mitigation technique for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick media, while maintaining the capability of coherence gating, crucial for practical reflection-based microscopy and 3D imaging, and highlight the potential of focused illumination in imaging through dynamically-bent multi-core fibers (MCFs):
+     Secondly, we suggest a potential mitigation technique for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick media, while maintaining the capability of coherence gating, crucial for practical reflection-based microscopy and 3D imaging, and highlight the potential of focused illumination in imaging through dynamically-bent multi-core fibers (MCFs). We have added this discussion to the Discussion section of our manuscript:
 
      \begin{quote}
      
@@ -205,7 +205,7 @@ As often with this group, this work is technically of excellent quality and its 
      This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
 
      Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed.
-     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{weinberg2024ptychographic}.
+     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{choi2022flexible, weinberg2024ptychographic}."
      \end{quote}
 
 
@@ -231,8 +231,8 @@ The third row (Fig.~\ref{fig_S7_1}g-i) shows the effect of these illumination pa
 \captionof{figure}{\footnotesize\textbf{Effect of illumination pattern stability on coherent image reconstruction.} 
 Numerical simulations of coherent matrix-based imaging through a thin dynamic scattering layer, studying the effect of illumination stability achieved by focusing the illumination spot size at the scattering layer surface ($d_{spot}$) to a size that is smaller than the scattering layercorrelation length ($d_{corr}$). Focusing the illumination beam to a size considerably smaller than the coherence area of the scattering layer (a) results in a homogeneous illumination pattern at the target object plane (d) that remains constant while the scattering layer dynamically changes.  
 Each column represents a different ratio of the illumination spot size to the scattering layer correlation length: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=0.3$ (middle), and $\frac{d_{spot}}{d_{corr}}=0.5$ (right). \textbf{a-c} The thin scattering layer 'phase screen' pattern (color), with the illumination spot size highlighted. \textbf{
-d-f} Resulting illumination intensity patterns at the object plane after numerical propagation through the scattering layer and free space. Grayscale colorbar indicates normalized intensity. \textbf{
-g-i} Effective reflected field intensity at the object plane (i.e., thetarget object reflectivity profile multiplied by the illumination pattern). \textbf{j-l}  I-CLASS reconstructed images from 150 dynamic scattering realizations. The small illumination spot size relative to the scattering layer coherence area (left column) maintains a relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) result in varying speckle illumination, degrading direct reconstruction quality.}
+d-f} Resulting illumination amplitude patterns at the object plane after numerical propagation through the scattering layer and free space. The grayscale colorbar indicates normalized intensity. \textbf{
+g-i} Effective reflected field amplitude at the object plane (i.e., the target object reflectivity profile multiplied by the illumination pattern). \textbf{j-l}  I-CLASS reconstructed images from 150 dynamic scattering realizations. The small illumination spot size relative to the scattering layer coherence area (left column) maintains a relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) result in varying speckle illumination, degrading direct reconstruction quality.}
 \label{fig_S7_1}
 \end{figure}
 
@@ -246,7 +246,7 @@ In our experimental implementation described in the main text, we carefully focu
 
 \textbf{In this discussion, we have added the following references to the revised manuscript:}
 \begin{itemize}[nosep]
-\item \cite{liba2017speckle} - Liba et al., Nature communications, 2017
+\item \cite{liba2017speckle} - Liba et al., Nature Communications, 2017
 \item \cite{idell1987image} - Idell et al., Optics Letters, 1987
 \item \cite{metzler2020deepinverse} - Metzler et al., Optica, 2020
 \item \cite{gateau2017complementary} - Gateau et al., Physical Review Letters, 2017
@@ -254,7 +254,7 @@ In our experimental implementation described in the main text, we carefully focu
 \item \cite{weinberg2024ptychographic} - Weinberg et al., Optics Express, 2024
 \end{itemize}
 
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 \begin{enumerate}[label=\arabic*., resume]
@@ -280,7 +280,7 @@ In our experimental implementation described in the main text, we carefully focu
 
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
     \begin{itemize}[nosep]
-    \item \cite{kang2023tracing} - Kang et al., Nature communications, 2023
+    \item \cite{kang2023tracing} - Kang et al., Nature Communications, 2023
     \item \cite{haim2025image} - Haim et al., Nature Photonics, 2025
     \item \cite{oh2025digital} - Oh et al., Nature Communications, 2025
     \end{itemize}
@@ -296,7 +296,7 @@ In our experimental implementation described in the main text, we carefully focu
 \end{solved_reviewercomment}
     
 \begin{ourresponse}
-    We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNRR").
+    We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNR").
 
     \begin{quote}
         \setcounter{section}{2221}
@@ -358,8 +358,8 @@ We maintained the detailed analysis in Supplementary Section S2 as suggested, wh
 
 \textbf{In this discussion, we have added the following references to the revised manuscript:}
 \begin{itemize}[nosep]
-\item \cite{jo2022through} - Jo et al., Science advances, 2022
-\item \cite{badon2016smart} - Badon et al., Science advances, 2016
+\item \cite{jo2022through} - Jo et al., Science Advances, 2022
+\item \cite{badon2016smart} - Badon et al., Science Advances, 2016
 \end{itemize}
 
 \end{ourresponse}
@@ -427,7 +427,7 @@ To address this concern while balancing manuscript length considerations, we hav
     \item Shows how CTR-CLASS/I-CLASS extends this to random illumination scenarios
     \item Explains how our approach applies these principles to dynamic scattering through the mathematical duality between object and PSF
     \item Details the technical implementation of the memory-efficient algorithm
-    \item \end{enumerate}
+    \end{enumerate}
 
 The mathematical nature and length of this explanation make it more appropriate for the Supplementary Materials rather than the Methods section of the main paper. This approach follows common practice in the field where detailed algorithm derivations are included in supplementary sections to maintain focus on the experimental results and physical insights in the main text.
 We kindly refer the reviewers to read the supplementary section in full in the Supplementary Materials section XX.
@@ -504,9 +504,9 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     The importance of measuring the field and applying CLASS/I-CLASS in the thin scattering layer plane follows the principle of conjugation in conjugate adaptive optics. Conjugate correction involves placing the corrective elements (or, in computational approaches, applying corrections) in a plane that is optically conjugated to the primary source of aberrations. By measuring and applying corrections at the plane where phase (and potentially also amplitude) multiplicative distortions occur (the thin scattering layer plane in our case), one achieves a more efficient isoplanatic correction across the field of view. This concept is well established in adaptive optics microscopy, such as in the works by Mertz et al. \cite{mertz2015field}, and others  \cite{kwon2023computational, sunray2024beyond}.
     
     In the standard case, the CLASS/I-CLASS algorithm finds the phase distortion at this exact plane where the distortions can be described as multiplicative distortions, i.e., the scattering layer transmission-matrix is a diagonal matrix that effectively describes a thin phase(and in I-CLASS also amplitude) mask.
-    The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is the correction phase mask at the scattering layer plane. In our dynamic-scattering case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus results in an output that is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp, focused image of the target is obtained (see the new Supplementary Fig.~\ref{fig_S6}).
+    The output of the CLASS algorithm in the standard case, where the scattering medium is static and the target is dynamically illuminated, is the correction phase mask at the scattering layer plane. In our dynamic-scattering case, the scattering medium and the target change roles: the scattering function changes throughout the measurements while the object remains fixed. Running the I-CLASS algorithm on our dataset thus results in an output that is the object phase and amplitude function at the scattering layer plane. This complex-valued field is then back-propagated to any desired distance until a sharp, focused image of the target is obtained (see new Supplementary Fig.~\ref{fig_S6}).
 
-    To address this point in the revised manuscript, we have added the following explanation to the\textbf{ Methods} section, where we discuss the Fresnel reconstruction of the object field at the object plane:
+    To address this point in the revised manuscript, we have added the following explanation to the \textbf{ Methods} section, where we discuss the Fresnel reconstruction of the object field at the object plane:
 
     \begin{quote}
         "
@@ -515,9 +515,9 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     \end{quote}
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
     \begin{itemize}[nosep]
-    \item \cite{mertz2015field} - Mertz et al., Applied optics, 2015
+    \item \cite{mertz2015field} - Mertz et al., Applied Optics, 2015
     \item \cite{kwon2023computational} - Kwon et al., Nature Communications, 2023
-    \item \cite{katz2012looking} - Katz et al., Nature photonics, 2012
+    \item \cite{katz2012looking} - Katz et al., Nature Photonics, 2012
     \end{itemize}
 \end{ourresponse}
 
@@ -1002,9 +1002,9 @@ We thank the reviewer for raising this question, which was not discussed in suff
 To address this question comprehensively, we have added a new section, section \ref{sec: effect of spot size} ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material of the revised manuscript. The new supplementary section contains a thorough explanation and a set of numerical simulations, which demonstrate and study the limitations of the effect of focusing the illumination on the scattering layer surface. For convenience, we reproduce the full section below. In a nutshell, when the illumination beam is focused to a spot size that is sufficiently smaller than the coherence area of the scattering layer, it effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
 \begin{quote}
     \setcounter{section}{224}
-    \section{Effect of illumination spot size and homogeneity on coherent imaging through dynamic scattering}
+        \section{Effect of illumination homogeneity and stability on coherent imaging through dynamic scattering}
     \label{sec: effect of spot size}
-
+    
 
 In our coherent imaging demonstration (Fig.~\ref{fig_5} of the main text), maintaining a constant homogeneous illumination pattern at the object plane despite the dynamic scattering introduced by the rotating diffuser is important to ensure the 'fixed object' assumption of our model (Eqs. 6-7 of the main text).
 While obtaining a constant homogeneous illumination through a dynamic scatterer is rather straightforward with spatially-incoherent illumination, it is often challenging when spatially coherent illumination is considered. Nonetheless, it can be achieved for the case of a dynamic \textit{thin} scatterer, such as a diffuser, by focusing the illumination spot size on the diffuser, such that the spot size is sufficiently smaller than the diffuser's coherence (or correlation) area. In this case, the illumination beam effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
@@ -1016,8 +1016,11 @@ The third row (Fig.~\ref{fig_S7}g-i) shows the effect of these illumination patt
 \centering
 \includegraphics[width=0.99\textwidth]{figures/figure_S7.pdf}
 \renewcommand{\thefigure}{S7}
-\captionof{figure}{\footnotesize\textbf{Effect of illumination spot size on imaging through dynamic scattering.} 
-Numerical simulations demonstrating how the ratio between the illumination spot size ($d_{spot}$) to scattering layer (or diffuser) correlation length ($d_{corr}$, the square root of the scattering layer coherence area) affects the illumination at the object plane, and reconstruction quality. Each column represents a different spot size to correlation size ratio: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=0.3$ (middle), and $\frac{d_{spot}}{d_{corr}}=0.5$ (right). \textbf{a-c} Scattering layer phase pattern (color) and illumination spot size at the scattering layer surface (bright highlighted area). The colorbar indicates phase values from $-\pi$ to $\pi$. \textbf{d-f} Resulting illumination intensity patterns at the object plane after numerical propagation through the scattering layer and free space. The grayscale colorbar indicates normalized intensity. \textbf{g-i} Effective object reflected field (i.e., that target object reflectivity profile multiplied by the illumination pattern). \textbf{j-l}  I-CLASS reconstructed images from 150 scattering realizations. Note how the small illumination spot size relative to the scattering layer coherence area (left column) maintains a relatively uniform illumination at the object plane, and enables high-quality reconstruction, while larger spot sizes (middle and right columns) create varying speckle patterns, which degrade reconstruction quality.}
+\captionof{figure}{\footnotesize\textbf{Effect of illumination pattern stability on coherent image reconstruction.} 
+Numerical simulations of coherent matrix-based imaging through a thin dynamic scattering layer, studying the effect of illumination stability achieved by focusing the illumination spot size at the scattering layer surface ($d_{spot}$) to a size that is smaller than the scattering layercorrelation length ($d_{corr}$). Focusing the illumination beam to a size considerably smaller than the coherence area of the scattering layer (a) results in a homogeneous illumination pattern at the target object plane (d) that remains constant while the scattering layer dynamically changes.  
+Each column represents a different ratio of the illumination spot size to the scattering layer correlation length: $\frac{d_{spot}}{d_{corr}}=0.1$ (left), $\frac{d_{spot}}{d_{corr}}=0.3$ (middle), and $\frac{d_{spot}}{d_{corr}}=0.5$ (right). \textbf{a-c} The thin scattering layer 'phase screen' pattern (color), with the illumination spot size highlighted. \textbf{
+d-f} Resulting illumination amplitude patterns at the object plane after numerical propagation through the scattering layer and free space. The grayscale colorbar indicates normalized intensity. \textbf{
+g-i} Effective reflected field amplitude at the object plane (i.e., the target object reflectivity profile multiplied by the illumination pattern). \textbf{j-l}  I-CLASS reconstructed images from 150 dynamic scattering realizations. The small illumination spot size relative to the scattering layer coherence area (left column) maintains a relatively uniform illumination at the object plane, enabling high-quality reconstruction, while larger spot sizes (middle and right columns) result in varying speckle illumination, degrading direct reconstruction quality.}
 \label{fig_S7}
 \end{figure}
 
@@ -1100,13 +1103,13 @@ In our experimental implementation described in the main text, we carefully focu
             \item Apply appropriate windowing for optimal phase-retrieval results: a square-root of a Tukey window for the USAF target and a Tukey window taken to the power of $1/4$  for the camera-man target.
         \end{enumerate}
         
-        For phase retrieval, following Katz et al. \cite{katz14}, we ran 500 independent runs of the following phase-retrieval algorithms, where in each run a different random initial guess for the object was used, and the lowest error reconstruction is presented in Fig. ~\ref{fig_S4},:
+        For phase retrieval, following Katz et al. \cite{katz14}, we ran 500 independent runs of the following phase-retrieval algorithms, where in each run a different random initial guess for the object was used, and the lowest error reconstruction is presented in Fig.~\ref {fig_S4},:
         \begin{enumerate}
             \item 300 iterations of HIO algorithm with a decreasing value of beta parameter, from 2.0 to 1.2, in steps of 0.2. A total of $5\times300=1,500$ iterations.
             \item 300 additional iterations of error reduction algorithm.
             \item In each iteration we applied the following object-dependent constraints:
             \begin{itemize}
-                \item For the camera-man: real, positive, and non-negative constraints
+                \item For the cameraman: real, positive, and non-negative constraints
                 \item For the USAF target: same constraints plus an additional finite square support constraint.
             \end{itemize}
 
@@ -1125,7 +1128,7 @@ In our experimental implementation described in the main text, we carefully focu
 
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
     \begin{itemize}[nosep]
-    \item \cite{fienup1982phase} - Fienup, Applied optics, 1982
+    \item \cite{fienup1982phase} - Fienup, Applied Optics, 1982
     \end{itemize}
 
 \end{finished_ourresponse}
