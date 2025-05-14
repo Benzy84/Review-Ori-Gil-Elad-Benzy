@@ -312,7 +312,7 @@ In our experimental implementation described in the main text, we carefully focu
             \includegraphics[width=0.85\textwidth]{figures/figure_S8.pdf}
             \renewcommand{\thefigure}{S8}
             \captionof{figure}{\footnotesize\textbf{Reconstruction fidelity as a function of the number of realizations, signal to noise (SNR), and object sparsity.} 
-            Numerical results studying the reconstruction fidelity as a function of the imaging parameters. Simulated objects (a) consist of a varying number (sparsity) of bright points over a dark background. For each studied case, defined by object sparsity, SNR, and number of realizations, 10 distinct numerical experiments with different random distributions and scattering realizations were simulated and reconstructed. For all simulations, a camera pixel count of $N=350\times 350$ was used, and an $\sim$18-pixel wide scattering PSF. Cross-correlation scores between reconstructed and ground truth images are shown as heatmaps for the different studied scenarios. \textbf{a} Sample simulated objects with different sparsity levels: $2^{12}$ (left) and $2^8$ (right) bright points. \textbf{b} Results for the incoherent imaging case under different SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). \textbf{c} Coherent imaging results under the same SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). The horizontal axis is the number of realizations (M), and the vertical axis is the object sparsity. The color scale indicates the correlation coefficient from 0 to 1.}
+            Numerical results studying the reconstruction fidelity as a function of the imaging parameters. Simulated objects (a) consist of a varying number (sparsity) of bright points over a dark background. For each studied case, defined by object sparsity, SNR, and number of realizations, 10 distinct numerical experiments with different random distributions and scattering realizations were simulated and reconstructed. For all simulations, a camera pixel count of $N=350\times 350$ was used, and an $\sim$18-pixel wide scattering PSF. Cross-correlation scores between reconstructed and widefield reference images are shown as heatmaps for the different studied scenarios. \textbf{a} Sample simulated objects with different sparsity levels: $2^{12}$ (left) and $2^8$ (right) bright points. \textbf{b} Results for the incoherent imaging case under different SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). \textbf{c} Coherent imaging results under the same SNR conditions: SNR=5 (left), SNR=10 (middle), and SNR=$\infty$ (right). The horizontal axis is the number of realizations (M), and the vertical axis is the object sparsity. The color scale indicates the correlation coefficient from 0 to 1.}
             \label{fig_S8}
         \end{figure}
 
@@ -337,12 +337,7 @@ In our experimental implementation described in the main text, we carefully focu
     The supplementary Section S2 that shows the impact of correlations between speckle patterns is very interesting and might have deserved a place in the main manuscript. In this Supplementary Section, these correlations arise from energy conservation (phase-distortions). Maybe a singular value (or equivalently eigenvalue) decomposition of the covariance matrix \cite{badon2020distortion}(citation [10] in manuscript) can help in that case? The first singular vector would be less affected by these negative correlations than the CLASS algorithm. Can the authors comment on that? 
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
-    \begin{comment}
-        \hlred{But citation [10]  doesn't perform SVD on the covariance matrix: A. it is not on the covariance but on the full matrix, and B. it is also not on the matrix but on the 'de-scanned' / 'distortion' matrix, which is different. This cannot apply here where the energy conservation creates a problem in the covariance calculation, **before applying algorithm**}
-
-        \hlred{Maybe refer to Wonshik's work on SVD (the Science Adavnces one https://www.science.org/doi/10.1126/sciadv.abo4366) and show him the effect of pre-processing the measurement matrix with SVD filtering, create a graph where the x axis is the number of non-zero singular values, and the correlation to GT, and see if there is a value smaller than M that will give better correlation}
-    \end{comment}
+\begin{finished_ourresponse}
     
 We thank the reviewer for this insightful comment and suggestion.
 
@@ -350,7 +345,7 @@ Regarding the SVD approach: The reviewer raises an interesting point about using
 
 Following the reviewer's suggestion, we have added the following discussion to the main manuscript: 
 \begin{quote}
-    "Our analysis revealed that energy conservation in phase-only speckle patterns may introduce spatial correlations that can cause background haze in the reconstructions (see Supplementary Fig. XX). Here, we addressed this by simply applying varying intensity scaling across frames during post-processing (see Supplementary section 2). It would be interesting to study more advanced processing techniques to identify and filter these correlations and/or their effects. In particular, it would be interesting to study matricial processing approaches, such as singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix. It was recently shown that SVD-based analysis and filtering of the reflection matrix or the distortion matrix \cite{jo2022through, badon2016smart, badon2020distortion},  can effectively separate correlated signals such as those originating from different isoplanatic patches, or that are less affected by noise. 
+    "Our analysis revealed that energy conservation in phase-only speckle patterns may introduce spatial correlations that can cause background haze in the reconstructions (see Supplementary Fig.~\ref{fig: modulation depth}). Here, we addressed this by simply applying varying intensity scaling across frames during post-processing (see Supplementary section 2). It would be interesting to study more advanced processing techniques to identify and filter these correlations and/or their effects. In particular, it would be interesting to study matricial processing approaches, such as singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix. It was recently shown that SVD-based analysis and filtering of the reflection matrix or the distortion matrix \cite{jo2022through, badon2016smart, badon2020distortion},  can effectively separate correlated signals such as those originating from different isoplanatic patches, or that are less affected by noise. 
     An analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3."
 \end{quote}
 We maintained the detailed analysis in Supplementary Section S2 as suggested, while bringing the key insight to readers' attention in the main text.
@@ -361,7 +356,7 @@ We maintained the detailed analysis in Supplementary Section S2 as suggested, wh
 \item \cite{badon2016smart} - Badon et al., Science Advances, 2016
 \end{itemize}
 
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
     
@@ -373,7 +368,7 @@ We maintained the detailed analysis in Supplementary Section S2 as suggested, wh
     The authors show how to circumvent this issue by a multiplication of each frame by a fixed scalar value. This is interesting, but the choice of the multiplication factor from one to two lacks justification. Can the authors provide more details about this choice? 
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
 We thank the reviewer for raising this point, which was not properly addressed in the original manuscript. To address this, we added to the revised manuscript a systematic study examining how the choice of modulation depth affects reconstruction quality. The results of this study have been added to the Supplementary Materials section 2, which discusses amplitude modulation.
 
 
@@ -393,10 +388,10 @@ Where $\alpha$ controls the total range of modulation with corresponding modulat
     \centering
     \includegraphics[width=0.93\textwidth]{figures/Figure_S9.pdf}
     \renewcommand{\thefigure}{S9}
-    \captionof{figure}{\footnotesize\textbf{Incoherent imaging reconstruction fidelity as a function of post-processing intensity modulation of captured frame.} Analysis of the the reconstruction fidelity for the experimental results of Fig. XXb as different levels of post-processing intensity modulation are applied before running the I-CLASS reconstruction algorithm. 
-    The graph present the Pearson correlation between the reconstruction and the widefield reference (bottom-right inset) as a function as a function of the applied modulation depth (see text). 
-    Insets display sample reconstructions, showing the progressive suppression of background haze as the modulation depth increases. At higher modulation depths the constrast within the object itself is lowered. The red circle indicates the modulation depth chosen for the incoherent reconstructions.}
-    \label{fig_S9}
+    \captionof{figure}{\footnotesize\textbf{Incoherent imaging reconstruction fidelity as a function of post-processing intensity modulation of captured frame.} Analysis of the reconstruction fidelity for the experimental results of Fig.2d as different levels of post-processing intensity modulation are applied before running the I-CLASS reconstruction algorithm. 
+    The graph presents the Pearson correlation between the reconstruction and the widefield reference (bottom-right inset) as a function of the applied modulation depth (see text). 
+    Insets display sample reconstructions, showing the progressive suppression of background haze as the modulation depth increases. At higher modulation depths, the contrast within the object itself is lowered. The red circle indicates the modulation depth chosen for the incoherent reconstructions.}
+    \label{fig: modulation depth}
 \end{figure}
 
 
@@ -404,7 +399,7 @@ Our results show that without adding a modulation (modulation depth = 0), the re
 Additional improvements for addressing this point, such as SVD filtering, will be the focus of future work.
 
 \end{quote}
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
     
@@ -416,7 +411,7 @@ Additional improvements for addressing this point, such as SVD filtering, will b
     Even if the I-CLASS and CTR-CLASS have already been presented in previous papers, I would suggest describing them in the Methods section to make the paper self-sufficient. 
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
 We thank the reviewer for this important suggestion about making the paper self-contained, especially for the non-expert reader. We agree that providing a clear explanation of the I-CLASS algorithm is important for readers outside of the field to understand and potentially implement our approach.
 
 To address this concern while balancing manuscript length considerations, we have added a comprehensive mathematical derivation and explanation of the matricial formalism of the problem of imaging through scattering media, and I-CLASS algorithm to the Supplementary Materials in a new section titled "Matrix-based scattering compensation algorithms." This detailed section:
@@ -429,9 +424,9 @@ To address this concern while balancing manuscript length considerations, we hav
     \end{enumerate}
 
 The mathematical nature and length of this explanation make it more appropriate for the Supplementary Materials rather than the Methods section of the main paper. This approach follows common practice in the field where detailed algorithm derivations are included in supplementary sections to maintain focus on the experimental results and physical insights in the main text.
-We kindly refer the reviewers to read the supplementary section in full in the Supplementary Materials section XX.
+We kindly refer the reviewers to read the supplementary section in full in the Supplementary Materials section \ref{sec: algorithm explanation}.
 
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 \begin{enumerate}[label=\arabic*., resume]
@@ -448,7 +443,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
         \subsection*{Fresnel propagation via Fourier-domain transfer function}
         \label{subsec: Fresnel propagation}
 
-                In Fig.~\ref{fig_5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However, since, following the principles of conjugate adaptive optics \cite{mertz2015field, kwon2023computational, sunray2024beyond, katz2012looking}, we measure the fields at the diffuser plane and input these fields to the I-CLASS algorithm, the I-CLASS algorithm reconstructs the complex object field at the same plane. This is since the object field in our dynamic matrix approach is analogous to the scattering medium phase-function that CLASS/I-CLASS algorithms retrieve in the conventional static medium case. We denote this reconstructed object field at the scattering layer plane as  $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, $E_o(x, y, z_{\text{obj}}) $, we back-propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
+        In Fig.~\ref{fig_5}, we present the object field located at the physical object plane, $z_{\text{obj}}$. However, since, following the principles of conjugate adaptive optics \cite{mertz2015field, kwon2023computational, sunray2024beyond, katz2012looking}, we measure the fields at the diffuser plane and input these fields to the I-CLASS algorithm, the I-CLASS algorithm reconstructs the complex object field at the same plane. This is since the object field in our dynamic matrix approach is analogous to the scattering medium phase-function that CLASS/I-CLASS algorithms retrieve in the conventional static medium case. We denote this reconstructed object field at the scattering layer plane as  $E_o(x, y, z_{\text{scatt}})$. To visualize the field at the object plane, $E_o(x, y, z_{\text{obj}}) $, we back-propagate the reconstructed field from the diffuser plane to the object plane using Fresnel propagation under the paraxial approximation.
         
         This propagation is efficiently implemented in the Fourier domain using the Fresnel transfer function:
         
@@ -489,14 +484,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     In that respect, it is not really clear to me why, in the holographic experiment, the I-CLASS reconstructed object field is obtained in the scattering layer plane? A more detailed description of the method is needed.
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
-    \begin{comment}
-    \hlred{I would add that we measure on the diffuser plane and hence the multiplicative factor is with the propagated object, so that is the object that is reconstructed}
-
-
-    \hlred{Write equations... original CLASS $POP\quad \overrightarrow{}\tilde{P}\tilde{O}\tilde{P}$, Here $O_{prop}PO_{prop}$ where $O_{prop}$ is diagonal and $P$ is the envelope, no Fourier needed}
-    \end{comment}
-
+\begin{finished_ourresponse}
     We thank the reviewer for bringing this potentially confusing point to our attention. 
     
     As mentioned in the new Methods section discussing the Fresnel propagator, since we measure the field at the scattering layer plane and input this field to the I-CLASS algorithm, the I-CLASS algorithm reconstructs the complex object field (equivalent in the conventional case to the scattering medium phase-function) also at the plane of the scattering layer. 
@@ -518,7 +506,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     \item \cite{kwon2023computational} - Kwon et al., Nature Communications, 2023
     \item \cite{katz2012looking} - Katz et al., Nature Photonics, 2012
     \end{itemize}
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 \textbf{Typos:}
@@ -581,7 +569,7 @@ In this manuscript the authors propose to use the I-CLASS algorithm (which was d
     The main culprit is that the whole CRT-CLASS/I-CLASS are not well-known algorithms, and the only reference given to readers to make themselves familiar with them is not self-contained. \textbf{This has a very easy fix:} add a section in the supplementary information with an explanation of how and why the algorithm works (there is no space restriction there, so there is also no excuse to provide the necessary information).
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
 We thank the reviewer for raising this important point and for the constructive suggestion. Following the referee's proposal, we have added a comprehensive explanation of the I-CLASS algorithm to make the paper self-contained and accessible to readers who may not be specialists in imaging through scattering media, and to the potentially large readership that is not familiar with the recent advancement of matrix-based algorithms.
 To this end, we have added a new supplementary section ("I-CLASS and matrix-based scattering compensation algorithms") that provides a complete mathematical foundation and derivation of:
 
@@ -838,7 +826,7 @@ We structured this section to gradually introduce the concepts, starting from th
 
 We believe these additions significantly improve the paper's accessibility and provide readers with all the necessary background to understand and implement our method. We would be happy to add any additional information or clarification.
 
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 \begin{enumerate}[label=\arabic*., resume]
@@ -850,20 +838,15 @@ We believe these additions significantly improve the paper's accessibility and p
     
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
-    We appreciate the reviewer's concern about the isoplanatic patch limitation. We note that we the original version of the manuscript already mentioned this constraint in the opening paragraph of the \textbf{Principle} section, highlighting that: 
-    \begin{quote}
-        \textbf{"all experiments and analysis in this work require the imaged object to be contained within the isoplanatic patch of the scattering medium; for objects larger than this patch, the approach presented here would not directly apply without additional modifications such as field segmentation."}
-    \end{quote}
-
-    To address the referee's concern, to further emphasize this point and ensure clarity for non-specialist readers, we have also added an explicit note immediately following Equation 1 reiterating this constraint:
-    
+\begin{finished_ourresponse}
+    We appreciate the reviewer's concern about the isoplanatic patch limitation. To address this important point and ensure clarity for non-specialist readers, we have added an explicit note in the Principle section immediately following Equation 1, reiterating this constraint:
     \begin{quote}
         "It is important to note that this convolution model is strictly valid only for objects within an isoplanatic patch. All experiments in this work were designed within this constraint. Potential extensions to larger fields of view or thick complex media are discussed in the Discussion section."
     \end{quote}
+            
     
     We believe that this addition ensures that readers are aware of this limitation from the outset, helping non-specialists better understand the current limited applicability of our approach (as most reflection-matrix works to date), while referring them to the potential extensions to anisoplantic scenarios discussed in the  Discussion section.
-\end{ourresponse}
+\end{finished_ourresponse}
 
 
 
@@ -1041,7 +1024,7 @@ In our experimental implementation described in the main text, we carefully focu
     I am slightly confused by the setup diagram in Fig.~\ref{fig_5}: The role of the polarizing beam splitter near the scattering medium is clear, as it allows to reject part of the unscattered light, thus maximizing the amount of useful signal, but the polarizing beam splitter closer to the camera seems to ensure that the signal and the reference have opposite polarizations, and thus can never interfere. Am I missing something, or is the diagram wrong?
 \end{solved_reviewercomment}
 
-\begin{ourresponse}
+\begin{finished_ourresponse}
     We thank the reviewer for spotting this confusion. There was indeed a mistake in our original sketch. The beam splitter should have been a non-polarizing beam splitter (BS), and not a polarizing beam splitter (PBS). We have corrected this in the revised manuscript. The corrected Figure and Figure caption now reads:
             
     \vspace{1em}
@@ -1057,7 +1040,7 @@ In our experimental implementation described in the main text, we carefully focu
         \textbf{f} Reference intensity image of the object without the diffuser present. Scale bars, 1$mm$}
         \label{fig_5}
     \end{figure}
-\end{ourresponse}
+\end{finished_ourresponse}
         
 \begin{enumerate}[label=\arabic*., resume]
 \item \leavevmode
