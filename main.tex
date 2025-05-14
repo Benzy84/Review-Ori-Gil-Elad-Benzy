@@ -1,13 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO
-% After finishing with the paper and supplementary, name all figures and sections as they are in the paper and in the supplementary materials with numbers, etc.
-% make the captions in normal size
-% check that all capitalizations in titles are the same
 % quotes should be in a different text color
-% לבדוק איך צריך להכניס משוואות בסופלמנטרי
-% לשנות משוואות אולי בסופלמנטרי שיהיו עם S
-% לדאוג שבכל סימולציה יש פרטים את הפרטים איך התקבלה (קידום XX הכפלות, קונבולוציות)
-% את כל מספרי הsections - להתאים למספר האמיתי
 
 \documentclass[12pt]{article}
 % Increase margin width for todos
@@ -210,10 +203,10 @@ As often with this group, this work is technically of excellent quality and its 
 
 
 Thirdly, we have performed a numerical study on the effects of imperfect (in)homogeneous illumination on the reconstruction fidelity in the case of coherent imaging with a beam focused at the scattering layer plane.
-The results of this study are presented in the new Supplementary Sections  \ref{sec: effect of spot size1}, which reads:
+The results of this study are presented in the new Supplementary Sections  S\ref{sec: effect of spot size1}, which reads:
 
 \begin{quote}
-    \setcounter{section}{224}
+    \setcounter{section}{4}
     \section{Effect of illumination homogeneity and stability on coherent imaging through dynamic scattering}
     \label{sec: effect of spot size1}
     
@@ -299,7 +292,7 @@ In our experimental implementation described in the main text, we carefully focu
     We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNR").
 
     \begin{quote}
-        \setcounter{section}{2221}
+        \setcounter{section}{5}
         \section{Dependence of reconstruction fidelity on number of realizations, object sparsity, and SNR}
 
         To study the dependence of the reconstruction quality on the number of realizations, object complexity, and SNR, we carried an in-depth numerical study where we numerically simulate reconstructions using a different number of random realizations (M) for different object complexities (as given by the object sparsity) for both incoherent and coherent imaging scenarios.
@@ -386,8 +379,8 @@ Where $\alpha$ controls the total range of modulation with corresponding modulat
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.93\textwidth]{figures/Figure_S9.pdf}
-    \renewcommand{\thefigure}{S9}
+    \includegraphics[width=0.93\textwidth]{figures/Figure_S4.pdf}
+    \renewcommand{\thefigure}{S4}
     \captionof{figure}{\footnotesize\textbf{Incoherent imaging reconstruction fidelity as a function of post-processing intensity modulation of captured frame.} Analysis of the reconstruction fidelity for the experimental results of Fig.2d as different levels of post-processing intensity modulation are applied before running the I-CLASS reconstruction algorithm. 
     The graph presents the Pearson correlation between the reconstruction and the widefield reference (bottom-right inset) as a function of the applied modulation depth (see text). 
     Insets display sample reconstructions, showing the progressive suppression of background haze as the modulation depth increases. At higher modulation depths, the contrast within the object itself is lowered. The red circle indicates the modulation depth chosen for the incoherent reconstructions.}
@@ -424,7 +417,7 @@ To address this concern while balancing manuscript length considerations, we hav
     \end{enumerate}
 
 The mathematical nature and length of this explanation make it more appropriate for the Supplementary Materials rather than the Methods section of the main paper. This approach follows common practice in the field where detailed algorithm derivations are included in supplementary sections to maintain focus on the experimental results and physical insights in the main text.
-We kindly refer the reviewers to read the supplementary section in full in the Supplementary Materials section \ref{sec: algorithm explanation}.
+We kindly refer the reviewers to read the supplementary section in full in the Supplementary Materials section S\ref{sec: algorithm explanation}.
 
 \end{finished_ourresponse}
 
@@ -550,7 +543,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
 
 
 \newpage
-
+\setcounter{section}{1}
 \section{Reviewer \#2 Comments (from email):}
 
 In this manuscript the authors propose to use the I-CLASS algorithm (which was developed in the same group) to deconvolve the unknown object from the (many) unknown point spread function measured through a dynamic scattering medium. This builds on a previous paper from the same group (ref 14, as far as I can see still unpublished).
@@ -584,7 +577,7 @@ To this end, we have added a new supplementary section ("I-CLASS and matrix-base
 This new supplementary section reads:
 
 \begin{quote}
-    \setcounter{section}{201}
+    \setcounter{section}{6}
     \section{Matrix-based scattering compensation algorithms}
     \label{sec: algorithm explanation}
 
@@ -943,7 +936,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
     To address this point in the revised manuscript, we have added a new supplementary section titled "Digital Autofocus by Fresnel Propagation" that explains this capability and includes a new figure presenting reconstructions in out-of-focus planes.
 
     \begin{quote}
-        \setcounter{section}{211}
+        \setcounter{section}{3}
         \section{Digital autofocus by Fresnel propagation}
         \label{sec: digital autofocus}
         
@@ -983,7 +976,7 @@ We thank the reviewer for raising this question, which was not discussed in suff
 
 To address this question comprehensively, we have added a new section, section \ref{sec: effect of spot size} ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material of the revised manuscript. The new supplementary section contains a thorough explanation and a set of numerical simulations, which demonstrate and study the limitations of the effect of focusing the illumination on the scattering layer surface. For convenience, we reproduce the full section below. In a nutshell, when the illumination beam is focused to a spot size that is sufficiently smaller than the coherence area of the scattering layer, it effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
 \begin{quote}
-    \setcounter{section}{224}
+    \setcounter{section}{4}
         \section{Effect of illumination homogeneity and stability on coherent imaging through dynamic scattering}
     \label{sec: effect of spot size}
     
@@ -1062,7 +1055,7 @@ In our experimental implementation described in the main text, we carefully focu
      The updated supplementary section and supplementary figure that reflect these improvements and provide a more comprehensive comparison appear below:
 
     \begin{quote}
-        \setcounter{section}{291}
+        \setcounter{section}{2}
         \section{Comparison with speckle-correlation phase-retrieval based reconstruction}
 
         In this section, we present a numerical comparison between our proposed matrix-based approach for the incoherent imaging case and the established speckle correlation phase-retrieval based imaging  \cite{bert12, katz14}. Inspired by Labeyrie's 1970 stellar speckle interferometry \cite{labeyrie1970attainment}, speckle correlation imaging \cite{bert12, katz14}. is composed of two steps: the first is an estimation of the object autocorrelation (that is, its power spectrum) from the measured speckle patterns autocorrelation (or power spectrum); and the second is a subsequent reconstruction of the object from this estimated power-spectrum using a phase-retrieval algorithm \cite{fienup1982phase}. 
@@ -1070,11 +1063,11 @@ In our experimental implementation described in the main text, we carefully focu
         
         Importantly, in contrast to the I-CLASS reconstruction algorithm that has no free parameters except for the number of iterations, the estimation of the object's autocorrelation from measured speckle patterns and the phase retrieval algorithm require very careful optimization and tailoring of signal conditioning, including envelope estimation and correction, windowing and background subtraction, as well as fine-tuning of the phase-retrieval reconstruction algorithm parameters, including specific support constraints, number of iterations, choice of beta parameter, and number of independent runs with random initial guesses. The reconstruction fidelity obtained by phase retrieval of speckle correlations is extremely sensitive to the exact choice of signal conditioning and parameters, and without a precise and careful optimization of this rather large set of parameters, the reconstruction fidelity may be very poor for complex non-sparse objects. 
 
-        Figure ~\ref{fig_S4} presents the results of this numerical study. Each of the two rows of panels in Fig. ~\ref{fig_S4} displays the results for a different target object.  For each target object, we display the widefield reference image of the object taken without the scattering medium present (Fig.~\ref{fig_S4}a,f), a sample simulated captured frame distorted by scattering (Fig.~\ref{fig_S4}b,g), the speckle correlation phase-retrieval reconstruction (Fig.~\ref{fig_S4}c,h), the matrix-based I-CLASS reconstruction (Fig.~\ref{fig_S4}d,i), and the result of the same phase retrieval algorithm applied directly to the reference image power spectrum (Fig.~\ref{fig_S4}e,j).
+        Figure ~\ref{supp_fig:comparison} presents the results of this numerical study. Each of the two rows of panels in Fig. ~\ref{supp_fig:comparison} displays the results for a different target object.  For each target object, we display the widefield reference image of the object taken without the scattering medium present (Fig.~\ref{supp_fig:comparison}a,f), a sample simulated captured frame distorted by scattering (Fig.~\ref{supp_fig:comparison}b,g), the speckle correlation phase-retrieval reconstruction (Fig.~\ref{supp_fig:comparison}c,h), the matrix-based I-CLASS reconstruction (Fig.~\ref{supp_fig:comparison}d,i), and the result of the same phase retrieval algorithm applied directly to the reference image power spectrum (Fig.~\ref{supp_fig:comparison}e,j).
         
         In all of the cases tested, our matrix-based approach demonstrated superior reconstruction fidelity than speckle correlations phase-retrieval based reconstructions. Most importantly, the I-CLASS matrix-based algorithmic reconstruction is extremely stable, providing solid results in every run, does not require any free parameters, signal conditioning, or other tweaks that speckle-correlation phase-retrieval requires for achieving a reasonable reconstruction. Strikingly, the matrix-based reconstruction demonstrates superior reconstruction quality even when compared to the best phase-retrieval speckle-correlation reconstruction obtained from 500 independent runs of the phase-retrieval algorithm on the optimized estimated power spectrum.
 
-        For producing Supplementary Fig. ~\ref{fig_S4}, we have applied the implementation of I-CLASS algorithm given in Weinberg et al.\cite{weinberg2024noninvasive} directly on \textbf{a set of 100} simulated captured frames. These frames were generated by convolving the original target image with 100 different random simulated speckle PSFs in the Fourier domain.
+        For producing Supplementary Fig. ~\ref{supp_fig:comparison}, we have applied the implementation of I-CLASS algorithm given in Weinberg et al.\cite{weinberg2024noninvasive} directly on \textbf{a set of 100} simulated captured frames. These frames were generated by convolving the original target image with 100 different random simulated speckle PSFs in the Fourier domain.
         For the speckle-correlation reconstruction, we employed the reconstruction approach of Bertolotti et al. and Katz et al. \cite{bert12, katz14} \textbf{using the same set of 100 simulated distorted images}, following a rigorous optimization of the choice of signal conditioning and algorithmic parameters, which are as follows:
 
         \begin{enumerate}
@@ -1085,7 +1078,7 @@ In our experimental implementation described in the main text, we carefully focu
             \item Apply appropriate windowing for optimal phase-retrieval results: a square-root of a Tukey window for the USAF target and a Tukey window taken to the power of $1/4$  for the camera-man target.
         \end{enumerate}
         
-        For phase retrieval, following Katz et al. \cite{katz14}, we ran 500 independent runs of the following phase-retrieval algorithms, where in each run a different random initial guess for the object was used, and the lowest error reconstruction is presented in Fig.~\ref {fig_S4},:
+        For phase retrieval, following Katz et al. \cite{katz14}, we ran 500 independent runs of the following phase-retrieval algorithms, where in each run a different random initial guess for the object was used, and the lowest error reconstruction is presented in Fig.~\ref {supp_fig:comparison},:
         \begin{enumerate}
             \item 300 iterations of HIO algorithm with a decreasing value of beta parameter, from 2.0 to 1.2, in steps of 0.2. A total of $5\times300=1,500$ iterations.
             \item 300 additional iterations of error reduction algorithm.
@@ -1100,11 +1093,11 @@ In our experimental implementation described in the main text, we carefully focu
 
         \begin{figure}[H]
             \centering
-            \includegraphics[width=0.93\linewidth]{figures/figure_S4.pdf}
-            \renewcommand{\thefigure}{S4}
+            \includegraphics[width=0.93\linewidth]{figures/figure_S5.pdf}
+            \renewcommand{\thefigure}{S5}
             \captionof{figure}{\footnotesize\textbf{Numerical comparison of imaging through dynamic scattering media with our matricial approach vs. speckle-correlation phase-retrieval based imaging.} 
             A comparison between the matrix-based I-CLASS reconstruction and speckle correlation phase-retrieval based imaging \cite{bert12,katz14} . \textbf{a,f}  Simulated target objects. \textbf{b,g} Sample simulated captured single camera frames under dynamic scattering. \textbf{c,h} Best results of speckle correlation imaging reconstructions from 500 runs of  HIO phase-retrieval algorithm, followed by error-reduction algorithm, after careful optimization of object autocorrelation estimation (see details in text). \textbf{d,i} I-CLASS reconstructions showing superior fidelity from every single run with no free parameters or signal conditioning. \textbf{e,j} Phase retrieval applied directly to the reference images power spectrum, for comparison. Scale bar: 10 px.}
-            \label{fig_S4}
+            \label{supp_fig:comparison}
         \end{figure}
     \end{quote}
 
