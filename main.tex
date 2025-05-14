@@ -6,6 +6,7 @@
 % quotes should be in a different text color
 % לבדוק איך צריך להכניס משוואות בסופלמנטרי
 % לשנות משוואות אולי בסופלמנטרי שיהיו עם S
+% לדאוג שבכל סימולציה יש פרטים את הפרטים איך התקבלה (קידום XX הכפלות, קונבולוציות)
 
 \documentclass[12pt]{article}
 % Increase margin width for todos
@@ -21,9 +22,9 @@
 \usepackage{hyperref}
 \usepackage{capt-of}
 \usepackage{caption}
-\usepackage{soul}           % For text highlighting
-\usepackage{xcolor}         % For color definitions
-\usepackage{todonotes}      % For margin notes
+\usepackage{soul}        
+\usepackage{xcolor}     
+\usepackage{todonotes}      
 \usepackage{enumitem,amssymb}
 \usepackage{bm}% bold math
 \usepackage{enumitem}
@@ -362,7 +363,7 @@ We thank the reviewer for raising this point, which was not properly addressed i
 
 \begin{quote}
 
-As discussed above, we addressed the off-diagonal correlations in the covariance matrix that are introduced by energy conservation by applying variable intensity modulation (scaling) across the captured frames. This was done by simply multiplying each captured frame by a scalar factor. We empirically found that modulating by factors between 1 and 2 gave near-optimal results. In Fig.~\ref{fig_S8} we present the reconstruction fidelity as a function of the choice of modulation depth for the experimental results of ~\ref{fig_2} in the main manuscript. To generate this result, we have performed multiple reconstructions on the same experimental dataset, where before each reconstruction, a different value of varying amplitude modulation (scaling) was applied. For each depth value, we applied a linear scaling to our experimental data where the multiplication factor for the $m$-th frame (out of $M$ total frames) was:
+As discussed above, we addressed the off-diagonal correlations in the covariance matrix that are introduced by energy conservation by applying variable intensity modulation (scaling) across the captured frames. This was done by simply multiplying each captured frame by a scalar factor. We empirically found that modulating by factors between 1 and 2 gave near-optimal results. In Fig.~\ref{fig_S8} we present the reconstruction fidelity as a function of the choice of modulation depth for the experimental results of Fig. 2 in the main manuscript. To generate this result, we have performed multiple reconstructions on the same experimental dataset, where before each reconstruction, a different value of varying amplitude modulation (scaling) was applied. For each depth value, we applied a linear scaling to our experimental data where the multiplication factor for the $m$-th frame (out of $M$ total frames) was:
 
 
 \begin{equation}
@@ -572,7 +573,7 @@ This new supplementary section reads:
     \section*{Matrix-based scattering compensation algorithms}
 
 In this section, we provide the background and mathematical foundation for the I-CLASS algorithm used to reconstruct the target objects in our work. 
-The I-CLASS algorithm builds upon the fundamental principles of reflection-matrix-based imaging techniques \cite{lee22}. To understand its operation, we first establish the mathematical foundation of the reflection-matrix formalism for imaging through static scattering media, and explain the basics of the original CLASS algorithm, applied to imaging with deterministic controlled illuminations, such as plane waves or scanning beams \cite{yoon2020laser}. 
+The I-CLASS algorithm builds upon the fundamental principles of reflection-matrix-based imaging techniques \cite{lee22}. To understand its operation, we first establish the mathematical foundation of the reflection-matrix formalism for imaging through static scattering media, and explain the basics of the original CLASS algorithm, applied to imaging with deterministic controlled illuminations, such as plane waves or scanning beams \cite{kang17,yoon2020laser}. 
 We then proceed to show how the matricial formalism and the CLASS algorithm were extended to the case of random illuminations via CTR-CLASS \cite{lee22}, and the extension to phase and amplitude correction by I-CLASS \cite{weinberg2024noninvasive}. Finally, we explain how these principles apply to dynamic scattering by the exchange of roles between the scattering medium and the target object.
 
 \subsection*{Reflection-matrix formalism}
@@ -612,7 +613,7 @@ For a static scattering medium and object scenario, one can measure the reflecti
 
 Once the reflection matrix is measured, the challenge of reconstructing the image of the hidden object from the scattered light measurements is equivalent to decomposing the reflection matrix into its three components. 
 The CLASS algorithm \cite{choi2022flexible} is fundamentally a matrix decomposition method that can take any matrix with this TDT structure and decompose it into its constituent matrices. This allows recovery of the aberration-free object reflectivity function, $\mathbf{O}$, by separating it from the distortions introduced by the PSFs. 
-Importantly, such a decomposition is made possible due to the fact that while the full reflection matrix contains $N\times N = N^2$ elements (measurements), it is the product of three matrices where in each matrix there are only $N$ unknown elements. Thus the challenge is to retrieve the $3N$ unknowns (target object and two PSFs) from $N^2$ measurements.
+Importantly, such a decomposition is made possible due to the fact that while the full reflection matrix contains $N\times N = N^2$ elements (measurements), it is the product of three matrices, where in each matrix there are only $N$ unknown elements. Thus the challenge is to retrieve the $3N$ unknowns (target object and two PSFs) from $N^2$ measurements.
 
 
 \subsection*{The CLASS scattering-compensation algorithm}
@@ -1050,9 +1051,10 @@ In our experimental implementation described in the main text, we carefully focu
         Figure ~\ref{fig_S4} presents the results of this numerical study. Each of the two rows of panels in Fig. ~\ref{fig_S4} displays the results for a different target object.  For each target object, we display the widefield reference image of the object taken without the scattering medium present (Fig.~\ref{fig_S4}a,f), a sample simulated captured frame distorted by scattering (Fig.~\ref{fig_S4}b,g), the speckle correlation phase-retrieval reconstruction (Fig.~\ref{fig_S4}c,h), the matrix-based I-CLASS reconstruction (Fig.~\ref{fig_S4}d,i), and the result of the same phase retrieval algorithm applied directly to the reference image power spectrum (Fig.~\ref{fig_S4}e,j).
         
         In all of the cases tested, our matrix-based approach demonstrated superior reconstruction fidelity than speckle correlations phase-retrieval based reconstructions. Most importantly, the I-CLASS matrix-based algorithmic reconstruction is extremely stable, providing solid results in every run, does not require any free parameters, signal conditioning, or other tweaks that speckle-correlation phase-retrieval requires for achieving a reasonable reconstruction. Strikingly, the matrix-based reconstruction demonstrates superior reconstruction quality even when compared to the best phase-retrieval speckle-correlation reconstruction obtained from 500 independent runs of the phase-retrieval algorithm on the optimized estimated power spectrum.
-        
-        For producing Supplementary Fig. ~\ref{fig_S4}, we have applied the implementation of I-CLASS algorithm given in Weinberg et al.\cite{weinberg2024noninvasive} directly on the simulated captured frames.
-        For the speckle-correlation reconstruction, we employed the reconstruction approach of Bertolotti et al. and Katz et al. \cite{bert12, katz14} following a rigorous optimization of the choice of signal conditioning and algorithmic parameters, which are as follows:
+
+        For producing Supplementary Fig. ~\ref{fig_S4}, we have applied the implementation of I-CLASS algorithm given in Weinberg et al.\cite{weinberg2024noninvasive} directly on \textbf{a set of 100} simulated captured frames. These frames were generated by convolving the original target image with 100 different random simulated speckle PSFs in the Fourier domain.
+        For the speckle-correlation reconstruction, we employed the reconstruction approach of Bertolotti et al. and Katz et al. \cite{bert12, katz14} \textbf{using the same set of 100 simulated distorted images}, following a rigorous optimization of the choice of signal conditioning and algorithmic parameters, which are as follows:
+
         \begin{enumerate}
             \item Calculate the autocorrelation of each scattered light intensity frame.
             \item Average all autocorrelations. The resulting autocorrelation suffers from an envelope given by the average envelope of the scattered light patterns.
