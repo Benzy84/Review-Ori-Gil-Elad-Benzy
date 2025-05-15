@@ -59,27 +59,6 @@
 
 \usepackage{mdframed}
 
-\newenvironment{coloredquote}{
-    \begin{mdframed}[
-        linewidth=0pt,
-        leftline=true,
-        rightline=false,
-        topline=false,
-        bottomline=false,
-        linecolor=quotationcolor,
-        backgroundcolor=quotationcolor!5,
-        leftmargin=0pt,
-        rightmargin=0pt,
-        innerleftmargin=10pt,
-        innerrightmargin=5pt,
-        innertopmargin=5pt,
-        innerbottommargin=5pt,
-        font=\itshape
-    ]
-}{
-    \end{mdframed}
-}
-
 
 % For a box-style quote using tcolorbox (which you already have)
 \newtcolorbox{bluebox}{
@@ -186,19 +165,21 @@ As often with this group, this work is technically of excellent quality and its 
     To address this limitation transparently in our manuscript, we have made the following two revisions to our manuscript: first, we added the following clarification to the Discussion Section:
     
     \begin{quote}
-        "We note that for coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin scattering layer by focusing the illumination to a spot that is smaller than the coherence area of the scattering layer, thick volumetric scattering presents a challenge that requires additional or alternative solutions."
+        "{\bfseries
+        We note that for coherent imaging through dynamic scattering, our current approach is limited to scenarios where effectively constant illumination can be maintained at the object plane. While demonstrated here with a thin scattering layer by focusing the illumination to a spot that is smaller than the coherence area of the scattering layer, thick volumetric scattering presents a challenge that requires additional or alternative solutions.}"
     \end{quote}
     
      Secondly, we suggest a potential mitigation technique for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick media, while maintaining the capability of coherence gating, crucial for practical reflection-based microscopy and 3D imaging, and highlight the potential of focused illumination in imaging through dynamically-bent multi-core fibers (MCFs). We have added this discussion to the Discussion section of our manuscript:
 
      \begin{quote}
      
-     "One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
+     "{\bfseries
+     One potential solution for obtaining an effectively homogeneous illumination in the case of coherent illumination through thick dynamic media, while maintaining the capability of coherence gating, without requiring focused illumination, is by digital incoherent compounding the time-gated frames of several illuminations taken within the correlation time of the medium. This utilizes the same principles used in speckle reduction techniques in OCT \cite{liba2017speckle}, and was demonstrated for imaging through scattering layers via correlography \cite{idell1987image, salhov2018depth, metzler2020deepinverse}, however, without leveraging the potential of matrix-based techniques.
      In such a solution, for each realization of the dynamic scatterer one would: (I) rapidly acquire multiple ($K \gg 1$) coherence-gated holograms under different speckle illuminations (created with an additional diffuser or SLM in the illumination path); (II) Incoherently sum the intensity patterns of the holographically measured fields to incoherently-compounded "macro-frames": $I_m(x,y,z=z_{obj}) = \sum_{k=1}^{K}|E_{m,k}(x,y,z=z_{obj})|^2$  that can then be (III) processed using I-CLASS as in our incoherent experiments.
      This protocol creates effectively uniform illumination through incoherent compounding, while preserving the important coherence-gating capability of coherent light that is crucial for practical reflection-based microscopy and 3D-imaging. The $K$ rapid illumination patterns can be random or complementary speckle illuminations that would result in more homogeneous illumination distribution \cite{gateau2017complementary}.
 
      Such a hybrid method offers a potential mitigation strategy for thick scattering media at the price of an increase in the number of acquisitions, or equivalently, at the price of acquisition or dynamic scattering speed.
-     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{choi2022flexible, weinberg2024ptychographic}."
+     Additionally, we highlight the applicability of the tight focusing approach to lensless imaging through highly dynamic flexible multi-core fiber (MCF) endoscopes, as previously demonstrated only through relatively static fibers \cite{choi2022flexible, haim2025image}. In this system, uniform illumination can be obtained by single-mode excitation of a single fiber core in a relatively straightforward fashion \cite{choi2022flexible, weinberg2024ptychographic}.}"
      \end{quote}
 
 
@@ -206,6 +187,7 @@ Thirdly, we have performed a numerical study on the effects of imperfect (in)hom
 The results of this study are presented in the new Supplementary Sections  S\ref{sec: effect of spot size1}, which reads:
 
 \begin{quote}
+{\bfseries
     \setcounter{section}{4}
     \section{Effect of illumination homogeneity and stability on coherent imaging through dynamic scattering}
     \label{sec: effect of spot size1}
@@ -234,7 +216,7 @@ Note that there exists a global phase shift of the illumination, but this global
 
 In contrast, when the illumination spot size is comparable to or larger than the diffuser correlation length (Fig.~\ref{fig_S7_1}c), the beam simultaneously samples multiple uncorrelated regions of the diffuser. This produces complex speckle patterns at the object plane that vary significantly between diffuser positions, creating a different illumination pattern for each diffuser realization. This variation violates our assumption of constant illumination in Eqs. 6-7 of the main text. As a result, the reconstruction quality gradually degrades as the spot size increases relative to the scattering layer coherence area. 
 
-In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length, thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.
+In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length, thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.}
 \end{quote}
 
 \textbf{In this discussion, we have added the following references to the revised manuscript:}
@@ -267,8 +249,9 @@ In our experimental implementation described in the main text, we carefully focu
     
     To address this point in the revised manuscript, we have added the following paragraph to the discussion section:
     \begin{quote}
-        "While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Beyond the direct application of mosaicking approaches, which are effective for moderate scattering \cite{lee22, najar2024harnessing}, applying a multi-conjugate, "multi-slice" correction \cite{kang2023tracing, haim2025image} would be very attractive. However, since in our formulation the dynamic medium plays the role that would normally be occupied by the object in conventional reflection-matrix implementation, and vice versa, the conventional multi-conjugate approach would only address a thick target object rather than a thick scattering medium. Addressing a thick scattering medium thus requires a solution analogous to addressing a thick target object in conventional reflection matrix imaging. Interestingly, the recent approach of Park et al. \cite{oh2025digital}, where thick target objects are considered, may offer a potential path forward. 
-        Alternatively, it may be possible to leverage the recent model-based gradient descent optimization approach  \cite{haim2025image}, which can flexibly handle a multi-parameter model, to integrate the case of a thick medium in the dynamic measurements formalism."
+        "{\bfseries
+        While we have focused our proof-of-principle demonstrations on isoplanatic scattering conditions, extending our approach to thick dynamic scattering media remains an important challenge. Beyond the direct application of mosaicking approaches, which are effective for moderate scattering \cite{lee22, najar2024harnessing}, applying a multi-conjugate, "multi-slice" correction \cite{kang2023tracing, haim2025image} would be very attractive. However, since in our formulation the dynamic medium plays the role that would normally be occupied by the object in conventional reflection-matrix implementation, and vice versa, the conventional multi-conjugate approach would only address a thick target object rather than a thick scattering medium. Addressing a thick scattering medium thus requires a solution analogous to addressing a thick target object in conventional reflection matrix imaging. Interestingly, the recent approach of Park et al. \cite{oh2025digital}, where thick target objects are considered, may offer a potential path forward. 
+        Alternatively, it may be possible to leverage the recent model-based gradient descent optimization approach  \cite{haim2025image}, which can flexibly handle a multi-parameter model, to integrate the case of a thick medium in the dynamic measurements formalism.}"
     \end{quote}
 
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
@@ -291,7 +274,7 @@ In our experimental implementation described in the main text, we carefully focu
 \begin{finished_ourresponse}
     We appreciate the reviewer's important question about the number of required independent frames for reliable estimation. To address this systematically, we conducted a comprehensive set of numerical simulations investigating the relationship between the number of realizations (M), the measurement signal-to-noise ratio, the object sparsity, and the reconstruction fidelity. We present the results of this study in a new supplementary section ("Dependence of reconstruction quality on number of realizations, object sparsity, and SNR").
 
-    \begin{quote}
+    \begin{quote} {\bfseries
         \setcounter{section}{5}
         \section{Dependence of reconstruction fidelity on number of realizations, object sparsity, and SNR}
 
@@ -309,7 +292,7 @@ In our experimental implementation described in the main text, we carefully focu
             \label{fig_S8}
         \end{figure}
 
-        These results demonstrate that sparser objects can be reconstructed with fewer realizations, while complex objects need substantially more measurements. Higher SNR conditions predictably improve reconstruction quality, and coherent imaging appears to require an increased number of measurements compared to incoherent imaging for an equivalent fidelity.
+        These results demonstrate that sparser objects can be reconstructed with fewer realizations, while complex objects need substantially more measurements. Higher SNR conditions predictably improve reconstruction quality, and coherent imaging appears to require an increased number of measurements compared to incoherent imaging for an equivalent fidelity.}
 
                    
     \end{quote}
@@ -338,8 +321,9 @@ Regarding the SVD approach: The reviewer raises an interesting point about using
 
 Following the reviewer's suggestion, we have added the following discussion to the main manuscript: 
 \begin{quote}
-    "Our analysis revealed that energy conservation in phase-only speckle patterns may introduce spatial correlations that can cause background haze in the reconstructions (see Supplementary Fig.~\ref{fig: modulation depth}). Here, we addressed this by simply applying varying intensity scaling across frames during post-processing (see Supplementary section 2). It would be interesting to study more advanced processing techniques to identify and filter these correlations and/or their effects. In particular, it would be interesting to study matricial processing approaches, such as singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix. It was recently shown that SVD-based analysis and filtering of the reflection matrix or the distortion matrix \cite{jo2022through, badon2016smart, badon2020distortion},  can effectively separate correlated signals such as those originating from different isoplanatic patches, or that are less affected by noise. 
-    An analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3."
+    "{\bfseries
+    Our analysis revealed that energy conservation in phase-only speckle patterns may introduce spatial correlations that can cause background haze in the reconstructions (see Supplementary Fig.~\ref{fig: modulation depth}). Here, we addressed this by simply applying varying intensity scaling across frames during post-processing (see Supplementary section 2). It would be interesting to study more advanced processing techniques to identify and filter these correlations and/or their effects. In particular, it would be interesting to study matricial processing approaches, such as singular value decomposition filtering (SVD) of the measurement matrix or the covariance matrix. It was recently shown that SVD-based analysis and filtering of the reflection matrix or the distortion matrix \cite{jo2022through, badon2016smart, badon2020distortion},  can effectively separate correlated signals such as those originating from different isoplanatic patches, or that are less affected by noise. 
+    An analysis of the effects of the energy-conservation originated correlations on the reconstruction, and our approach for mitigating them, is detailed in Supplementary Section S2 and Supplementary Figure S3.}"
 \end{quote}
 We maintained the detailed analysis in Supplementary Section S2 as suggested, while bringing the key insight to readers' attention in the main text.
 
@@ -368,6 +352,7 @@ We thank the reviewer for raising this point, which was not properly addressed i
 
 \begin{quote}
 
+"{\bfseries
 As discussed above, we addressed the off-diagonal correlations in the covariance matrix that are introduced by energy conservation by applying variable intensity modulation (scaling) across the captured frames. This was done by simply multiplying each captured frame by a scalar factor. We empirically found that modulating by factors between 1 and 2 gave near-optimal results. In Fig.~\ref{fig_S8} we present the reconstruction fidelity as a function of the choice of modulation depth for the experimental results of Fig. 2 in the main manuscript. To generate this result, we have performed multiple reconstructions on the same experimental dataset, where before each reconstruction, a different value of varying amplitude modulation (scaling) was applied. For each depth value, we applied a linear scaling to our experimental data where the multiplication factor for the $m$-th frame (out of $M$ total frames) was:
 
 
@@ -389,7 +374,7 @@ Where $\alpha$ controls the total range of modulation with corresponding modulat
 
 
 Our results show that without adding a modulation (modulation depth = 0), the reconstructions display a significant background haze. As the modulation depth increases, this background haze diminishes progressively. At very high modulation depths, while the background continues to reduce, the contrast is somewhat lowered, which may be the result of an imperfect estimation of the MTF in the I-CLASS algorithm \cite{weinberg2024noninvasive}.  Modulation depths of 0.3-0.5 used in our main experiments provide an effective trade-off between these competing effects. 
-Additional improvements for addressing this point, such as SVD filtering, will be the focus of future work.
+Additional improvements for addressing this point, such as SVD filtering, will be the focus of future work.}
 
 \end{quote}
 \end{finished_ourresponse}
@@ -433,6 +418,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
 \begin{finished_ourresponse}
     We thank the reviewer for this suggestion. The revised manuscript now includes a detailed description of the Fresnel propagation operator used in the holographic reconstruction. This has been added to the \textbf{Methods} section titled "Fresnel propagation via Fourier-domain transfer function".
     \begin{quote}
+    {\bfseries
         \subsection*{Fresnel propagation via Fourier-domain transfer function}
         \label{subsec: Fresnel propagation}
 
@@ -460,7 +446,7 @@ We kindly refer the reviewers to read the supplementary section in full in the S
         - $ \lambda $ is the illumination wavelength,
         - $ (f_x, f_y) $ are the spatial frequency coordinates corresponding to the real-space axes $ (x, y) $.
         
-        This formulation supports forward and backward propagation by simply changing the sign of $ \Delta z $, and is especially suitable for numerical implementation via Fast Fourier Transforms (FFT).
+        This formulation supports forward and backward propagation by simply changing the sign of $ \Delta z $, and is especially suitable for numerical implementation via Fast Fourier Transforms (FFT).}
         
     \end{quote}
 
@@ -489,8 +475,8 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     To address this point in the revised manuscript, we have added the following explanation to the \textbf{ Methods} section, where we discuss the Fresnel reconstruction of the object field at the object plane:
 
     \begin{quote}
-        "
-        ...since, following the principles of conjugate adaptive optics \cite{mertz2015field, kwon2023computational, sunray2024beyond, katz2012looking}, we measure the fields at the diffuser plane and input these fields to the I-CLASS algorithm, the I-CLASS algorithm reconstructs the complex object field at the same plane. This is since the object field in our dynamic matrix approach is analogous to the scattering medium phase-function that CLASS/I-CLASS algorithms retrieve in the conventional static medium case.
+        "{\bfseries
+        ...since, following the principles of conjugate adaptive optics \cite{mertz2015field, kwon2023computational, sunray2024beyond, katz2012looking}, we measure the fields at the diffuser plane and input these fields to the I-CLASS algorithm, the I-CLASS algorithm reconstructs the complex object field at the same plane. This is since the object field in our dynamic matrix approach is analogous to the scattering medium phase-function that CLASS/I-CLASS algorithms retrieve in the conventional static medium case.}
         "
     \end{quote}
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
@@ -516,8 +502,9 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     We apologize for this phrasing mixup. We have revised the statement to read:
     
     \begin{quote}
-        "Thus, our approach provides a natural and fully interpretable extension of matrix-based imaging techniques to the case of rapidly dynamic scatterers. 
-        It enables the reconstruction of complex, megapixel-scale images through rapidly time-varying scattering. Importantly, unlike state-of-the-art neural-networks-based techniques, our approach does not require any assumptions on the temporal variations or other regularization, making it suitable for rapid dynamic scattering."
+        "{\bfseries
+        Thus, our approach provides a natural and fully interpretable extension of matrix-based imaging techniques to the case of rapidly dynamic scatterers. 
+        It enables the reconstruction of complex, megapixel-scale images through rapidly time-varying scattering. Importantly, unlike state-of-the-art neural-networks-based techniques, our approach does not require any assumptions on the temporal variations or other regularization, making it suitable for rapid dynamic scattering.}"
     \end{quote}
     
 \end{finished_ourresponse}
@@ -536,7 +523,8 @@ We kindly refer the reviewers to read the supplementary section in full in the S
     
     We have revised the sentence to read: 
     \begin{quote}
-        "The experimental setup and results for these experiments..." 
+        "{\bfseries
+        The experimental setup and results for these experiments...}" 
     \end{quote}
     which removes the redundancy and improves clarity.
 \end{finished_ourresponse}
@@ -577,6 +565,7 @@ To this end, we have added a new supplementary section ("I-CLASS and matrix-base
 This new supplementary section reads:
 
 \begin{quote}
+    {\bfseries
     \setcounter{section}{6}
     \section{Matrix-based scattering compensation algorithms}
     \label{sec: algorithm explanation}
@@ -811,7 +800,7 @@ We note that to achieve a fixed object illumination throughout the different mea
 The I-CLASS algorithm \cite{weinberg2024noninvasive} extends the CLASS algorithm \cite{choi2022flexible} estimation of phase distortions to allow both phase and amplitude distortions in conventional reflection matrix measurements. 
 Specifically, in I-CLASS the phase corrections are found in the exact same manner as the CLASS algorithm. Following the standard CLASS phase-correction, I-CLASS estimates the amplitude distortions in the Fourier domain (the Modulation Transfer Function, MTF) from the diagonal of the covariance matrix in the Fourier domain. This amplitude information is used to correct for the amplitude aberrations by Fourier-reweighting.
 
-In the conventional case of a static medium using multiple illuminations \cite{weinberg2024noninvasive}, the I-CLASS algorithm produces an estimate of the Fourier phase and amplitude of the scattering PSF. However, in the case of a dynamic scattering medium considered in this work, applying the I-CLASS algorithm (without any change on the data or the algorithm) produces the Fourier phase and amplitude of the target object. All that is left is to Fourier transform (or digitally propagate) the algorithm output to reconstruct the image of the object at the target plane.
+In the conventional case of a static medium using multiple illuminations \cite{weinberg2024noninvasive}, the I-CLASS algorithm produces an estimate of the Fourier phase and amplitude of the scattering PSF. However, in the case of a dynamic scattering medium considered in this work, applying the I-CLASS algorithm (without any change on the data or the algorithm) produces the Fourier phase and amplitude of the target object. All that is left is to Fourier transform (or digitally propagate) the algorithm output to reconstruct the image of the object at the target plane.}
     
 \end{quote}
 
@@ -834,7 +823,8 @@ We believe these additions significantly improve the paper's accessibility and p
 \begin{finished_ourresponse}
     We appreciate the reviewer's concern about the isoplanatic patch limitation. To address this important point and ensure clarity for non-specialist readers, we have added an explicit note in the Principle section immediately following Equation 1, reiterating this constraint:
     \begin{quote}
-        "It is important to note that this convolution model is strictly valid only for objects within an isoplanatic patch. All experiments in this work were designed within this constraint. Potential extensions to larger fields of view or thick complex media are discussed in the Discussion section."
+        "{\bfseries
+        It is important to note that this convolution model is strictly valid only for objects within an isoplanatic patch. All experiments in this work were designed within this constraint. Potential extensions to larger fields of view or thick complex media are discussed in the Discussion section.}"
     \end{quote}
             
     
@@ -857,7 +847,8 @@ A few more minor points:
 \begin{finished_ourresponse}
     We thank the reviewer for this correction. We have revised the text to more accurately reflect the nature of iterative phase retrieval, acknowledging that convergence is possible, albeit potentially time-consuming. The revised sentence now reads:  
     \begin{quote}
-        "However, despite this advantage, these techniques are hindered by their reliance on iterative phase retrieval \cite{fienup1978reconstruction}, which can require a very large number of iterations to converge, as well as specific support priors and potentialy a large number of initial guesses."
+        "{\bfseries
+        However, despite this advantage, these techniques are hindered by their reliance on iterative phase retrieval \cite{fienup1978reconstruction}, which can require a very large number of iterations to converge, as well as specific support priors and potentialy a large number of initial guesses.}"
     \end{quote}
     
 \end{finished_ourresponse}
@@ -894,7 +885,7 @@ A few more minor points:
     
     To clarify this explicitly in the revised manuscript, we added the following note to the results section:
     \begin{quote}
-        "Note that although these initial experiments utilize a transmission geometry with illumination from behind the target, the addition of a scattering medium between the light source and the target in these experiments would not change the imaging performance as long as a sufficiently high intensity is passed through the scattering medium, as the incoherent imaging configuration only requires homogeneous illumination of the target. Additionally, our subsequent experimental demonstrations in epi-illumination and detection in fluorescence microscopy (Fig.4) and coherent holographic imaging Fig.~\ref{fig_5}) demonstrate applicability to noninvasive imaging across diverse optical configurations and imaging modalities."
+        "{\bfseries Note that although these initial experiments utilize a transmission geometry with illumination from behind the target, the addition of a scattering medium between the light source and the target in these experiments would not change the imaging performance as long as a sufficiently high intensity is passed through the scattering medium, as the incoherent imaging configuration only requires homogeneous illumination of the target. Additionally, our subsequent experimental demonstrations in epi-illumination and detection in fluorescence microscopy (Fig.4) and coherent holographic imaging Fig.~\ref{fig_5}) demonstrate applicability to noninvasive imaging across diverse optical configurations and imaging modalities.}"
     \end{quote}
 
 \end{finished_ourresponse}
@@ -912,7 +903,8 @@ I might have missed it, but I don't think I have seen any discussion about the t
 We thank the reviewer for raising this point, which was indeed not adequately discussed in the original manuscript. Following the reviewer's comment, we have added to the revised manuscript the information on the specific runtime for each iteration for the presented results on our system. This information was added to the \textbf{Materials and methods}, and it reads:
 
 \begin{quote}
-    The run time of the I-CLASS algorithm on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels. With our standard protocol of 1000 iterations, this yields total processing times of approximately 8 seconds and 70 seconds, respectively.
+    "{\bfseries
+    The run time of the I-CLASS algorithm on a commercially available GPU (Nvidia RTX4090, 24 GB) was approximately $\sim 8ms$ per iteration for 150 camera frames at a resolution of $300 \times 300$ pixels and around $\sim 70ms$ per iteration for 150 camera frames at a resolution of $850 \times 850$ pixels. With our standard protocol of 1000 iterations, this yields total processing times of approximately 8 seconds and 70 seconds, respectively.}"
 \end{quote}
 \end{finished_ourresponse}
 
@@ -936,6 +928,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
     To address this point in the revised manuscript, we have added a new supplementary section titled "Digital Autofocus by Fresnel Propagation" that explains this capability and includes a new figure presenting reconstructions in out-of-focus planes.
 
     \begin{quote}
+    {\bfseries
         \setcounter{section}{3}
         \section{Digital autofocus by Fresnel propagation}
         \label{sec: digital autofocus}
@@ -956,7 +949,7 @@ We thank the reviewer for raising this point, which was indeed not adequately di
             \captionof{figure}{\footnotesize\textbf{Digital autofocus capability of the coherent imaging reconstruction.} The I-CLASS algorithm provides the complex-valued object field at the scattering layer plane. This field can be back-propagated to any desired distance from the scattering layer, allowing to find the target object plane by 'digital focusing' in post-processing, without prior knowledge of the target position. Presented images show reconstructed field intensity at three propagation distances: \textbf{a} z = 5.3 cm (before the object plane), \textbf{b} z = 7.15 cm (at the object plane, where optimal focus is achieved), and \textbf{c} z = 9.0 cm (after the object plane). 
             Scale bars: 1 mm.}
             \label{fig_S6}
-        \end{figure}
+        \end{figure}}
 
     \end{quote}
 \end{finished_ourresponse}
@@ -976,6 +969,7 @@ We thank the reviewer for raising this question, which was not discussed in suff
 
 To address this question comprehensively, we have added a new section, section \ref{sec: effect of spot size} ("Effect of illumination spot size on coherent imaging through dynamic scattering") to the supplementary material of the revised manuscript. The new supplementary section contains a thorough explanation and a set of numerical simulations, which demonstrate and study the limitations of the effect of focusing the illumination on the scattering layer surface. For convenience, we reproduce the full section below. In a nutshell, when the illumination beam is focused to a spot size that is sufficiently smaller than the coherence area of the scattering layer, it effectively experiences propagation through a single coherence area with a nearly constant phase function, and thus does not experience scattering, providing a homogeneous illumination of the target.
 \begin{quote}
+    {\bfseries
     \setcounter{section}{4}
         \section{Effect of illumination homogeneity and stability on coherent imaging through dynamic scattering}
     \label{sec: effect of spot size}
@@ -1004,7 +998,7 @@ Note that there exists a global phase shift of the illumination, but this global
 
 In contrast, when the illumination spot size is comparable to or larger than the diffuser correlation length (Fig.~\ref{fig_S7}c), the beam simultaneously samples multiple uncorrelated regions of the diffuser. This produces complex speckle patterns at the object plane that vary significantly between diffuser positions, creating a different illumination pattern for each diffuser realization. This variation violates our assumption of constant illumination in Eqs. 6-7 of the main text. As a result, the reconstruction quality gradually degrades as the spot size increases relative to the scattering layer coherence area. 
 
-In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length, thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.
+In our experimental implementation described in the main text, we carefully focused the beam to ensure a spot size smaller than the diffuser's correlation length, thereby maintaining sufficiently constant spatial illumination patterns at the object plane across different realizations, as required.}
 \end{quote}
 
 \end{finished_ourresponse}
@@ -1055,6 +1049,7 @@ In our experimental implementation described in the main text, we carefully focu
      The updated supplementary section and supplementary figure that reflect these improvements and provide a more comprehensive comparison appear below:
 
     \begin{quote}
+    {\bfseries
         \setcounter{section}{2}
         \section{Comparison with speckle-correlation phase-retrieval based reconstruction}
 
@@ -1098,7 +1093,7 @@ In our experimental implementation described in the main text, we carefully focu
             \captionof{figure}{\footnotesize\textbf{Numerical comparison of imaging through dynamic scattering media with our matricial approach vs. speckle-correlation phase-retrieval based imaging.} 
             A comparison between the matrix-based I-CLASS reconstruction and speckle correlation phase-retrieval based imaging \cite{bert12,katz14} . \textbf{a,f}  Simulated target objects. \textbf{b,g} Sample simulated captured single camera frames under dynamic scattering. \textbf{c,h} Best results of speckle correlation imaging reconstructions from 500 runs of  HIO phase-retrieval algorithm, followed by error-reduction algorithm, after careful optimization of object autocorrelation estimation (see details in text). \textbf{d,i} I-CLASS reconstructions showing superior fidelity from every single run with no free parameters or signal conditioning. \textbf{e,j} Phase retrieval applied directly to the reference images power spectrum, for comparison. Scale bar: 10 px.}
             \label{supp_fig:comparison}
-        \end{figure}
+        \end{figure}}
     \end{quote}
 
     \textbf{In this discussion, we have added the following references to the revised manuscript:}
